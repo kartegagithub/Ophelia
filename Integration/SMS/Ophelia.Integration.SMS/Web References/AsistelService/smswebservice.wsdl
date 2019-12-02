@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SmsGonder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kullaniciAd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parola" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gsmNo" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="gonderimTarihi" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="alfaNumeric" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="chargedNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="multiSms" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SmsGonderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SmsGonderResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BaslikOgren">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kullaniciAd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parola" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BaslikOgrenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BaslikOgrenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguSonuc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="telefonNo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="transactionId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguSonucResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SorguSonucResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguSonuc2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kullaniciAd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parola" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telefonNo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="transactionId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguSonuc2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SorguSonuc2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGroupsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNumbers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNumbersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNumbersResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSmsReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="passWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="transactionId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="numberList" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSmsReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSmsReportResult" type="tns:KurumsalSms" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="KurumsalSms">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ResultReport" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsList" type="tns:ArrayOfSms" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSms">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Sms" nillable="true" type="tns:Sms" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Sms">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MessageId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TransactionId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SendPhoneNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsCount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorDetail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveredDate" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="InsertGroupAddressBook">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="passWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertGroupAddressBookResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InsertGroupAddressBookResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertPersonAddressBook">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="passWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gsmNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="personName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="personSurname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gsmNumber2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="city" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="keywords" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dateBirth" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="dateAnniversary" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key4" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key5" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertPersonAddressBookResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="InsertPersonAddressBookResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguTarih">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kullaniciAd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parola" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tarihBaslangic" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tarihBitis" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="detay" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguTarihResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SorguTarihResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguTransactionId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="kullaniciAd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parola" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="transactionId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="detay" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SorguTransactionIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SorguTransactionIdResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="passWord" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mailSubject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="mailBody" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="onBehalfOfEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="onBehalfOfName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="attachmentFile" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="attachmentFileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMail" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="multiMail" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="sendDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendEmailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SmsGonderSoapIn">
+    <wsdl:part name="parameters" element="tns:SmsGonder" />
+  </wsdl:message>
+  <wsdl:message name="SmsGonderSoapOut">
+    <wsdl:part name="parameters" element="tns:SmsGonderResponse" />
+  </wsdl:message>
+  <wsdl:message name="BaslikOgrenSoapIn">
+    <wsdl:part name="parameters" element="tns:BaslikOgren" />
+  </wsdl:message>
+  <wsdl:message name="BaslikOgrenSoapOut">
+    <wsdl:part name="parameters" element="tns:BaslikOgrenResponse" />
+  </wsdl:message>
+  <wsdl:message name="SorguSonucSoapIn">
+    <wsdl:part name="parameters" element="tns:SorguSonuc" />
+  </wsdl:message>
+  <wsdl:message name="SorguSonucSoapOut">
+    <wsdl:part name="parameters" element="tns:SorguSonucResponse" />
+  </wsdl:message>
+  <wsdl:message name="SorguSonuc2SoapIn">
+    <wsdl:part name="parameters" element="tns:SorguSonuc2" />
+  </wsdl:message>
+  <wsdl:message name="SorguSonuc2SoapOut">
+    <wsdl:part name="parameters" element="tns:SorguSonuc2Response" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGroups" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNumbersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNumbers" />
+  </wsdl:message>
+  <wsdl:message name="GetNumbersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNumbersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSmsReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSmsReport" />
+  </wsdl:message>
+  <wsdl:message name="GetSmsReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSmsReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertGroupAddressBookSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertGroupAddressBook" />
+  </wsdl:message>
+  <wsdl:message name="InsertGroupAddressBookSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertGroupAddressBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertPersonAddressBookSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertPersonAddressBook" />
+  </wsdl:message>
+  <wsdl:message name="InsertPersonAddressBookSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertPersonAddressBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="SorguTarihSoapIn">
+    <wsdl:part name="parameters" element="tns:SorguTarih" />
+  </wsdl:message>
+  <wsdl:message name="SorguTarihSoapOut">
+    <wsdl:part name="parameters" element="tns:SorguTarihResponse" />
+  </wsdl:message>
+  <wsdl:message name="SorguTransactionIdSoapIn">
+    <wsdl:part name="parameters" element="tns:SorguTransactionId" />
+  </wsdl:message>
+  <wsdl:message name="SorguTransactionIdSoapOut">
+    <wsdl:part name="parameters" element="tns:SorguTransactionIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:SendEmail" />
+  </wsdl:message>
+  <wsdl:message name="SendEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:SendEmailResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SmsWebServiceSoap">
+    <wsdl:operation name="SmsGonder">
+      <wsdl:input message="tns:SmsGonderSoapIn" />
+      <wsdl:output message="tns:SmsGonderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BaslikOgren">
+      <wsdl:input message="tns:BaslikOgrenSoapIn" />
+      <wsdl:output message="tns:BaslikOgrenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SorguSonuc">
+      <wsdl:input message="tns:SorguSonucSoapIn" />
+      <wsdl:output message="tns:SorguSonucSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SorguSonuc2">
+      <wsdl:input message="tns:SorguSonuc2SoapIn" />
+      <wsdl:output message="tns:SorguSonuc2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGroups">
+      <wsdl:input message="tns:GetGroupsSoapIn" />
+      <wsdl:output message="tns:GetGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNumbers">
+      <wsdl:input message="tns:GetNumbersSoapIn" />
+      <wsdl:output message="tns:GetNumbersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSmsReport">
+      <wsdl:input message="tns:GetSmsReportSoapIn" />
+      <wsdl:output message="tns:GetSmsReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertGroupAddressBook">
+      <wsdl:input message="tns:InsertGroupAddressBookSoapIn" />
+      <wsdl:output message="tns:InsertGroupAddressBookSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertPersonAddressBook">
+      <wsdl:input message="tns:InsertPersonAddressBookSoapIn" />
+      <wsdl:output message="tns:InsertPersonAddressBookSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SorguTarih">
+      <wsdl:input message="tns:SorguTarihSoapIn" />
+      <wsdl:output message="tns:SorguTarihSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SorguTransactionId">
+      <wsdl:input message="tns:SorguTransactionIdSoapIn" />
+      <wsdl:output message="tns:SorguTransactionIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <wsdl:input message="tns:SendEmailSoapIn" />
+      <wsdl:output message="tns:SendEmailSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SmsWebServiceSoap" type="tns:SmsWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SmsGonder">
+      <soap:operation soapAction="http://tempuri.org/SmsGonder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BaslikOgren">
+      <soap:operation soapAction="http://tempuri.org/BaslikOgren" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguSonuc">
+      <soap:operation soapAction="http://tempuri.org/SorguSonuc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguSonuc2">
+      <soap:operation soapAction="http://tempuri.org/SorguSonuc2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroups">
+      <soap:operation soapAction="http://tempuri.org/GetGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumbers">
+      <soap:operation soapAction="http://tempuri.org/GetNumbers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSmsReport">
+      <soap:operation soapAction="http://tempuri.org/GetSmsReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertGroupAddressBook">
+      <soap:operation soapAction="http://tempuri.org/InsertGroupAddressBook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertPersonAddressBook">
+      <soap:operation soapAction="http://tempuri.org/InsertPersonAddressBook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguTarih">
+      <soap:operation soapAction="http://tempuri.org/SorguTarih" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguTransactionId">
+      <soap:operation soapAction="http://tempuri.org/SorguTransactionId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <soap:operation soapAction="http://tempuri.org/SendEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SmsWebServiceSoap12" type="tns:SmsWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SmsGonder">
+      <soap12:operation soapAction="http://tempuri.org/SmsGonder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BaslikOgren">
+      <soap12:operation soapAction="http://tempuri.org/BaslikOgren" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguSonuc">
+      <soap12:operation soapAction="http://tempuri.org/SorguSonuc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguSonuc2">
+      <soap12:operation soapAction="http://tempuri.org/SorguSonuc2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroups">
+      <soap12:operation soapAction="http://tempuri.org/GetGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNumbers">
+      <soap12:operation soapAction="http://tempuri.org/GetNumbers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSmsReport">
+      <soap12:operation soapAction="http://tempuri.org/GetSmsReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertGroupAddressBook">
+      <soap12:operation soapAction="http://tempuri.org/InsertGroupAddressBook" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertPersonAddressBook">
+      <soap12:operation soapAction="http://tempuri.org/InsertPersonAddressBook" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguTarih">
+      <soap12:operation soapAction="http://tempuri.org/SorguTarih" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SorguTransactionId">
+      <soap12:operation soapAction="http://tempuri.org/SorguTransactionId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEmail">
+      <soap12:operation soapAction="http://tempuri.org/SendEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmsWebService">
+    <wsdl:port name="SmsWebServiceSoap" binding="tns:SmsWebServiceSoap">
+      <soap:address location="http://92.42.35.50:16899/smswebservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SmsWebServiceSoap12" binding="tns:SmsWebServiceSoap12">
+      <soap12:address location="http://92.42.35.50:16899/smswebservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

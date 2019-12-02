@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://application.anonymous.ws.listingapi.gg.com" name="ApplicationServiceService" targetNamespace="http://application.anonymous.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://application.anonymous.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="applicationServiceListResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="applicationCount" type="xs:int" />
+              <xs:element minOccurs="0" name="applications">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="application" nillable="true" type="tns:applicationType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="applicationType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="apiKey" type="xs:string" />
+          <xs:element minOccurs="0" name="secretKey" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="accessType" type="xs:string" />
+          <xs:element minOccurs="0" name="applicationType" type="xs:string" />
+          <xs:element minOccurs="0" name="descDetail" type="xs:string" />
+          <xs:element minOccurs="0" name="registerDate" type="xs:string" />
+          <xs:element minOccurs="0" name="successReturnUrl" type="xs:string" />
+          <xs:element minOccurs="0" name="failReturnUrl" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="messageServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="applicationInfoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="developerId" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="accessType" type="xs:string" />
+          <xs:element minOccurs="0" name="appType" type="xs:string" />
+          <xs:element minOccurs="0" name="descDetail" type="xs:string" />
+          <xs:element minOccurs="0" name="successReturnUrl" type="xs:string" />
+          <xs:element minOccurs="0" name="failReturnUrl" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="applicationServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="application" type="tns:applicationType" />
+              <xs:element minOccurs="0" name="developerId" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="ApplicationService_deleteApplication">
+    <part name="developerId" type="xsd:string" />
+    <part name="apiKey" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="ApplicationService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="ApplicationService_deleteApplicationResponse">
+    <part name="return" type="tns:messageServiceResponse" />
+  </message>
+  <message name="ApplicationService_createApplicationResponse">
+    <part name="return" type="tns:applicationServiceResponse" />
+  </message>
+  <message name="ApplicationService_getServiceName" />
+  <message name="ApplicationService_getApplicationListResponse">
+    <part name="return" type="tns:applicationServiceListResponse" />
+  </message>
+  <message name="ApplicationService_getApplicationList">
+    <part name="developerId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="ApplicationService_createApplication">
+    <part name="applicationInfo" type="tns:applicationInfoType" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <portType name="ApplicationService">
+    <operation name="createApplication" parameterOrder="applicationInfo lang">
+      <input message="tns:ApplicationService_createApplication" />
+      <output message="tns:ApplicationService_createApplicationResponse" />
+    </operation>
+    <operation name="deleteApplication" parameterOrder="developerId apiKey lang">
+      <input message="tns:ApplicationService_deleteApplication" />
+      <output message="tns:ApplicationService_deleteApplicationResponse" />
+    </operation>
+    <operation name="getApplicationList" parameterOrder="developerId lang">
+      <input message="tns:ApplicationService_getApplicationList" />
+      <output message="tns:ApplicationService_getApplicationListResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:ApplicationService_getServiceName" />
+      <output message="tns:ApplicationService_getServiceNameResponse" />
+    </operation>
+  </portType>
+  <binding name="ApplicationServiceBinding" type="tns:ApplicationService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="createApplication">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="deleteApplication">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getApplicationList">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ApplicationServiceService">
+    <port name="ApplicationServicePort" binding="tns:ApplicationServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/ApplicationService" />
+    </port>
+  </service>
+</definitions>

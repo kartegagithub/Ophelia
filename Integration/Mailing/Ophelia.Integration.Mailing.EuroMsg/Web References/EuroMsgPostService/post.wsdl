@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://ws.euromsg.com/post" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://ws.euromsg.com/post" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://ws.euromsg.com/post">
+      <s:element name="PostHtml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HtmlBody" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Charset" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfEmAttachment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmAttachment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmAttachment" nillable="true" type="tns:EmAttachment" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EmAttachment">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Content" type="s:base64Binary" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PostHtmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostHtmlResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="EmPostResult">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EmResult">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="RelayStatus" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DeliveryStatus" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="UndeliveryReason" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MarkedSpam" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="KeyID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CustomParams" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PostType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReadTime" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="RelayBounceTime" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastUpdateTime" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FromAdress" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReplyAdress" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ToAddress" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EmResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DetailedMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PostHtmlWithCCandBCC">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HtmlBody" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Charset" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CCEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BCCEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfEmAttachment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostHtmlWithCCandBCCResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostHtmlWithCCandBCCResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostHtmlWithType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HtmlBody" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Charset" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfEmAttachment" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostHtmlWithTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostHtmlWithTypeResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostHtmlWithTypeCCandBCC">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HtmlBody" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Charset" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CCEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BCCEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfEmAttachment" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostHtmlWithTypeCCandBCCResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostHtmlWithTypeCCandBCCResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostHtmlWithTypeKeyIDAndCustomParams">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="HtmlBody" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Charset" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfEmAttachment" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="KeyID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CustomParams" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostHtmlWithTypeKeyIDAndCustomParamsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostHtmlWithTypeKeyIDAndCustomParamsResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostTransactionalEmailWithHtmlTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TemplateName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SubjectVariables" type="tns:ArrayOfEmKeyValue" />
+            <s:element minOccurs="0" maxOccurs="1" name="BodyVariables" type="tns:ArrayOfEmKeyValue" />
+            <s:element minOccurs="0" maxOccurs="1" name="Charset" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfEmAttachment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmKeyValue">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmKeyValue" nillable="true" type="tns:EmKeyValue" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EmKeyValue">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PostTransactionalEmailWithHtmlTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostTransactionalEmailWithHtmlTemplateResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostTransactionalEmailWithXsltTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FromAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ReplyAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="TemplateName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Xml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Charset" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToEmailAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Attachments" type="tns:ArrayOfEmAttachment" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostTransactionalEmailWithXsltTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PostTransactionalEmailWithXsltTemplateResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPostResultResult" type="tns:EmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostBulkResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BeginDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostBulkResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPostBulkResultResult" type="tns:EmPostResult" />
+            <s:element minOccurs="0" maxOccurs="1" name="BulkReport" type="tns:ArrayOfEmPostBulkReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmPostBulkReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmPostBulkReport" nillable="true" type="tns:EmPostBulkReport" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EmPostBulkReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PostID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RelayStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UndeliveryReason" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MarkedSpam" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="KeyID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomParams" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PostType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReadTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RelayBounceTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastUpdateTime" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPostBulkResultWithOptional">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="serviceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="beginDateStr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endDateStr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="postType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostBulkResultWithOptionalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPostBulkResultWithOptionalResult" type="tns:EmPostResult" />
+            <s:element minOccurs="0" maxOccurs="1" name="BulkReport" type="tns:ArrayOfEmPostBulkReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostBulkResultByPostId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="serviceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="postIds" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPostBulkResultByPostIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPostBulkResultByPostIdResult" type="tns:EmPostResult" />
+            <s:element minOccurs="0" maxOccurs="1" name="bulkResult" type="tns:ArrayOfEmPostResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfEmPostResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="EmPostResult" nillable="true" type="tns:EmPostResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetPostBulkBounceResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BeginDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostBulkBounceResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPostBulkBounceResultResult" type="tns:EmPostResult" />
+            <s:element minOccurs="0" maxOccurs="1" name="BulkReport" type="tns:ArrayOfEmPostBulkReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostBulkResultByLastUpdate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ServiceTicket" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BeginDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPostBulkResultByLastUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPostBulkResultByLastUpdateResult" type="tns:EmPostResult" />
+            <s:element minOccurs="0" maxOccurs="1" name="BulkReport" type="tns:ArrayOfEmPostBulkReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmPostResult" nillable="true" type="tns:EmPostResult" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PostHtmlSoapIn">
+    <wsdl:part name="parameters" element="tns:PostHtml" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlSoapOut">
+    <wsdl:part name="parameters" element="tns:PostHtmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithCCandBCCSoapIn">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithCCandBCC" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithCCandBCCSoapOut">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithCCandBCCResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithType" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithTypeCCandBCCSoapIn">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithTypeCCandBCC" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithTypeCCandBCCSoapOut">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithTypeCCandBCCResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithTypeKeyIDAndCustomParamsSoapIn">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithTypeKeyIDAndCustomParams" />
+  </wsdl:message>
+  <wsdl:message name="PostHtmlWithTypeKeyIDAndCustomParamsSoapOut">
+    <wsdl:part name="parameters" element="tns:PostHtmlWithTypeKeyIDAndCustomParamsResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostTransactionalEmailWithHtmlTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:PostTransactionalEmailWithHtmlTemplate" />
+  </wsdl:message>
+  <wsdl:message name="PostTransactionalEmailWithHtmlTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:PostTransactionalEmailWithHtmlTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostTransactionalEmailWithXsltTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:PostTransactionalEmailWithXsltTemplate" />
+  </wsdl:message>
+  <wsdl:message name="PostTransactionalEmailWithXsltTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:PostTransactionalEmailWithXsltTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPostResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPostResult" />
+  </wsdl:message>
+  <wsdl:message name="GetPostResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPostResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResult" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultWithOptionalSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResultWithOptional" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultWithOptionalSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResultWithOptionalResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultByPostIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResultByPostId" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultByPostIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResultByPostIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkBounceResultSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPostBulkBounceResult" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkBounceResultSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPostBulkBounceResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultByLastUpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResultByLastUpdate" />
+  </wsdl:message>
+  <wsdl:message name="GetPostBulkResultByLastUpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPostBulkResultByLastUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPostResultHttpGetIn">
+    <wsdl:part name="ServiceTicket" type="s:string" />
+    <wsdl:part name="PostID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPostResultHttpGetOut">
+    <wsdl:part name="Body" element="tns:EmPostResult" />
+  </wsdl:message>
+  <wsdl:message name="GetPostResultHttpPostIn">
+    <wsdl:part name="ServiceTicket" type="s:string" />
+    <wsdl:part name="PostID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPostResultHttpPostOut">
+    <wsdl:part name="Body" element="tns:EmPostResult" />
+  </wsdl:message>
+  <wsdl:portType name="PostSoap">
+    <wsdl:operation name="PostHtml">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enables free-html posting.</wsdl:documentation>
+      <wsdl:input message="tns:PostHtmlSoapIn" />
+      <wsdl:output message="tns:PostHtmlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithCCandBCC">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enables free-html posting with CC and BCC. Be aware that these CC and BCC emails may affect the reporting of transactional emails. Please use them after consulting euro.message IT Team.</wsdl:documentation>
+      <wsdl:input message="tns:PostHtmlWithCCandBCCSoapIn" />
+      <wsdl:output message="tns:PostHtmlWithCCandBCCSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithType">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enables free-html posting with type</wsdl:documentation>
+      <wsdl:input message="tns:PostHtmlWithTypeSoapIn" />
+      <wsdl:output message="tns:PostHtmlWithTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithTypeCCandBCC">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enables free-html posting with type with CC and BCC. Be aware that these CC and BCC emails may affect the reporting of transactional emails. Please use them after consulting euro.message IT Team.</wsdl:documentation>
+      <wsdl:input message="tns:PostHtmlWithTypeCCandBCCSoapIn" />
+      <wsdl:output message="tns:PostHtmlWithTypeCCandBCCSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithTypeKeyIDAndCustomParams">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enables free-html posting with type, key_id and custom fields</wsdl:documentation>
+      <wsdl:input message="tns:PostHtmlWithTypeKeyIDAndCustomParamsSoapIn" />
+      <wsdl:output message="tns:PostHtmlWithTypeKeyIDAndCustomParamsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostTransactionalEmailWithHtmlTemplate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enables transactional template html posting.</wsdl:documentation>
+      <wsdl:input message="tns:PostTransactionalEmailWithHtmlTemplateSoapIn" />
+      <wsdl:output message="tns:PostTransactionalEmailWithHtmlTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostTransactionalEmailWithXsltTemplate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enables transactional template html posting.</wsdl:documentation>
+      <wsdl:input message="tns:PostTransactionalEmailWithXsltTemplateSoapIn" />
+      <wsdl:output message="tns:PostTransactionalEmailWithXsltTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPostResult">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Delivery Report For A Transactional Message</wsdl:documentation>
+      <wsdl:input message="tns:GetPostResultSoapIn" />
+      <wsdl:output message="tns:GetPostResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResult">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Bulk Result For Transacrtional Messages Between Two Dates</wsdl:documentation>
+      <wsdl:input message="tns:GetPostBulkResultSoapIn" />
+      <wsdl:output message="tns:GetPostBulkResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultWithOptional">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Bulk Result For Transactional Messages Between Two Dates and Optional Post Type and To Adress</wsdl:documentation>
+      <wsdl:input message="tns:GetPostBulkResultWithOptionalSoapIn" />
+      <wsdl:output message="tns:GetPostBulkResultWithOptionalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultByPostId">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Delivery Report For  Transactional Messages,out parameter give the messages results.</wsdl:documentation>
+      <wsdl:input message="tns:GetPostBulkResultByPostIdSoapIn" />
+      <wsdl:output message="tns:GetPostBulkResultByPostIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkBounceResult">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Bulk Bounce Result For Transacrtional Messages Between Two Dates</wsdl:documentation>
+      <wsdl:input message="tns:GetPostBulkBounceResultSoapIn" />
+      <wsdl:output message="tns:GetPostBulkBounceResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultByLastUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Bulk Result For Transacrtional Messages Between Two Last Update Dates</wsdl:documentation>
+      <wsdl:input message="tns:GetPostBulkResultByLastUpdateSoapIn" />
+      <wsdl:output message="tns:GetPostBulkResultByLastUpdateSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PostHttpGet">
+    <wsdl:operation name="GetPostResult">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Delivery Report For A Transactional Message</wsdl:documentation>
+      <wsdl:input message="tns:GetPostResultHttpGetIn" />
+      <wsdl:output message="tns:GetPostResultHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PostHttpPost">
+    <wsdl:operation name="GetPostResult">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets Delivery Report For A Transactional Message</wsdl:documentation>
+      <wsdl:input message="tns:GetPostResultHttpPostIn" />
+      <wsdl:output message="tns:GetPostResultHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PostSoap" type="tns:PostSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PostHtml">
+      <soap:operation soapAction="http://ws.euromsg.com/post/PostHtml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithCCandBCC">
+      <soap:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithCCandBCC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithType">
+      <soap:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithTypeCCandBCC">
+      <soap:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithTypeCCandBCC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithTypeKeyIDAndCustomParams">
+      <soap:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithTypeKeyIDAndCustomParams" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostTransactionalEmailWithHtmlTemplate">
+      <soap:operation soapAction="http://ws.euromsg.com/post/PostTransactionalEmailWithHtmlTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostTransactionalEmailWithXsltTemplate">
+      <soap:operation soapAction="http://ws.euromsg.com/post/PostTransactionalEmailWithXsltTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostResult">
+      <soap:operation soapAction="http://ws.euromsg.com/post/GetPostResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResult">
+      <soap:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultWithOptional">
+      <soap:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResultWithOptional" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultByPostId">
+      <soap:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResultByPostId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkBounceResult">
+      <soap:operation soapAction="http://ws.euromsg.com/post/GetPostBulkBounceResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultByLastUpdate">
+      <soap:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResultByLastUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PostSoap12" type="tns:PostSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PostHtml">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/PostHtml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithCCandBCC">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithCCandBCC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithType">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithTypeCCandBCC">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithTypeCCandBCC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostHtmlWithTypeKeyIDAndCustomParams">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/PostHtmlWithTypeKeyIDAndCustomParams" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostTransactionalEmailWithHtmlTemplate">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/PostTransactionalEmailWithHtmlTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostTransactionalEmailWithXsltTemplate">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/PostTransactionalEmailWithXsltTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostResult">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/GetPostResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResult">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultWithOptional">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResultWithOptional" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultByPostId">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResultByPostId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkBounceResult">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/GetPostBulkBounceResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPostBulkResultByLastUpdate">
+      <soap12:operation soapAction="http://ws.euromsg.com/post/GetPostBulkResultByLastUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PostHttpGet" type="tns:PostHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetPostResult">
+      <http:operation location="/GetPostResult" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PostHttpPost" type="tns:PostHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetPostResult">
+      <http:operation location="/GetPostResult" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Post">
+    <wsdl:port name="PostSoap" binding="tns:PostSoap">
+      <soap:address location="http://ws.euromsg.com/live/post.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PostSoap12" binding="tns:PostSoap12">
+      <soap12:address location="http://ws.euromsg.com/live/post.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PostHttpGet" binding="tns:PostHttpGet">
+      <http:address location="http://ws.euromsg.com/live/post.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PostHttpPost" binding="tns:PostHttpPost">
+      <http:address location="http://ws.euromsg.com/live/post.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

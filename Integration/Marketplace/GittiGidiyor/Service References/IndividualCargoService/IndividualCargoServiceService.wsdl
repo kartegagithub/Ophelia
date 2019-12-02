@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://cargo.individual.ws.listingapi.gg.com" name="IndividualCargoServiceService" targetNamespace="http://cargo.individual.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://cargo.individual.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="commonSaleResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence />
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cargoInformationResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="cargoPostCode" type="xs:string" />
+              <xs:element minOccurs="0" name="cargoContent" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="IndividualCargoService_getServiceName" />
+  <message name="IndividualCargoService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="IndividualCargoService_sendCargoInformationResponse">
+    <part name="return" type="tns:commonSaleResponse" />
+  </message>
+  <message name="IndividualCargoService_getCargoInformation">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualCargoService_sendCargoInformation">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="cargoPostCode" type="xsd:string" />
+    <part name="cargoCompany" type="xsd:string" />
+    <part name="cargoBranch" type="xsd:string" />
+    <part name="followUpUrl" type="xsd:string" />
+    <part name="userType" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualCargoService_getCargoInformationResponse">
+    <part name="return" type="tns:cargoInformationResponse" />
+  </message>
+  <portType name="IndividualCargoService">
+    <operation name="getCargoInformation" parameterOrder="apiKey sign time saleCode lang">
+      <input message="tns:IndividualCargoService_getCargoInformation" />
+      <output message="tns:IndividualCargoService_getCargoInformationResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:IndividualCargoService_getServiceName" />
+      <output message="tns:IndividualCargoService_getServiceNameResponse" />
+    </operation>
+    <operation name="sendCargoInformation" parameterOrder="apiKey sign time saleCode cargoPostCode cargoCompany cargoBranch followUpUrl userType lang">
+      <input message="tns:IndividualCargoService_sendCargoInformation" />
+      <output message="tns:IndividualCargoService_sendCargoInformationResponse" />
+    </operation>
+  </portType>
+  <binding name="IndividualCargoServiceBinding" type="tns:IndividualCargoService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getCargoInformation">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://cargo.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://cargo.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://cargo.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://cargo.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="sendCargoInformation">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://cargo.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://cargo.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="IndividualCargoServiceService">
+    <port name="IndividualCargoServicePort" binding="tns:IndividualCargoServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/IndividualCargoService" />
+    </port>
+  </service>
+</definitions>

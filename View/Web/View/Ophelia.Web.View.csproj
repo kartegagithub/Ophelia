@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C65CA72-3261-4B4C-B256-C46957283A72}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ophelia.Web.View</RootNamespace>
+    <AssemblyName>Ophelia.Web.View</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Style\BorderConfiguration.cs" />
+    <Compile Include="Style\BordersConfiguration.cs" />
+    <Compile Include="Style\FontConfiguration.cs" />
+    <Compile Include="Style\Rule.cs" />
+    <Compile Include="Style\RuleCollection.cs" />
+    <Compile Include="Style\Style.cs" />
+    <Compile Include="Style\StyleSheet.cs" />
+    <Compile Include="UserInterface\BaseElements\Body.cs" />
+    <Compile Include="UserInterface\BaseElements\clsHeader.cs" />
+    <Compile Include="UserInterface\BaseElements\clsHeadLink.cs" />
+    <Compile Include="UserInterface\BaseElements\clsHeadLinkCollection.cs" />
+    <Compile Include="UserInterface\BaseElements\clsHeadScript.cs" />
+    <Compile Include="UserInterface\BaseElements\clsHeadScriptCollection.cs" />
+    <Compile Include="UserInterface\BaseElements\clsMetaTag.cs" />
+    <Compile Include="UserInterface\BaseElements\clsMetaTagCollection.cs" />
+    <Compile Include="UserInterface\BaseElements\clsXmlNamespace.cs" />
+    <Compile Include="UserInterface\BaseElements\clsXmlNamespaceCollection.cs" />
+    <Compile Include="UserInterface\FileHandler.cs" />
+    <Compile Include="UserInterface\Index.cs" />
+    <Compile Include="UserInterface\IPage.cs" />
+    <Compile Include="UserInterface\Page.cs" />
+    <Compile Include="UserInterface\PageConfiguration.cs" />
+    <Compile Include="UserInterface\PageContext.cs" />
+    <Compile Include="UserInterface\Templates\WrapperLayout.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Base\Factory.cs.error" />
+    <None Include="UserInterface\Index.cs.error" />
+    <None Include="UserInterface\Page.cs.error" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\Themes\Base\jqueryuicore.css" />
+    <Content Include="Files\Themes\Base\jqueryuidatepicker.css" />
+    <Content Include="Files\Themes\Base\jqueryuitabs.css" />
+    <Content Include="Files\Themes\Base\jqueryuitheme.css" />
+    <Content Include="Files\Themes\Mobile\ophelia-mobile.css" />
+    <Content Include="Files\UI\DatePicker\datepicker.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Files\Images\ColorPicker\" />
+    <Folder Include="Files\Themes\Base\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Web\Ophelia.Web.csproj">
+      <Project>{732ae156-646e-4037-9713-eac8e462b2f9}</Project>
+      <Name>Ophelia.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\Ophelia\Ophelia.csproj">
+      <Project>{6ed74a5b-dbdf-46be-b7a0-497920bd7529}</Project>
+      <Name>Ophelia</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ophelia.Web\Ophelia.Web.csproj">
+      <Project>{732ae156-646e-4037-9713-eac8e462b2f9}</Project>
+      <Name>Ophelia.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ophelia\Ophelia.csproj">
+      <Project>{6ed74a5b-dbdf-46be-b7a0-497920bd7529}</Project>
+      <Name>Ophelia</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

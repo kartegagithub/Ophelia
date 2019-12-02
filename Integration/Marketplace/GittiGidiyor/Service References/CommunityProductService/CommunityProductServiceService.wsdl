@@ -1,0 +1,1307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://product.community.ws.listingapi.gg.com" xmlns:ns1="http://jaxb.dev.java.net/array" name="CommunityProductServiceService" targetNamespace="http://product.community.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://jaxb.dev.java.net/array" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="intArray" final="#all">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="stringArray" final="#all">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://product.community.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="productServiceIdResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productCount" type="xs:long" />
+              <xs:element minOccurs="0" name="productIdList">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="productId" nillable="true" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="voucher" type="xs:string" />
+              <xs:element minOccurs="0" name="price" type="xs:double" />
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productServiceSpecResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productId" type="xs:int" />
+              <xs:element minOccurs="0" name="itemId" type="xs:string" />
+              <xs:element minOccurs="0" name="specs">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="spec" type="tns:specType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="specType">
+        <xs:sequence />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="value" type="xs:string" />
+        <xs:attribute name="type" type="xs:string" />
+        <xs:attribute name="required" type="xs:boolean" />
+      </xs:complexType>
+      <xs:complexType name="productServiceDetailResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productDetail" type="tns:productDetailType" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productDetailType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="itemId" type="xs:string" />
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="product" type="tns:productType" />
+          <xs:element minOccurs="0" name="summary" type="tns:productConcerningType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="categoryCode" type="xs:string" />
+          <xs:element minOccurs="0" name="storeCategoryId" type="xs:int" />
+          <xs:element minOccurs="0" name="title" type="xs:string" />
+          <xs:element minOccurs="0" name="subtitle" type="xs:string" />
+          <xs:element minOccurs="0" name="specs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="spec" type="tns:specType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="photos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="photo" type="tns:photoType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="pageTemplate" type="xs:int" />
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="startDate" type="xs:string" />
+          <xs:element minOccurs="0" name="catalogId" type="xs:int" />
+          <xs:element minOccurs="0" name="catalogDetail" type="xs:int" />
+          <xs:element minOccurs="0" name="catalogFilter" type="xs:string" />
+          <xs:element minOccurs="0" name="format" type="xs:string" />
+          <xs:element minOccurs="0" name="startPrice" type="xs:double" />
+          <xs:element minOccurs="0" name="buyNowPrice" type="xs:double" />
+          <xs:element minOccurs="0" name="netEarning" type="xs:double" />
+          <xs:element minOccurs="0" name="listingDays" type="xs:int" />
+          <xs:element minOccurs="0" name="productCount" type="xs:int" />
+          <xs:element minOccurs="0" name="cargoDetail" type="tns:cargoDetailType" />
+          <xs:element minOccurs="0" name="affiliateOption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="boldOption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="catalogOption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="vitrineOption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="variantGroups">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="variantGroup" type="tns:variantGroupType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="auctionProfilePercentage" type="xs:int" />
+          <xs:element minOccurs="0" name="marketPrice" type="xs:double" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="photoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="url" type="xs:string" />
+          <xs:element minOccurs="0" name="base64" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="photoId" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="cargoDetailType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="city" type="xs:string" />
+          <xs:element minOccurs="0" name="cargoCompanies">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="cargoCompany" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="shippingPayment" type="xs:string" />
+          <xs:element minOccurs="0" name="cargoDescription" type="xs:string" />
+          <xs:element minOccurs="0" name="shippingWhere" type="xs:string" />
+          <xs:element minOccurs="0" name="cargoCompanyDetails">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="cargoCompanyDetail" type="tns:cargoCompanyDetailType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="shippingTime" type="tns:cargoTimeType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cargoCompanyDetailType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="value" type="xs:string" />
+          <xs:element minOccurs="0" name="cityPrice" type="xs:string" />
+          <xs:element minOccurs="0" name="countryPrice" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cargoTimeType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="days" type="xs:string" />
+          <xs:element minOccurs="0" name="beforeTime" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="variantGroupType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="variants">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="variant" type="tns:variantType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="photos">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="photo" type="tns:photoType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="nameId" type="xs:long" />
+        <xs:attribute name="valueId" type="xs:long" />
+        <xs:attribute name="alias" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="variantType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="variantSpecs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="variantSpec" type="tns:variantSpecType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="quantity" type="xs:int" />
+          <xs:element minOccurs="0" name="stockCode" type="xs:string" />
+          <xs:element minOccurs="0" name="soldCount" type="xs:int" />
+        </xs:sequence>
+        <xs:attribute name="variantId" type="xs:long" />
+        <xs:attribute name="operation" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="variantSpecType">
+        <xs:sequence />
+        <xs:attribute name="nameId" type="xs:long" />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="valueId" type="xs:long" />
+        <xs:attribute name="value" type="xs:string" />
+        <xs:attribute name="orderNumber" type="xs:int" />
+        <xs:attribute name="specDataOrderNumber" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="productConcerningType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="soldCount" type="xs:int" />
+          <xs:element minOccurs="0" name="endDate" type="xs:string" />
+          <xs:element minOccurs="0" name="listingStatus" type="xs:string" />
+          <xs:element minOccurs="0" name="currentPrice" type="xs:string" />
+          <xs:element minOccurs="0" name="hasRelistOption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="bidCount" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productServiceVariantResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productId" type="xs:int" />
+              <xs:element minOccurs="0" name="itemId" type="xs:string" />
+              <xs:element minOccurs="0" name="variantGroups">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="variantGroup" type="tns:variantGroupType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productServiceListResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productCount" type="xs:long" />
+              <xs:element minOccurs="0" name="products">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="product" nillable="true" type="tns:productDetailType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productServiceStockResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="products">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="product" nillable="true" type="tns:stockDetailType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="stockDetailType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="itemId" type="xs:string" />
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="format" type="xs:string" />
+          <xs:element minOccurs="0" name="amount" type="xs:int" />
+          <xs:element minOccurs="0" name="soldItemCount" type="xs:int" />
+          <xs:element minOccurs="0" name="startPrice" type="xs:double" />
+          <xs:element minOccurs="0" name="buyNowPrice" type="xs:double" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productServiceProcessResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="successfulProcesses">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="successfulProcess" nillable="true" type="tns:productSuccessProcessType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="failedProcesses">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="failedProcess" nillable="true" type="tns:productFailProcessType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productSuccessProcessType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="changeStatus" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productFailProcessType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="failCode" type="xs:int" />
+          <xs:element minOccurs="0" name="failReason" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productServiceDescResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productId" type="xs:int" />
+              <xs:element minOccurs="0" name="itemId" type="xs:string" />
+              <xs:element minOccurs="0" name="description" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productServiceBooleanResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="exists" type="xs:boolean" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productId" type="xs:int" />
+              <xs:element minOccurs="0" name="payRequired" type="xs:boolean" />
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+              <xs:element minOccurs="0" name="descriptionFilterStatus" type="xs:int" />
+              <xs:element minOccurs="0" name="variantGroups">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="variantGroup" type="tns:variantGroupType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productServiceRetailResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productId" type="xs:int" />
+              <xs:element minOccurs="0" name="itemId" type="xs:string" />
+              <xs:element minOccurs="0" name="payRequired" type="xs:boolean" />
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+              <xs:element minOccurs="0" name="descriptionFilterStatus" type="xs:int" />
+              <xs:element minOccurs="0" name="listingStatus" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productVariantType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="variantGroups">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="variantGroup" type="tns:variantGroupType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productServicePriceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="paymentVoucher" type="xs:string" />
+              <xs:element minOccurs="0" name="price" type="xs:double" />
+              <xs:element minOccurs="0" name="message" type="xs:string" />
+              <xs:element minOccurs="0" name="payRequired" type="xs:boolean" />
+              <xs:element minOccurs="0" name="productCount" type="xs:int" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productServiceAuditResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="maxResult" type="xs:int" />
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="productAudits">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="productAudit" nillable="true" type="tns:productAuditType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productAuditType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseAuditType">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productId" type="xs:int" />
+              <xs:element minOccurs="0" name="changeTime" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseAuditType" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="changeType" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="productServiceStatusResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="productCount" type="xs:long" />
+              <xs:element minOccurs="0" name="productStatusList">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="productStatus" nillable="true" type="tns:productStatusType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="productStatusType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="itemId" type="xs:string" />
+          <xs:element minOccurs="0" name="currentStatus" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="CommunityProductService_getProductVariants">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="variantId" type="xsd:long" />
+    <part name="variantStockCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_updatePriceByPercentageResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_updateProductWithVariants">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="product" type="tns:productType" />
+    <part name="onSale" type="xsd:boolean" />
+    <part name="forceToSpecEntry" type="xsd:boolean" />
+    <part name="nextDateOption" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_insertRetailProductResponse">
+    <part name="return" type="tns:productServiceRetailResponse" />
+  </message>
+  <message name="CommunityProductService_calculatePriceForShoppingCartResponse">
+    <part name="return" type="tns:productServicePriceResponse" />
+  </message>
+  <message name="CommunityProductService_updateStockResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_updatePriceByPercentage">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="operatorType" type="xsd:string" />
+    <part name="percentage" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getProductSpecs">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_calculatePriceForRevision">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_insertProductWithNewCargoDetailResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_getProduct">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_finishEarlyProductsResponse">
+    <part name="return" type="tns:productServiceProcessResponse" />
+  </message>
+  <message name="CommunityProductService_updateStock">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="stock" type="xsd:int" />
+    <part name="cancelBid" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_checkForItemId">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getProductVariantsResponse">
+    <part name="return" type="tns:productServiceVariantResponse" />
+  </message>
+  <message name="CommunityProductService_deleteProduct">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_calculatePriceForShoppingCart">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_finishEarlyResponse">
+    <part name="return" type="tns:productServiceIdResponse" />
+  </message>
+  <message name="CommunityProductService_updateProductResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_updateProductVariantsResponse">
+    <part name="return" type="tns:productServiceRetailResponse" />
+  </message>
+  <message name="CommunityProductService_getProductsByIds">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getModifiedProductsResponse">
+    <part name="return" type="tns:productServiceAuditResponse" />
+  </message>
+  <message name="CommunityProductService_getProductIds">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="statusTypes" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_insertRetailProductWithNewCargoDetailResponse">
+    <part name="return" type="tns:productServiceRetailResponse" />
+  </message>
+  <message name="CommunityProductService_getStockAndPrice">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getProductDescriptionResponse">
+    <part name="return" type="tns:productServiceDescResponse" />
+  </message>
+  <message name="CommunityProductService_updatePriceResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_insertRetailProductWithNewCargoDetail">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="product" type="tns:productType" />
+    <part name="forceToSpecEntry" type="xsd:boolean" />
+    <part name="nextDateOption" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getNewlyListedProductIdList">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="viaApi" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_finishEarly">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_updateProduct">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="product" type="tns:productType" />
+    <part name="onSale" type="xsd:boolean" />
+    <part name="forceToSpecEntry" type="xsd:boolean" />
+    <part name="nextDateOption" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getNewlyListedProductIdListResponse">
+    <part name="return" type="tns:productServiceIdResponse" />
+  </message>
+  <message name="CommunityProductService_getProductsByIdsResponse">
+    <part name="return" type="tns:productServiceListResponse" />
+  </message>
+  <message name="CommunityProductService_getProductResponse">
+    <part name="return" type="tns:productServiceDetailResponse" />
+  </message>
+  <message name="CommunityProductService_getProductSpecsResponse">
+    <part name="return" type="tns:productServiceSpecResponse" />
+  </message>
+  <message name="CommunityProductService_deleteProductsResponse">
+    <part name="return" type="tns:productServiceProcessResponse" />
+  </message>
+  <message name="CommunityProductService_updatePrice">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="price" type="xsd:double" />
+    <part name="cancelBid" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_updateProductWithNewCargoDetail">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="product" type="tns:productType" />
+    <part name="onSale" type="xsd:boolean" />
+    <part name="forceToSpecEntry" type="xsd:boolean" />
+    <part name="nextDateOption" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_calculatePriceForRevisionResponse">
+    <part name="return" type="tns:productServicePriceResponse" />
+  </message>
+  <message name="CommunityProductService_deleteProducts">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_relistProductsResponse">
+    <part name="return" type="tns:productServiceIdResponse" />
+  </message>
+  <message name="CommunityProductService_updateProductVariants">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="productVariant" type="tns:productVariantType" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getModifiedProducts">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="clientId" type="xsd:string" />
+    <part name="changeTime" type="xsd:long" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_cloneProductResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_finishEarlyProducts">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getStockAndPriceResponse">
+    <part name="return" type="tns:productServiceStockResponse" />
+  </message>
+  <message name="CommunityProductService_insertProductResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_insertRetailProduct">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="product" type="tns:productType" />
+    <part name="forceToSpecEntry" type="xsd:boolean" />
+    <part name="nextDateOption" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_cloneProduct">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_insertProductWithNewCargoDetail">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="product" type="tns:productType" />
+    <part name="forceToSpecEntry" type="xsd:boolean" />
+    <part name="nextDateOption" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_updateProductWithNewCargoDetailResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_getProductDescription">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getProductStatusesResponse">
+    <part name="return" type="tns:productServiceStatusResponse" />
+  </message>
+  <message name="CommunityProductService_deleteProductResponse">
+    <part name="return" type="tns:productServiceIdResponse" />
+  </message>
+  <message name="CommunityProductService_updateProductWithVariantsResponse">
+    <part name="return" type="tns:productServiceResponse" />
+  </message>
+  <message name="CommunityProductService_insertProduct">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="itemId" type="xsd:string" />
+    <part name="product" type="tns:productType" />
+    <part name="forceToSpecEntry" type="xsd:boolean" />
+    <part name="nextDateOption" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_checkForItemIdResponse">
+    <part name="return" type="tns:productServiceBooleanResponse" />
+  </message>
+  <message name="CommunityProductService_relistProducts">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getProductIdsResponse">
+    <part name="return" type="tns:productServiceIdResponse" />
+  </message>
+  <message name="CommunityProductService_getProductsResponse">
+    <part name="return" type="tns:productServiceListResponse" />
+  </message>
+  <message name="CommunityProductService_getServiceName" />
+  <message name="CommunityProductService_getProducts">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="status" type="xsd:string" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityProductService_getProductStatuses">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="productIdList" type="ns1:intArray" />
+    <part name="itemIdList" type="ns1:stringArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <portType name="CommunityProductService">
+    <operation name="calculatePriceForRevision" parameterOrder="apiKey sign time sessionId productId itemId lang">
+      <input message="tns:CommunityProductService_calculatePriceForRevision" />
+      <output message="tns:CommunityProductService_calculatePriceForRevisionResponse" />
+    </operation>
+    <operation name="calculatePriceForShoppingCart" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_calculatePriceForShoppingCart" />
+      <output message="tns:CommunityProductService_calculatePriceForShoppingCartResponse" />
+    </operation>
+    <operation name="checkForItemId" parameterOrder="apiKey sign time sessionId itemId lang">
+      <input message="tns:CommunityProductService_checkForItemId" />
+      <output message="tns:CommunityProductService_checkForItemIdResponse" />
+    </operation>
+    <operation name="cloneProduct" parameterOrder="apiKey sign time sessionId productId itemId lang">
+      <input message="tns:CommunityProductService_cloneProduct" />
+      <output message="tns:CommunityProductService_cloneProductResponse" />
+    </operation>
+    <operation name="deleteProduct" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_deleteProduct" />
+      <output message="tns:CommunityProductService_deleteProductResponse" />
+    </operation>
+    <operation name="deleteProducts" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_deleteProducts" />
+      <output message="tns:CommunityProductService_deleteProductsResponse" />
+    </operation>
+    <operation name="finishEarly" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_finishEarly" />
+      <output message="tns:CommunityProductService_finishEarlyResponse" />
+    </operation>
+    <operation name="finishEarlyProducts" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_finishEarlyProducts" />
+      <output message="tns:CommunityProductService_finishEarlyProductsResponse" />
+    </operation>
+    <operation name="getModifiedProducts" parameterOrder="apiKey sign time sessionId clientId changeTime startOffSet rowCount lang">
+      <input message="tns:CommunityProductService_getModifiedProducts" />
+      <output message="tns:CommunityProductService_getModifiedProductsResponse" />
+    </operation>
+    <operation name="getNewlyListedProductIdList" parameterOrder="apiKey sign time sessionId startOffSet rowCount viaApi lang">
+      <input message="tns:CommunityProductService_getNewlyListedProductIdList" />
+      <output message="tns:CommunityProductService_getNewlyListedProductIdListResponse" />
+    </operation>
+    <operation name="getProduct" parameterOrder="apiKey sign time sessionId productId itemId lang">
+      <input message="tns:CommunityProductService_getProduct" />
+      <output message="tns:CommunityProductService_getProductResponse" />
+    </operation>
+    <operation name="getProductDescription" parameterOrder="apiKey sign time sessionId productId itemId lang">
+      <input message="tns:CommunityProductService_getProductDescription" />
+      <output message="tns:CommunityProductService_getProductDescriptionResponse" />
+    </operation>
+    <operation name="getProductIds" parameterOrder="apiKey sign time sessionId startOffSet rowCount statusTypes lang">
+      <input message="tns:CommunityProductService_getProductIds" />
+      <output message="tns:CommunityProductService_getProductIdsResponse" />
+    </operation>
+    <operation name="getProductSpecs" parameterOrder="apiKey sign time sessionId productId itemId lang">
+      <input message="tns:CommunityProductService_getProductSpecs" />
+      <output message="tns:CommunityProductService_getProductSpecsResponse" />
+    </operation>
+    <operation name="getProductStatuses" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_getProductStatuses" />
+      <output message="tns:CommunityProductService_getProductStatusesResponse" />
+    </operation>
+    <operation name="getProductVariants" parameterOrder="apiKey sign time sessionId productId itemId variantId variantStockCode lang">
+      <input message="tns:CommunityProductService_getProductVariants" />
+      <output message="tns:CommunityProductService_getProductVariantsResponse" />
+    </operation>
+    <operation name="getProducts" parameterOrder="apiKey sign time sessionId startOffSet rowCount status withData lang">
+      <input message="tns:CommunityProductService_getProducts" />
+      <output message="tns:CommunityProductService_getProductsResponse" />
+    </operation>
+    <operation name="getProductsByIds" parameterOrder="apiKey sign time sessionId productIdList itemIdList withData lang">
+      <input message="tns:CommunityProductService_getProductsByIds" />
+      <output message="tns:CommunityProductService_getProductsByIdsResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:CommunityProductService_getServiceName" />
+      <output message="tns:CommunityProductService_getServiceNameResponse" />
+    </operation>
+    <operation name="getStockAndPrice" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_getStockAndPrice" />
+      <output message="tns:CommunityProductService_getStockAndPriceResponse" />
+    </operation>
+    <operation name="insertProduct" parameterOrder="apiKey sign time sessionId itemId product forceToSpecEntry nextDateOption lang">
+      <input message="tns:CommunityProductService_insertProduct" />
+      <output message="tns:CommunityProductService_insertProductResponse" />
+    </operation>
+    <operation name="insertProductWithNewCargoDetail" parameterOrder="apiKey sign time sessionId itemId product forceToSpecEntry nextDateOption lang">
+      <input message="tns:CommunityProductService_insertProductWithNewCargoDetail" />
+      <output message="tns:CommunityProductService_insertProductWithNewCargoDetailResponse" />
+    </operation>
+    <operation name="insertRetailProduct" parameterOrder="apiKey sign time sessionId itemId product forceToSpecEntry nextDateOption lang">
+      <input message="tns:CommunityProductService_insertRetailProduct" />
+      <output message="tns:CommunityProductService_insertRetailProductResponse" />
+    </operation>
+    <operation name="insertRetailProductWithNewCargoDetail" parameterOrder="apiKey sign time sessionId itemId product forceToSpecEntry nextDateOption lang">
+      <input message="tns:CommunityProductService_insertRetailProductWithNewCargoDetail" />
+      <output message="tns:CommunityProductService_insertRetailProductWithNewCargoDetailResponse" />
+    </operation>
+    <operation name="relistProducts" parameterOrder="apiKey sign time sessionId productIdList itemIdList lang">
+      <input message="tns:CommunityProductService_relistProducts" />
+      <output message="tns:CommunityProductService_relistProductsResponse" />
+    </operation>
+    <operation name="updatePrice" parameterOrder="apiKey sign time sessionId productId itemId price cancelBid lang">
+      <input message="tns:CommunityProductService_updatePrice" />
+      <output message="tns:CommunityProductService_updatePriceResponse" />
+    </operation>
+    <operation name="updatePriceByPercentage" parameterOrder="apiKey sign time productId itemId operatorType percentage lang">
+      <input message="tns:CommunityProductService_updatePriceByPercentage" />
+      <output message="tns:CommunityProductService_updatePriceByPercentageResponse" />
+    </operation>
+    <operation name="updateProduct" parameterOrder="apiKey sign time sessionId itemId productId product onSale forceToSpecEntry nextDateOption lang">
+      <input message="tns:CommunityProductService_updateProduct" />
+      <output message="tns:CommunityProductService_updateProductResponse" />
+    </operation>
+    <operation name="updateProductVariants" parameterOrder="apiKey sign time sessionId productId itemId productVariant lang">
+      <input message="tns:CommunityProductService_updateProductVariants" />
+      <output message="tns:CommunityProductService_updateProductVariantsResponse" />
+    </operation>
+    <operation name="updateProductWithNewCargoDetail" parameterOrder="apiKey sign time sessionId itemId productId product onSale forceToSpecEntry nextDateOption lang">
+      <input message="tns:CommunityProductService_updateProductWithNewCargoDetail" />
+      <output message="tns:CommunityProductService_updateProductWithNewCargoDetailResponse" />
+    </operation>
+    <operation name="updateProductWithVariants" parameterOrder="apiKey sign time sessionId itemId productId product onSale forceToSpecEntry nextDateOption lang">
+      <input message="tns:CommunityProductService_updateProductWithVariants" />
+      <output message="tns:CommunityProductService_updateProductWithVariantsResponse" />
+    </operation>
+    <operation name="updateStock" parameterOrder="apiKey sign time sessionId productId itemId stock cancelBid lang">
+      <input message="tns:CommunityProductService_updateStock" />
+      <output message="tns:CommunityProductService_updateStockResponse" />
+    </operation>
+  </portType>
+  <binding name="CommunityProductServiceBinding" type="tns:CommunityProductService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="calculatePriceForRevision">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="calculatePriceForShoppingCart">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="checkForItemId">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="cloneProduct">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="deleteProduct">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="deleteProducts">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="finishEarly">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="finishEarlyProducts">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getModifiedProducts">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getNewlyListedProductIdList">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProduct">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProductDescription">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProductIds">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProductSpecs">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProductStatuses">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProductVariants">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProducts">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getProductsByIds">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getStockAndPrice">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="insertProduct">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="insertProductWithNewCargoDetail">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="insertRetailProduct">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="insertRetailProductWithNewCargoDetail">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="relistProducts">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updatePrice">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updatePriceByPercentage">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updateProduct">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updateProductVariants">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updateProductWithNewCargoDetail">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updateProductWithVariants">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updateStock">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://product.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="CommunityProductServiceService">
+    <port name="CommunityProductServicePort" binding="tns:CommunityProductServiceBinding">
+      <soap:address location="https://dev.gittigidiyor.com:8443/listingapi/ws/CommunityProductService" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://catalog.anonymous.ws.listingapi.gg.com" name="CatalogServiceService" targetNamespace="http://catalog.anonymous.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://catalog.anonymous.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" type="tns:catalogServiceResponse" />
+      <xs:complexType name="catalogServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="catalogs">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="catalog" nillable="true" type="tns:catalogType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="catalogType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="catalogId" type="xs:int" />
+          <xs:element minOccurs="0" name="brandName" type="xs:string" />
+          <xs:element minOccurs="0" name="title" type="xs:string" />
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="thumbnailImage" type="xs:string" />
+          <xs:element minOccurs="0" name="images">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="image" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="CatalogService_getCatalogDetailResponse">
+    <part name="return" type="tns:catalogServiceResponse" />
+  </message>
+  <message name="CatalogService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="CatalogService_searchCatalogResponse">
+    <part name="return" type="tns:catalogServiceResponse" />
+  </message>
+  <message name="CatalogService_getCatalogDetail">
+    <part name="catalogId" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CatalogService_getServiceName" />
+  <message name="CatalogService_searchCatalog">
+    <part name="categoryCode" type="xsd:string" />
+    <part name="title" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <portType name="CatalogService">
+    <operation name="getCatalogDetail" parameterOrder="catalogId lang">
+      <input message="tns:CatalogService_getCatalogDetail" />
+      <output message="tns:CatalogService_getCatalogDetailResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:CatalogService_getServiceName" />
+      <output message="tns:CatalogService_getServiceNameResponse" />
+    </operation>
+    <operation name="searchCatalog" parameterOrder="categoryCode title startOffSet rowCount lang">
+      <input message="tns:CatalogService_searchCatalog" />
+      <output message="tns:CatalogService_searchCatalogResponse" />
+    </operation>
+  </portType>
+  <binding name="CatalogServiceBinding" type="tns:CatalogService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getCatalogDetail">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://catalog.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://catalog.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://catalog.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://catalog.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="searchCatalog">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://catalog.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://catalog.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="CatalogServiceService">
+    <port name="CatalogServicePort" binding="tns:CatalogServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/CatalogService" />
+    </port>
+  </service>
+</definitions>

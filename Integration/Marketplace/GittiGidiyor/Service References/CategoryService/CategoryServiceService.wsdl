@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://category.anonymous.ws.listingapi.gg.com" xmlns:ns1="http://jaxb.dev.java.net/array" name="CategoryServiceService" targetNamespace="http://category.anonymous.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://jaxb.dev.java.net/array" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="stringArray" final="#all">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://category.anonymous.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="categoryServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="categoryCount" type="xs:int" />
+              <xs:element minOccurs="0" name="categories">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="category" nillable="true" type="tns:categoryType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="categoryType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="categoryCode" type="xs:string" />
+          <xs:element minOccurs="0" name="categoryName" type="xs:string" />
+          <xs:element minOccurs="0" name="specs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="spec" nillable="true" type="tns:categorySpecType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="deepest" type="xs:boolean" />
+        <xs:attribute name="hasCatalog" type="xs:boolean" />
+      </xs:complexType>
+      <xs:complexType name="categorySpecType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="values">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="required" type="xs:boolean" />
+        <xs:attribute name="type" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="categoryServiceVariantResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="specCount" type="xs:long" />
+              <xs:element minOccurs="0" name="specs">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="spec" nillable="true" type="tns:categoryVariantSpecType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="categoryVariantSpecType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="specValues">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="specValue" nillable="true" type="tns:categoryVariantSpecValueType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="nameId" type="xs:long" />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="type" type="xs:string" />
+        <xs:attribute name="orderNumber" type="xs:int" />
+        <xs:attribute name="base" type="xs:boolean" />
+      </xs:complexType>
+      <xs:complexType name="categoryVariantSpecValueType">
+        <xs:sequence />
+        <xs:attribute name="valueId" type="xs:long" />
+        <xs:attribute name="value" type="xs:string" />
+        <xs:attribute name="orderNumber" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="categorySpecsServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="specs">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="spec" nillable="true" type="tns:categorySpecType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="categoryServiceAuditResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="categoryAudits">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="categoryAudit" nillable="true" type="tns:categoryAuditType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="categoryAuditType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseAuditType">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="categoryCode" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseAuditType" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="changeType" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="categorySpecsWithDetailServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="specs">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="spec" nillable="true" type="tns:categorySpecWithDetailType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="categorySpecWithDetailType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="values">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="value" nillable="true" type="tns:categorySpecValueType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="required" type="xs:boolean" />
+        <xs:attribute name="type" type="xs:string" />
+        <xs:attribute name="specId" type="xs:int" />
+        <xs:attribute name="childSpecId" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="categorySpecValueType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="specId" type="xs:int" />
+        <xs:attribute name="parentSpecId" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="categoryPermaServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="categoryCount" type="xs:int" />
+              <xs:element minOccurs="0" name="categories">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="category" nillable="true" type="tns:categoryPermaType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="categoryPermaType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="categoryCode" type="xs:string" />
+          <xs:element minOccurs="0" name="categoryPerma" type="xs:string" />
+          <xs:element minOccurs="0" name="breadCrumbs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="breadCrumb" nillable="true" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="CategoryService_getCategoriesByCodesResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getModifiedCategoriesResponse">
+    <part name="return" type="tns:categoryServiceAuditResponse" />
+  </message>
+  <message name="CategoryService_getCategoryVariantSpecsResponse">
+    <part name="return" type="tns:categoryServiceVariantResponse" />
+  </message>
+  <message name="CategoryService_getServiceName" />
+  <message name="CategoryService_getDeepestCategoriesResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getCategoriesHavingVariantSpecs">
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategoryVariantSpecs">
+    <part name="categoryCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategoryMetaDataResponse">
+    <part name="return" type="tns:categoryPermaServiceResponse" />
+  </message>
+  <message name="CategoryService_getCategoryMetaData">
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getDepositCategoriesResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getParentCategoriesResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getCategoriesByCodes">
+    <part name="categoryCodes" type="ns1:stringArray" />
+    <part name="withSpecs" type="xsd:boolean" />
+    <part name="withDeepest" type="xsd:boolean" />
+    <part name="withCatalog" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategorySpecsWithDetailResponse">
+    <part name="return" type="tns:categorySpecsWithDetailServiceResponse" />
+  </message>
+  <message name="CategoryService_getSubCategories">
+    <part name="categoryCode" type="xsd:string" />
+    <part name="withSpecs" type="xsd:boolean" />
+    <part name="withDeepest" type="xsd:boolean" />
+    <part name="withCatalog" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategoryResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getCategoriesHavingVariantSpecsResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getDepositCategories">
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getModifiedCategories">
+    <part name="changeTime" type="xsd:long" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategoriesResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getCategorySpecs">
+    <part name="categoryCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategorySpecsResponse">
+    <part name="return" type="tns:categorySpecsServiceResponse" />
+  </message>
+  <message name="CategoryService_getCategorySpecsWithDetail">
+    <part name="categoryCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategory">
+    <part name="categoryCode" type="xsd:string" />
+    <part name="withSpecs" type="xsd:boolean" />
+    <part name="withDeepest" type="xsd:boolean" />
+    <part name="withCatalog" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getCategories">
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="withSpecs" type="xsd:boolean" />
+    <part name="withDeepest" type="xsd:boolean" />
+    <part name="withCatalog" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getDeepestCategories">
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="withSpecs" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getParentCategories">
+    <part name="withSpecs" type="xsd:boolean" />
+    <part name="withDeepest" type="xsd:boolean" />
+    <part name="withCatalog" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CategoryService_getSubCategoriesResponse">
+    <part name="return" type="tns:categoryServiceResponse" />
+  </message>
+  <message name="CategoryService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <portType name="CategoryService">
+    <operation name="getCategories" parameterOrder="startOffSet rowCount withSpecs withDeepest withCatalog lang">
+      <input message="tns:CategoryService_getCategories" />
+      <output message="tns:CategoryService_getCategoriesResponse" />
+    </operation>
+    <operation name="getCategoriesByCodes" parameterOrder="categoryCodes withSpecs withDeepest withCatalog lang">
+      <input message="tns:CategoryService_getCategoriesByCodes" />
+      <output message="tns:CategoryService_getCategoriesByCodesResponse" />
+    </operation>
+    <operation name="getCategoriesHavingVariantSpecs" parameterOrder="lang">
+      <input message="tns:CategoryService_getCategoriesHavingVariantSpecs" />
+      <output message="tns:CategoryService_getCategoriesHavingVariantSpecsResponse" />
+    </operation>
+    <operation name="getCategory" parameterOrder="categoryCode withSpecs withDeepest withCatalog lang">
+      <input message="tns:CategoryService_getCategory" />
+      <output message="tns:CategoryService_getCategoryResponse" />
+    </operation>
+    <operation name="getCategoryMetaData" parameterOrder="lang">
+      <input message="tns:CategoryService_getCategoryMetaData" />
+      <output message="tns:CategoryService_getCategoryMetaDataResponse" />
+    </operation>
+    <operation name="getCategorySpecs" parameterOrder="categoryCode lang">
+      <input message="tns:CategoryService_getCategorySpecs" />
+      <output message="tns:CategoryService_getCategorySpecsResponse" />
+    </operation>
+    <operation name="getCategorySpecsWithDetail" parameterOrder="categoryCode lang">
+      <input message="tns:CategoryService_getCategorySpecsWithDetail" />
+      <output message="tns:CategoryService_getCategorySpecsWithDetailResponse" />
+    </operation>
+    <operation name="getCategoryVariantSpecs" parameterOrder="categoryCode lang">
+      <input message="tns:CategoryService_getCategoryVariantSpecs" />
+      <output message="tns:CategoryService_getCategoryVariantSpecsResponse" />
+    </operation>
+    <operation name="getDeepestCategories" parameterOrder="startOffSet rowCount withSpecs lang">
+      <input message="tns:CategoryService_getDeepestCategories" />
+      <output message="tns:CategoryService_getDeepestCategoriesResponse" />
+    </operation>
+    <operation name="getDepositCategories" parameterOrder="lang">
+      <input message="tns:CategoryService_getDepositCategories" />
+      <output message="tns:CategoryService_getDepositCategoriesResponse" />
+    </operation>
+    <operation name="getModifiedCategories" parameterOrder="changeTime startOffSet rowCount lang">
+      <input message="tns:CategoryService_getModifiedCategories" />
+      <output message="tns:CategoryService_getModifiedCategoriesResponse" />
+    </operation>
+    <operation name="getParentCategories" parameterOrder="withSpecs withDeepest withCatalog lang">
+      <input message="tns:CategoryService_getParentCategories" />
+      <output message="tns:CategoryService_getParentCategoriesResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:CategoryService_getServiceName" />
+      <output message="tns:CategoryService_getServiceNameResponse" />
+    </operation>
+    <operation name="getSubCategories" parameterOrder="categoryCode withSpecs withDeepest withCatalog lang">
+      <input message="tns:CategoryService_getSubCategories" />
+      <output message="tns:CategoryService_getSubCategoriesResponse" />
+    </operation>
+  </portType>
+  <binding name="CategoryServiceBinding" type="tns:CategoryService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getCategories">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCategoriesByCodes">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCategoriesHavingVariantSpecs">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCategory">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCategoryMetaData">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCategorySpecs">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCategorySpecsWithDetail">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCategoryVariantSpecs">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getDeepestCategories">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getDepositCategories">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getModifiedCategories">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getParentCategories">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSubCategories">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://category.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="CategoryServiceService">
+    <port name="CategoryServicePort" binding="tns:CategoryServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/CategoryService" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{65B6E4B7-6857-406A-9145-9F51C29F0614}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ophelia.Data</RootNamespace>
+    <AssemblyName>Ophelia.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\..\Packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\..\..\Packages\Npgsql.3.1.3\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Packages\Oracle.ManagedDataAccess.19.3.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\ColumnProperty.cs" />
+    <Compile Include="Attributes\ExcludeDefaultColumn.cs" />
+    <Compile Include="Attributes\RelationClass.cs" />
+    <Compile Include="Attributes\N2NRelationProperty.cs" />
+    <Compile Include="Attributes\RelationNavigationProperty.cs" />
+    <Compile Include="Attributes\RelationFKProperty.cs" />
+    <Compile Include="Attributes\RelationFilterProperty.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Expressions\ExcludeExpression.cs" />
+    <Compile Include="Expressions\UpdateExpression.cs" />
+    <Compile Include="Expressions\OrderExpression.cs" />
+    <Compile Include="Expressions\GroupExpression.cs" />
+    <Compile Include="Expressions\SelectExpression.cs" />
+    <Compile Include="Expressions\SkipExpression.cs" />
+    <Compile Include="Expressions\TakeExpression.cs" />
+    <Compile Include="Expressions\InExpression.cs" />
+    <Compile Include="Expressions\WhereExpression.cs" />
+    <Compile Include="Expressions\IncludeExpression.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Model\DataEntity.cs" />
+    <Compile Include="Model\DataEntityTracker.cs" />
+    <Compile Include="Model\DataValue.cs" />
+    <Compile Include="Model\ModelExtensions.cs" />
+    <Compile Include="Model\OGrouping.cs" />
+    <Compile Include="Model\QueryableDataSetExtensions.cs" />
+    <Compile Include="Connection.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataConfiguration.cs" />
+    <Compile Include="DataContext.cs" />
+    <Compile Include="Model\EntityLoadLog.cs" />
+    <Compile Include="Model\SQLLog.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\QueryableDataSetWithType.cs" />
+    <Compile Include="Model\QueryableDataSet.cs" />
+    <Compile Include="Querying\DataDesigner.cs" />
+    <Compile Include="Querying\Query\Helpers\Filter.cs" />
+    <Compile Include="Querying\Query\Helpers\Grouper.cs" />
+    <Compile Include="Querying\Query\Helpers\Includer.cs" />
+    <Compile Include="Querying\Query\Helpers\ExpressionParser.cs" />
+    <Compile Include="Querying\Query\Helpers\DBFunction.cs" />
+    <Compile Include="Querying\Query\Helpers\Selector.cs" />
+    <Compile Include="Querying\Query\Helpers\Excluder.cs" />
+    <Compile Include="Querying\Query\Helpers\Sorter.cs" />
+    <Compile Include="Querying\Query\Helpers\Table.cs" />
+    <Compile Include="Querying\Query\QueryBuilder.cs" />
+    <Compile Include="Querying\Query\QueryData.cs" />
+    <Compile Include="Querying\Query\QueryExtensions.cs" />
+    <Compile Include="Querying\Query\SQLPreparationVisitor.cs" />
+    <Compile Include="Querying\Query\BaseQuery.cs" />
+    <Compile Include="Querying\QueryProvider.cs" />
+    <Compile Include="Querying\Query\UpdateQuery.cs" />
+    <Compile Include="Querying\Query\InsertQuery.cs" />
+    <Compile Include="Querying\Query\DeleteQuery.cs" />
+    <Compile Include="Querying\Query\SelectQuery.cs" />
+    <Compile Include="QueryLogger.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="RepositoryWithType.cs" />
+    <Compile Include="DBStructureCache.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Ophelia\Ophelia.csproj">
+      <Project>{6ed74a5b-dbdf-46be-b7a0-497920bd7529}</Project>
+      <Name>Ophelia</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "D:\Production\Packages\Build\Ophelia\" /F /Y
+xcopy "$(TargetDir)$(TargetName).pdb" "D:\Production\Packages\Build\Ophelia\" /F /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

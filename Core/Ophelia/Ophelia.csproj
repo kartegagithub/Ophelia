@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6ED74A5B-DBDF-46BE-B7A0-497920BD7529}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ophelia</RootNamespace>
+    <AssemblyName>Ophelia</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEnvironment.cs" />
+    <Compile Include="Attributes\StringValueAttribute.cs" />
+    <Compile Include="AutoMailer.cs" />
+    <Compile Include="Compression\ArchiveEntry.cs" />
+    <Compile Include="Compression\ArchiveExtractCallback.cs" />
+    <Compile Include="Compression\ArchiveOpenCallback.cs" />
+    <Compile Include="Compression\EventArgs.cs" />
+    <Compile Include="Compression\Exceptions.cs" />
+    <Compile Include="Compression\PropVariant.cs" />
+    <Compile Include="Compression\SevenZipArchive.cs" />
+    <Compile Include="Compression\SevenZipInterface.cs" />
+    <Compile Include="ConfigurationManager.cs" />
+    <Compile Include="Cryptography\CryptoHelper.cs" />
+    <Compile Include="Cryptography\CryptoManager.cs" />
+    <Compile Include="Cryptography\Algorithms.cs" />
+    <Compile Include="Diagnostics\EventLogger.cs" />
+    <Compile Include="Diagnostics\ILogger.cs" />
+    <Compile Include="Diagnostics\ILoggerExtensions.cs" />
+    <Compile Include="Extensions\DynamicQueryable.cs" />
+    <Compile Include="Extensions\HttpWebResponseExtensions.cs" />
+    <Compile Include="Extensions\HttpWebRequestExtensions.cs" />
+    <Compile Include="Extensions\URLExtensions.cs" />
+    <Compile Include="Extensions\ByteExtensions.cs" />
+    <Compile Include="Extensions\DataTableExtensions.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
+    <Compile Include="Extensions\HashtableExtensions.cs" />
+    <Compile Include="Extensions\XmlParserExtensions.cs" />
+    <Compile Include="Linq\GroupResult.cs" />
+    <Compile Include="Linq\Serialization\Serializer.cs" />
+    <Compile Include="Linq\Serialization\Evaluator.cs" />
+    <Compile Include="Linq\Serialization\ExpressionSerializer %28GenerateXmlFromExpressionCore%29.cs" />
+    <Compile Include="Linq\Serialization\ExpressionSerializer%28Deserialize%29.cs" />
+    <Compile Include="Linq\Serialization\ExpressionSerializer%28Serialize%29.cs" />
+    <Compile Include="Linq\LinqHelper.cs" />
+    <Compile Include="Linq\Serialization\KnownTypeExpressionXmlConverter.cs" />
+    <Compile Include="Linq\Serialization\Query.cs" />
+    <Compile Include="Linq\Serialization\QueryCreator.cs" />
+    <Compile Include="Linq\Serialization\QueryExpressionXmlConverter.cs" />
+    <Compile Include="Linq\Serialization\QueryProvider.cs" />
+    <Compile Include="Linq\Serialization\RemoteProvider.cs" />
+    <Compile Include="Linq\Serialization\TypeResolver.cs" />
+    <Compile Include="Net\IMailClient.cs" />
+    <Compile Include="Net\NetworkAdapter.cs" />
+    <Compile Include="Net\NetworkMonitor.cs" />
+    <Compile Include="Diagnostics\Trace.cs" />
+    <Compile Include="Drawing\ImageResizer.cs" />
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\BitmapExtensions.cs" />
+    <Compile Include="Extensions\BooleanExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\DoubleExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\GuidExtensions.cs" />
+    <Compile Include="Extensions\ICollectionExtensions.cs" />
+    <Compile Include="Extensions\IComparableExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\IntegerExtensions.cs" />
+    <Compile Include="Extensions\IObservableExtensions.cs" />
+    <Compile Include="Extensions\IQueryableExtensions.cs" />
+    <Compile Include="Extensions\NullableExtension.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Guard.cs" />
+    <Compile Include="Linq\ExpressionEqualityComparer.cs" />
+    <Compile Include="Linq\PredicateBuilder.cs" />
+    <Compile Include="Exception\ObjectNotFoundException.cs" />
+    <Compile Include="LogManager.cs" />
+    <Compile Include="NameEqualityComparer.cs" />
+    <Compile Include="Net\FtpClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\OpheliaSharedAssemblyInfo.cs" />
+    <Compile Include="Reflection\Accessor.cs" />
+    <Compile Include="Reflection\AssemblyDefinition.cs" />
+    <Compile Include="Reflection\IInstanceFactory.cs" />
+    <Compile Include="Reflection\InstanceFactory.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Tasks\Job.cs" />
+    <Compile Include="Tasks\JobExecution.cs" />
+    <Compile Include="Tasks\JobMethodAttribute.cs" />
+    <Compile Include="Tasks\IJobClass.cs" />
+    <Compile Include="Tasks\JobManager.cs" />
+    <Compile Include="Tasks\Routine.cs" />
+    <Compile Include="Text\ContentBuilder.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="Xml\DynamicHelper.cs" />
+    <Compile Include="Xml\DynamicXmlParser.cs" />
+    <Compile Include="Xml\DynamicXmlParserExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExternalDLL\7z64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "D:\Production\Packages\Build\Ophelia\" /F /Y
+xcopy "$(TargetDir)$(TargetName).pdb" "D:\Production\Packages\Build\Ophelia\" /F /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

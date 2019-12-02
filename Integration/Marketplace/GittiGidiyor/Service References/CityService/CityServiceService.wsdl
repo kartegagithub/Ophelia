@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://city.anonymous.ws.listingapi.gg.com" xmlns:ns1="http://jaxb.dev.java.net/array" name="CityServiceService" targetNamespace="http://city.anonymous.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://jaxb.dev.java.net/array" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="intArray" final="#all">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://city.anonymous.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="cityServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="cityCount" type="xs:int" />
+              <xs:element minOccurs="0" name="cities">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="city" nillable="true" type="tns:cityType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cityType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="trCode" type="xs:int" />
+          <xs:element minOccurs="0" name="cityName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cityServiceAuditResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="cityAudits">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="cityAudit" nillable="true" type="tns:cityAuditType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="cityAuditType">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseAuditType">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="trCode" type="xs:int" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseAuditType" abstract="true">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="changeType" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="CityService_getCities">
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CityService_getCityResponse">
+    <part name="return" type="tns:cityServiceResponse" />
+  </message>
+  <message name="CityService_getCitiesByCodesResponse">
+    <part name="return" type="tns:cityServiceResponse" />
+  </message>
+  <message name="CityService_getOrderedCitiesResponse">
+    <part name="return" type="tns:cityServiceResponse" />
+  </message>
+  <message name="CityService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="CityService_getCitiesResponse">
+    <part name="return" type="tns:cityServiceResponse" />
+  </message>
+  <message name="CityService_getCity">
+    <part name="code" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CityService_getOrderedCities">
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CityService_getCitiesByCodes">
+    <part name="codes" type="ns1:intArray" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CityService_getServiceName" />
+  <message name="CityService_getModifiedCitiesResponse">
+    <part name="return" type="tns:cityServiceAuditResponse" />
+  </message>
+  <message name="CityService_getModifiedCities">
+    <part name="changeTime" type="xsd:long" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <portType name="CityService">
+    <operation name="getCities" parameterOrder="startOffSet rowCount lang">
+      <input message="tns:CityService_getCities" />
+      <output message="tns:CityService_getCitiesResponse" />
+    </operation>
+    <operation name="getCitiesByCodes" parameterOrder="codes lang">
+      <input message="tns:CityService_getCitiesByCodes" />
+      <output message="tns:CityService_getCitiesByCodesResponse" />
+    </operation>
+    <operation name="getCity" parameterOrder="code lang">
+      <input message="tns:CityService_getCity" />
+      <output message="tns:CityService_getCityResponse" />
+    </operation>
+    <operation name="getModifiedCities" parameterOrder="changeTime startOffSet rowCount lang">
+      <input message="tns:CityService_getModifiedCities" />
+      <output message="tns:CityService_getModifiedCitiesResponse" />
+    </operation>
+    <operation name="getOrderedCities" parameterOrder="lang">
+      <input message="tns:CityService_getOrderedCities" />
+      <output message="tns:CityService_getOrderedCitiesResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:CityService_getServiceName" />
+      <output message="tns:CityService_getServiceNameResponse" />
+    </operation>
+  </portType>
+  <binding name="CityServiceBinding" type="tns:CityService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getCities">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCitiesByCodes">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getCity">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getModifiedCities">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getOrderedCities">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://city.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="CityServiceService">
+    <port name="CityServicePort" binding="tns:CityServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/CityService" />
+    </port>
+  </service>
+</definitions>

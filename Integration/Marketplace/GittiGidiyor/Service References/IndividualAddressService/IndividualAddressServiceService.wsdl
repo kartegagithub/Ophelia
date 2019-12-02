@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://application.individual.ws.listingapi.gg.com" name="IndividualAddressServiceService" targetNamespace="http://application.individual.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://application.individual.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="addressServiceListResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="addresses">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="address" nillable="true" type="tns:addressType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addressType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="addressId" type="xs:int" />
+          <xs:element minOccurs="0" name="isDefault" type="xs:boolean" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="surname" type="xs:string" />
+          <xs:element minOccurs="0" name="alias" type="xs:string" />
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="district" type="xs:string" />
+          <xs:element minOccurs="0" name="zipCode" type="xs:string" />
+          <xs:element minOccurs="0" name="city" type="tns:cityType" />
+          <xs:element minOccurs="0" name="phoneNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="gsmNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="faxNumber" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cityType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="trCode" type="xs:int" />
+          <xs:element minOccurs="0" name="cityName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addressServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="addressId" type="xs:int" />
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="addressServiceDetailResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="address" type="tns:addressType" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="IndividualAddressService_getAddressListResponse">
+    <part name="return" type="tns:addressServiceListResponse" />
+  </message>
+  <message name="IndividualAddressService_createNewAddressResponse">
+    <part name="return" type="tns:addressServiceResponse" />
+  </message>
+  <message name="IndividualAddressService_getAddressDetailResponse">
+    <part name="return" type="tns:addressServiceDetailResponse" />
+  </message>
+  <message name="IndividualAddressService_getAddressList">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualAddressService_getDefaultAddressDetail">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualAddressService_deleteAddress">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="addressId" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualAddressService_getServiceName" />
+  <message name="IndividualAddressService_getAddressDetail">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="addressId" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualAddressService_getDefaultAddressDetailResponse">
+    <part name="return" type="tns:addressServiceDetailResponse" />
+  </message>
+  <message name="IndividualAddressService_makeAddressAsDefault">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="addressId" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualAddressService_updateAddress">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="addressId" type="xsd:int" />
+    <part name="address" type="tns:addressType" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualAddressService_updateAddressResponse">
+    <part name="return" type="tns:addressServiceResponse" />
+  </message>
+  <message name="IndividualAddressService_deleteAddressResponse">
+    <part name="return" type="tns:addressServiceResponse" />
+  </message>
+  <message name="IndividualAddressService_makeAddressAsDefaultResponse">
+    <part name="return" type="tns:addressServiceResponse" />
+  </message>
+  <message name="IndividualAddressService_createNewAddress">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="address" type="tns:addressType" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualAddressService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <portType name="IndividualAddressService">
+    <operation name="createNewAddress" parameterOrder="apiKey sign time address lang">
+      <input message="tns:IndividualAddressService_createNewAddress" />
+      <output message="tns:IndividualAddressService_createNewAddressResponse" />
+    </operation>
+    <operation name="deleteAddress" parameterOrder="apiKey sign time addressId lang">
+      <input message="tns:IndividualAddressService_deleteAddress" />
+      <output message="tns:IndividualAddressService_deleteAddressResponse" />
+    </operation>
+    <operation name="getAddressDetail" parameterOrder="apiKey sign time addressId lang">
+      <input message="tns:IndividualAddressService_getAddressDetail" />
+      <output message="tns:IndividualAddressService_getAddressDetailResponse" />
+    </operation>
+    <operation name="getAddressList" parameterOrder="apiKey sign time startOffSet rowCount lang">
+      <input message="tns:IndividualAddressService_getAddressList" />
+      <output message="tns:IndividualAddressService_getAddressListResponse" />
+    </operation>
+    <operation name="getDefaultAddressDetail" parameterOrder="apiKey sign time lang">
+      <input message="tns:IndividualAddressService_getDefaultAddressDetail" />
+      <output message="tns:IndividualAddressService_getDefaultAddressDetailResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:IndividualAddressService_getServiceName" />
+      <output message="tns:IndividualAddressService_getServiceNameResponse" />
+    </operation>
+    <operation name="makeAddressAsDefault" parameterOrder="apiKey sign time addressId lang">
+      <input message="tns:IndividualAddressService_makeAddressAsDefault" />
+      <output message="tns:IndividualAddressService_makeAddressAsDefaultResponse" />
+    </operation>
+    <operation name="updateAddress" parameterOrder="apiKey sign time addressId address lang">
+      <input message="tns:IndividualAddressService_updateAddress" />
+      <output message="tns:IndividualAddressService_updateAddressResponse" />
+    </operation>
+  </portType>
+  <binding name="IndividualAddressServiceBinding" type="tns:IndividualAddressService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="createNewAddress">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="deleteAddress">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getAddressDetail">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getAddressList">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getDefaultAddressDetail">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="makeAddressAsDefault">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="updateAddress">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://application.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="IndividualAddressServiceService">
+    <port name="IndividualAddressServicePort" binding="tns:IndividualAddressServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/IndividualAddressService" />
+    </port>
+  </service>
+</definitions>

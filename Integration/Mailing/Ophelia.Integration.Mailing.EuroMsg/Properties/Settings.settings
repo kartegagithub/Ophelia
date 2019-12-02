@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Ophelia.Integration.Mailing.EuroMsg.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Ophelia_Integration_Mailing_EuroMsg_EuroMsgAuthService_Auth" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ws.euromsg.com/live/auth.asmx</Value>
+    </Setting>
+    <Setting Name="Ophelia_Integration_Mailing_EuroMsg_EuroMsgPostService_Post" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ws.euromsg.com/live/post.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

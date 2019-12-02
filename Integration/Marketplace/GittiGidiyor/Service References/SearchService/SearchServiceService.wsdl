@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://search.anonymous.ws.listingapi.gg.com" name="SearchServiceService" targetNamespace="http://search.anonymous.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://search.anonymous.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="searchServiceCategoryResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="count" type="xs:long" />
+              <xs:element minOccurs="0" name="categories">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="category" nillable="true" type="tns:categorySearchResultType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="totalProductCount" type="xs:long" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="categorySearchResultType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="count" type="xs:long" />
+        </xs:sequence>
+        <xs:attribute name="deepest" type="xs:boolean" />
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="searchCriteriaType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="format" type="xs:string" />
+          <xs:element minOccurs="0" name="freeShipping" type="xs:boolean" />
+          <xs:element minOccurs="0" name="startFromOneTL" type="xs:boolean" />
+          <xs:element minOccurs="0" name="catalogOption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="newProduct" type="xs:boolean" />
+          <xs:element minOccurs="0" name="minPrice" type="xs:double" />
+          <xs:element minOccurs="0" name="maxPrice" type="xs:double" />
+          <xs:element minOccurs="0" name="city" type="xs:int" />
+          <xs:element minOccurs="0" name="newItems" type="xs:int" />
+          <xs:element minOccurs="0" name="runOutItems" type="xs:int" />
+          <xs:element minOccurs="0" name="finishedItems" type="xs:int" />
+          <xs:element minOccurs="0" name="seller" type="xs:string" />
+          <xs:element minOccurs="0" name="sellerExcluded" type="xs:boolean" />
+          <xs:element minOccurs="0" name="categoryCode" type="xs:string" />
+          <xs:element minOccurs="0" name="catalogId" type="xs:int" />
+          <xs:element minOccurs="0" name="categorySpecs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="categorySpec" nillable="true" type="tns:categorySpecCriteriaType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="returnSpecs" type="xs:boolean" />
+          <xs:element minOccurs="0" name="newProductWithNoSpec" type="xs:boolean" />
+          <xs:element minOccurs="0" name="storeVisibility" type="xs:boolean" />
+          <xs:element minOccurs="0" name="storeType" type="xs:int" />
+          <xs:element minOccurs="0" name="storeCategoryId" type="xs:int" />
+          <xs:element minOccurs="0" name="categoryLevel" type="xs:int" />
+          <xs:element minOccurs="0" name="facetFields" type="tns:facetFields" />
+          <xs:element minOccurs="0" name="parkCategoryId" type="xs:int" />
+          <xs:element minOccurs="0" name="parkItems" type="xs:boolean" />
+          <xs:element minOccurs="0" name="returnImages" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="categorySpecCriteriaType">
+        <xs:sequence />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="value" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="facetFields">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="facets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="facet" nillable="true" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="limit" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="searchServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="count" type="xs:long" />
+              <xs:element minOccurs="0" name="isFuzzy" type="xs:boolean" />
+              <xs:element minOccurs="0" name="products">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="product" nillable="true" type="tns:searchResultType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="categories">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="category" nillable="true" type="tns:categorySearchResultType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="specs">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="spec" nillable="true" type="tns:specSearchResultType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="facets">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="facet" nillable="true" type="tns:specSearchResultType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="searchResultType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="imageLink" type="xs:string" />
+          <xs:element minOccurs="0" name="url" type="xs:string" />
+          <xs:element minOccurs="0" name="title" type="xs:string" />
+          <xs:element minOccurs="0" name="subtitle" type="xs:string" />
+          <xs:element minOccurs="0" name="seller" type="xs:string" />
+          <xs:element minOccurs="0" name="format" type="xs:string" />
+          <xs:element minOccurs="0" name="hasBuyNowPrice" type="xs:boolean" />
+          <xs:element minOccurs="0" name="bidCount" type="xs:int" />
+          <xs:element minOccurs="0" name="currentPrice" type="xs:string" />
+          <xs:element minOccurs="0" name="buyNowPrice" type="xs:string" />
+          <xs:element minOccurs="0" name="remainingTime" type="xs:string" />
+          <xs:element minOccurs="0" name="shippingPayment" type="xs:string" />
+          <xs:element minOccurs="0" name="featureType" type="xs:string" />
+          <xs:element minOccurs="0" name="newItem" type="xs:boolean" />
+          <xs:element minOccurs="0" name="bold" type="xs:boolean" />
+          <xs:element minOccurs="0" name="marketPrice" type="xs:string" />
+          <xs:element minOccurs="0" name="productCount" type="xs:int" />
+          <xs:element minOccurs="0" name="soldNum" type="xs:int" />
+          <xs:element minOccurs="0" name="storeSoldNum" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="specSearchResultType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="facets">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="facet" nillable="true" type="tns:specValueFacetType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="specValueFacetType">
+        <xs:sequence />
+        <xs:attribute name="value" type="xs:string" />
+        <xs:attribute name="count" type="xs:long" />
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="SearchService_searchResponse">
+    <part name="return" type="tns:searchServiceResponse" />
+  </message>
+  <message name="SearchService_search">
+    <part name="keyword" type="xsd:string" />
+    <part name="criteria" type="tns:searchCriteriaType" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="includeDescription" type="xsd:boolean" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="orderBy" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="SearchService_getServiceName" />
+  <message name="SearchService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="SearchService_searchByVersion">
+    <part name="keyword" type="xsd:string" />
+    <part name="criteria" type="tns:searchCriteriaType" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="includeDescription" type="xsd:boolean" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="orderBy" type="xsd:string" />
+    <part name="version" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="SearchService_searchForCategories">
+    <part name="categoryCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="SearchService_searchForCategoriesResponse">
+    <part name="return" type="tns:searchServiceCategoryResponse" />
+  </message>
+  <message name="SearchService_searchByVersionResponse">
+    <part name="return" type="tns:searchServiceResponse" />
+  </message>
+  <portType name="SearchService">
+    <operation name="getServiceName">
+      <input message="tns:SearchService_getServiceName" />
+      <output message="tns:SearchService_getServiceNameResponse" />
+    </operation>
+    <operation name="search" parameterOrder="keyword criteria startOffSet rowCount includeDescription withData orderBy lang">
+      <input message="tns:SearchService_search" />
+      <output message="tns:SearchService_searchResponse" />
+    </operation>
+    <operation name="searchByVersion" parameterOrder="keyword criteria startOffSet rowCount includeDescription withData orderBy version lang">
+      <input message="tns:SearchService_searchByVersion" />
+      <output message="tns:SearchService_searchByVersionResponse" />
+    </operation>
+    <operation name="searchForCategories" parameterOrder="categoryCode lang">
+      <input message="tns:SearchService_searchForCategories" />
+      <output message="tns:SearchService_searchForCategoriesResponse" />
+    </operation>
+  </portType>
+  <binding name="SearchServiceBinding" type="tns:SearchService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="search">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="searchByVersion">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="searchForCategories">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://search.anonymous.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="SearchServiceService">
+    <port name="SearchServicePort" binding="tns:SearchServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/SearchService" />
+    </port>
+  </service>
+</definitions>

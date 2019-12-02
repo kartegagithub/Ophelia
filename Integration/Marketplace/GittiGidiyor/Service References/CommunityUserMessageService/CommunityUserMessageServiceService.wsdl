@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://message.community.ws.listingapi.gg.com" name="CommunityUserMessageServiceService" targetNamespace="http://message.community.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://message.community.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="userMessageServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="messageCount" type="xs:int" />
+              <xs:element minOccurs="0" name="messages">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="message" nillable="true" type="tns:userMessageType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="userMessageType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="messageId" type="xs:int" />
+          <xs:element minOccurs="0" name="from" type="xs:string" />
+          <xs:element minOccurs="0" name="to" type="xs:string" />
+          <xs:element minOccurs="0" name="title" type="xs:string" />
+          <xs:element minOccurs="0" name="messageContent" type="xs:string" />
+          <xs:element minOccurs="0" name="time" type="xs:string" />
+          <xs:element minOccurs="0" name="deleteTime" type="xs:string" />
+          <xs:element minOccurs="0" name="isRead" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="userMessageServiceIdResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="messageCount" type="xs:int" />
+              <xs:element minOccurs="0" name="messageIdList">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="messageId" nillable="true" type="xs:int" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="CommunityMessageService_getInboxMessages">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="unread" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityMessageService_sendNewMessage">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="to" type="xsd:string" />
+    <part name="title" type="xsd:string" />
+    <part name="message" type="xsd:string" />
+    <part name="sendCopy" type="xsd:boolean" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityMessageService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="CommunityMessageService_getServiceName" />
+  <message name="CommunityMessageService_getSendedMessagesResponse">
+    <part name="return" type="tns:userMessageServiceResponse" />
+  </message>
+  <message name="CommunityMessageService_getMessagesByUserResponse">
+    <part name="return" type="tns:userMessageServiceResponse" />
+  </message>
+  <message name="CommunityMessageService_getMessagesByUser">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="byUser" type="xsd:string" />
+    <part name="messageType" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityMessageService_getSendedMessages">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunityMessageService_sendNewMessageResponse">
+    <part name="return" type="tns:userMessageServiceIdResponse" />
+  </message>
+  <message name="CommunityMessageService_getInboxMessagesResponse">
+    <part name="return" type="tns:userMessageServiceResponse" />
+  </message>
+  <portType name="CommunityMessageService">
+    <operation name="getInboxMessages" parameterOrder="apiKey sign time sessionId startOffSet rowCount unread lang">
+      <input message="tns:CommunityMessageService_getInboxMessages" />
+      <output message="tns:CommunityMessageService_getInboxMessagesResponse" />
+    </operation>
+    <operation name="getMessagesByUser" parameterOrder="apiKey sign time sessionId byUser messageType startOffSet rowCount lang">
+      <input message="tns:CommunityMessageService_getMessagesByUser" />
+      <output message="tns:CommunityMessageService_getMessagesByUserResponse" />
+    </operation>
+    <operation name="getSendedMessages" parameterOrder="apiKey sign time sessionId startOffSet rowCount lang">
+      <input message="tns:CommunityMessageService_getSendedMessages" />
+      <output message="tns:CommunityMessageService_getSendedMessagesResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:CommunityMessageService_getServiceName" />
+      <output message="tns:CommunityMessageService_getServiceNameResponse" />
+    </operation>
+    <operation name="sendNewMessage" parameterOrder="apiKey sign time sessionId to title message sendCopy lang">
+      <input message="tns:CommunityMessageService_sendNewMessage" />
+      <output message="tns:CommunityMessageService_sendNewMessageResponse" />
+    </operation>
+  </portType>
+  <binding name="CommunityMessageServiceBinding" type="tns:CommunityMessageService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getInboxMessages">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getMessagesByUser">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSendedMessages">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="sendNewMessage">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://message.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="CommunityUserMessageServiceService">
+    <port name="CommunityMessageServicePort" binding="tns:CommunityMessageServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/CommunityUserMessageService" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://sale.individual.ws.listingapi.gg.com" name="IndividualSaleServiceService" targetNamespace="http://sale.individual.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://sale.individual.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="saleServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="saleCount" type="xs:int" />
+              <xs:element minOccurs="0" name="sales">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="sale" nillable="true" type="tns:saleType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="saleType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="saleCode" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="productTitle" type="xs:string" />
+          <xs:element minOccurs="0" name="price" type="xs:string" />
+          <xs:element minOccurs="0" name="cargoPayment" type="xs:string" />
+          <xs:element minOccurs="0" name="amount" type="xs:int" />
+          <xs:element minOccurs="0" name="endDate" type="xs:string" />
+          <xs:element minOccurs="0" name="buyerInfo" type="tns:orderBuyerInfoType" />
+          <xs:element minOccurs="0" name="changeStatus" type="xs:string" />
+          <xs:element minOccurs="0" name="thumbImageLink" type="xs:string" />
+          <xs:element minOccurs="0" name="lastActionDate" type="xs:string" />
+          <xs:element minOccurs="0" name="waitingProcesses">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="waitingProcess" nillable="true" type="xs:int" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="invoiceInfo" type="tns:saleInvoiceType" />
+          <xs:element minOccurs="0" name="variantId" type="xs:long" />
+          <xs:element minOccurs="0" name="variantSpecs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="variantSpec" nillable="true" type="tns:itemVariantSpecType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="moneyDate" type="xs:string" />
+          <xs:element minOccurs="0" name="cargoApprovementDate" type="xs:string" />
+          <xs:element minOccurs="0" name="itemId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderBuyerInfoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="username" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="surname" type="xs:string" />
+          <xs:element minOccurs="0" name="phone" type="xs:string" />
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="district" type="xs:string" />
+          <xs:element minOccurs="0" name="city" type="xs:string" />
+          <xs:element minOccurs="0" name="zipCode" type="xs:string" />
+          <xs:element minOccurs="0" name="processCount" type="xs:int" />
+          <xs:element minOccurs="0" name="ratePercentage" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="saleInvoiceType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="fullname" type="xs:string" />
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="district" type="xs:string" />
+          <xs:element minOccurs="0" name="cityCode" type="xs:int" />
+          <xs:element minOccurs="0" name="zipCode" type="xs:string" />
+          <xs:element minOccurs="0" name="phoneNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="taxOffice" type="xs:string" />
+          <xs:element minOccurs="0" name="taxNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="companyTitle" type="xs:string" />
+          <xs:element minOccurs="0" name="tcCertificate" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="itemVariantSpecType">
+        <xs:sequence />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="value" type="xs:string" />
+        <xs:attribute name="quantity" type="xs:int" />
+        <xs:attribute name="soldQuantity" type="xs:int" />
+        <xs:attribute name="stockCode" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="messageServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="accountTransactionListResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+              <xs:element minOccurs="0" name="sales">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="sale" nillable="true" type="tns:accountTransactionType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="accountTransactionType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="saleCode" type="xs:string" />
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="productTitle" type="xs:string" />
+          <xs:element minOccurs="0" name="buyerNick" type="xs:string" />
+          <xs:element minOccurs="0" name="price" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ggCommission" type="xs:decimal" />
+          <xs:element minOccurs="0" name="commissionPrice" type="xs:decimal" />
+          <xs:element minOccurs="0" name="paidPrice" type="xs:decimal" />
+          <xs:element minOccurs="0" name="approveDate" type="xs:string" />
+          <xs:element minOccurs="0" name="approve" type="xs:string" />
+          <xs:element minOccurs="0" name="accountNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="iban" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="saleServiceBuyerResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="itemBuyers">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="itemBuyer" nillable="true" type="tns:saleBuyerType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="saleBuyerType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nick" type="xs:string" />
+          <xs:element minOccurs="0" name="saleCount" type="xs:long" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="saleServiceCancelReasonResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="reasons">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="reason" nillable="true" type="tns:saleReasonType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="saleReasonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="value" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="commonSaleResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence />
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="IndividualSaleService_remindForApproval">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_giveRateAndCommentResponse">
+    <part name="return" type="tns:commonSaleResponse" />
+  </message>
+  <message name="IndividualSaleService_giveRateAndComment">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="userType" type="xsd:string" />
+    <part name="productId" type="xsd:int" />
+    <part name="rate" type="xsd:int" />
+    <part name="comment" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_receiveRemandedItem">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_getSalesResponse">
+    <part name="return" type="tns:saleServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_getItemBuyers">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="byStatus" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_getReasonsToCancelSale">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_cancelSaleResponse">
+    <part name="return" type="tns:messageServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_getSaleResponse">
+    <part name="return" type="tns:saleServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_getItemBuyersResponse">
+    <part name="return" type="tns:saleServiceBuyerResponse" />
+  </message>
+  <message name="IndividualSaleService_getSalesByDateRange">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="byStatus" type="xsd:string" />
+    <part name="byUser" type="xsd:string" />
+    <part name="orderBy" type="xsd:string" />
+    <part name="orderType" type="xsd:string" />
+    <part name="startDate" type="xsd:string" />
+    <part name="endDate" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_cancelSale">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="reasonId" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_receiveRemandedItemResponse">
+    <part name="return" type="tns:messageServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_getSalesByDateRangeResponse">
+    <part name="return" type="tns:saleServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_getSale">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_removeSaleFromListResponse">
+    <part name="return" type="tns:messageServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_giveApprovalForRemandedItem">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_getSales">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="byStatus" type="xsd:string" />
+    <part name="byUser" type="xsd:string" />
+    <part name="orderBy" type="xsd:string" />
+    <part name="orderType" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_giveApprovalForRemandedItemResponse">
+    <part name="return" type="tns:messageServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_getAccountTransactions">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="startDate" type="xsd:string" />
+    <part name="endDate" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_removeSaleFromList">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="userType" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_getAccountTransactionsResponse">
+    <part name="return" type="tns:accountTransactionListResponse" />
+  </message>
+  <message name="IndividualSaleService_replySaleCommentResponse">
+    <part name="return" type="tns:commonSaleResponse" />
+  </message>
+  <message name="IndividualSaleService_replySaleComment">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="userType" type="xsd:string" />
+    <part name="productId" type="xsd:int" />
+    <part name="comment" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualSaleService_remindForApprovalResponse">
+    <part name="return" type="tns:messageServiceResponse" />
+  </message>
+  <message name="IndividualSaleService_getServiceName" />
+  <message name="IndividualSaleService_getReasonsToCancelSaleResponse">
+    <part name="return" type="tns:saleServiceCancelReasonResponse" />
+  </message>
+  <portType name="IndividualSaleService">
+    <operation name="cancelSale" parameterOrder="apiKey sign time saleCode reasonId lang">
+      <input message="tns:IndividualSaleService_cancelSale" />
+      <output message="tns:IndividualSaleService_cancelSaleResponse" />
+    </operation>
+    <operation name="getAccountTransactions" parameterOrder="apiKey sign time startDate endDate startOffSet rowCount lang">
+      <input message="tns:IndividualSaleService_getAccountTransactions" />
+      <output message="tns:IndividualSaleService_getAccountTransactionsResponse" />
+    </operation>
+    <operation name="getItemBuyers" parameterOrder="apiKey sign time byStatus startOffSet rowCount lang">
+      <input message="tns:IndividualSaleService_getItemBuyers" />
+      <output message="tns:IndividualSaleService_getItemBuyersResponse" />
+    </operation>
+    <operation name="getReasonsToCancelSale" parameterOrder="apiKey sign time lang">
+      <input message="tns:IndividualSaleService_getReasonsToCancelSale" />
+      <output message="tns:IndividualSaleService_getReasonsToCancelSaleResponse" />
+    </operation>
+    <operation name="getSale" parameterOrder="apiKey sign time saleCode lang">
+      <input message="tns:IndividualSaleService_getSale" />
+      <output message="tns:IndividualSaleService_getSaleResponse" />
+    </operation>
+    <operation name="getSales" parameterOrder="apiKey sign time startOffSet rowCount withData byStatus byUser orderBy orderType lang">
+      <input message="tns:IndividualSaleService_getSales" />
+      <output message="tns:IndividualSaleService_getSalesResponse" />
+    </operation>
+    <operation name="getSalesByDateRange" parameterOrder="apiKey sign time startOffSet rowCount withData byStatus byUser orderBy orderType startDate endDate lang">
+      <input message="tns:IndividualSaleService_getSalesByDateRange" />
+      <output message="tns:IndividualSaleService_getSalesByDateRangeResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:IndividualSaleService_getServiceName" />
+      <output message="tns:IndividualSaleService_getServiceNameResponse" />
+    </operation>
+    <operation name="giveApprovalForRemandedItem" parameterOrder="apiKey sign time saleCode lang">
+      <input message="tns:IndividualSaleService_giveApprovalForRemandedItem" />
+      <output message="tns:IndividualSaleService_giveApprovalForRemandedItemResponse" />
+    </operation>
+    <operation name="giveRateAndComment" parameterOrder="apiKey sign time userType productId rate comment lang">
+      <input message="tns:IndividualSaleService_giveRateAndComment" />
+      <output message="tns:IndividualSaleService_giveRateAndCommentResponse" />
+    </operation>
+    <operation name="receiveRemandedItem" parameterOrder="apiKey sign time saleCode lang">
+      <input message="tns:IndividualSaleService_receiveRemandedItem" />
+      <output message="tns:IndividualSaleService_receiveRemandedItemResponse" />
+    </operation>
+    <operation name="remindForApproval" parameterOrder="apiKey sign time saleCode lang">
+      <input message="tns:IndividualSaleService_remindForApproval" />
+      <output message="tns:IndividualSaleService_remindForApprovalResponse" />
+    </operation>
+    <operation name="removeSaleFromList" parameterOrder="apiKey sign time saleCode userType lang">
+      <input message="tns:IndividualSaleService_removeSaleFromList" />
+      <output message="tns:IndividualSaleService_removeSaleFromListResponse" />
+    </operation>
+    <operation name="replySaleComment" parameterOrder="apiKey sign time userType productId comment lang">
+      <input message="tns:IndividualSaleService_replySaleComment" />
+      <output message="tns:IndividualSaleService_replySaleCommentResponse" />
+    </operation>
+  </portType>
+  <binding name="IndividualSaleServiceBinding" type="tns:IndividualSaleService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="cancelSale">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getAccountTransactions">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getItemBuyers">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getReasonsToCancelSale">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSale">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSales">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSalesByDateRange">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="giveApprovalForRemandedItem">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="giveRateAndComment">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="receiveRemandedItem">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="remindForApproval">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="removeSaleFromList">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="replySaleComment">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="IndividualSaleServiceService">
+    <port name="IndividualSaleServicePort" binding="tns:IndividualSaleServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/IndividualSaleService" />
+    </port>
+  </service>
+</definitions>

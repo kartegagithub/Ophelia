@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{67E8FA11-0886-480E-A026-98A2EBB6FE91}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ophelia.Social</RootNamespace>
+    <AssemblyName>Ophelia.Social</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twitterizer2">
+      <HintPath>..\..\..\..\Packages\twitterizer.2.4.2\lib\net40-Client\Twitterizer2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Core\Ophelia\Properties\OpheliaSharedAssemblyInfo.cs">
+      <Link>Properties\OpheliaSharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Facebook.cs" />
+    <Compile Include="Flickr.cs" />
+    <Compile Include="Foursquare.cs" />
+    <Compile Include="FriendFeed.cs" />
+    <Compile Include="GooglePlus.cs" />
+    <Compile Include="Base\IApplication.cs" />
+    <Compile Include="Instagram.cs" />
+    <Compile Include="Linkedin.cs" />
+    <Compile Include="Photobucket.cs" />
+    <Compile Include="Pinterest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tumblr.cs" />
+    <Compile Include="Twitter.cs" />
+    <Compile Include="Vimeo.cs" />
+    <Compile Include="Vine.cs" />
+    <Compile Include="Youtube.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Ophelia\Ophelia.csproj">
+      <Project>{6ed74a5b-dbdf-46be-b7a0-497920bd7529}</Project>
+      <Name>Ophelia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\View\Web\Web\Ophelia.Web.csproj">
+      <Project>{732ae156-646e-4037-9713-eac8e462b2f9}</Project>
+      <Name>Ophelia.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "D:\Production\Packages\Build\Ophelia\" /F /Y
+xcopy "$(TargetDir)$(TargetName).pdb" "D:\Production\Packages\Build\Ophelia\" /F /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

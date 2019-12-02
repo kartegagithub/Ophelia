@@ -1,0 +1,140 @@
+html,body,#layout{height:100%;margin:0;padding:0;}
+body {padding-top:67px;}
+div {margin:0px;padding:0px;}
+#nav_area{position: fixed;width: 100%;height: 67px;z-index:888;top:0px;}
+#nav_left_area {width:20%;height:67px;float:left;display:block;box-sizing: border-box;}
+#nav_title_area {width:60%;height:67px;display:block;box-sizing: border-box;float:left;}
+#nav_rigth_area {width:20%;height:67px;float:right;display:block;box-sizing: border-box;}
+#nav_breadcrumb_area {width: 100%;height: 56px;z-index:2}
+#menu {width: 260px;height:100%;position:fixed;left:-270px;top:0px; background:#eee;z-index:999;box-sizing: border-box;overflow:hidden;box-shadow: 5px 0px 10px #666;}
+#menu a {width:240px;padding:10px; display:block;background:#222; color:#FFF;border-bottom:2px solid #555;text-decoration:none;line-height:30px;}
+#menu a:hover {background:#666;}
+#MenuOverlay {width:100%;height:100%;opacity:0.4;background-color:#000;z-index:-9999;position: fixed;top: 0px;}
+#maincontent {width:100%;min-height:calc(100% - 96px);overflow-y:auto;overflow-x:hidden;background:#FFF;box-sizing: border-box;}/*overflow:hidden;calc(100% - 100px)*/
+#navpanel {	width:200%;}
+.loading{width:100%;height:100%;position:fixed;top:0px;text-align:center;background:#222;opacity:0.7;}
+.loading img{width:100px; height:100px;margin-top:200px;}
+.content{width:50%;display:block;float:left;box-sizing: border-box;margin-top:10px;margin-bottom:10px;}
+#footer {width: 100%;height: 40px;background-color: #222;}
+
+@media only screen and (min-width: 801px) {
+
+    .no-more-tables form table {background-color: #DCDCDC !important;margin: 10px auto; }
+    .no-more-tables form thead tr {background-color: #EEE !important;font-weight: bold;}
+    .no-more-tables form thead tr td {padding:10px 5px;vertical-align: middle;text-align: left;}
+    .no-more-tables form tbody tr {background-color: #FFF !important;vertical-align: top;border-bottom: 1px solid #ccc;}
+    .no-more-tables form tbody tr td {padding:10px 5px;vertical-align: middle;text-align: left;}
+    .no-more-tables form table tbody tr td:last-child { display:block;}
+}
+
+@media only screen and  (min-width:481px) and (max-width: 800px){
+
+	.no-more-tables table, 
+	.no-more-tables thead, 
+	.no-more-tables tbody, 
+	.no-more-tables th, 
+	.no-more-tables td, 
+	.no-more-tables tr { 
+		display: block; 
+	}
+    .no-more-tables table {background-color: #FFF !important;margin: 0px 10px; }
+	.no-more-tables thead tr { position: absolute;top: -9999px;left: -9999px;}
+	.no-more-tables tr { background-color:#EEE;border: 1px solid #ccc;margin-bottom: 10px;border-radius:4px;cursor:pointer;}
+ 	.no-more-tables td { border: none;border-bottom: 1px solid #ccc; position: relative;padding:10px 5px;padding-left: 250px !important;white-space: normal;text-align:left;min-height:18px;}
+	.no-more-tables td:before {position: absolute;top: 10px;left: 6px;width: 240px;padding-right: 10px;white-space: nowrap;text-align:left;font-weight: bold;white-space: nowrap !important;overflow: hidden;text-overflow: ellipsis;}
+	.no-more-tables td:before { content: attr(data-title); }
+    .no-more-tables form table tbody tr td:last-child { display:none;}
+    .no-more-tables form table tbody tr[id$="Footer"] td{padding-left: 0px !important;width:100% !important;display:block !important;}
+}
+@media only screen and (max-width: 480px) {
+	.no-more-tables table, 
+	.no-more-tables thead, 
+	.no-more-tables tbody, 
+	.no-more-tables th, 
+	.no-more-tables td, 
+	.no-more-tables tr { 
+		display: block; 
+	}
+
+    .no-more-tables table {background-color: #FFF !important;margin: 0px 10px; }
+	.no-more-tables thead tr { position: absolute;top: -9999px;left: -9999px;}
+	.no-more-tables tr { background-color:#eee;border: 1px solid #ccc;margin-bottom: 10px;border-radius:4px;cursor:pointer;}
+	.no-more-tables td { border: none;border-bottom: 1px solid #ccc;position: relative;padding:10px 5px;padding-left: 150px !important;white-space: normal;text-align:left;min-height:18px;}
+	.no-more-tables td:before { position: absolute;top: 10px;left: 6px;width: 140px;padding-right: 10px;white-space: nowrap;text-align:left;font-weight: bold;white-space: nowrap !important;overflow: hidden;text-overflow: ellipsis;}
+	.no-more-tables td:before { content: attr(data-title); }
+    .no-more-tables form table tbody tr td:last-child { display:none;}
+    .no-more-tables form table tbody tr[id$="Footer"] td{padding-left: 0px !important;width:100% !important;display:block !important;}
+}
+@media only screen and (max-width: 320px) {
+    html,body,#layout{width:320px;height:100%;margin:0;padding:0;}
+    body {padding-top:67px;}
+    #nav_area{position: fixed;width: 320px;height: 67px;z-index:888;top:0px;}
+    #nav_breadcrumb_area {width: 320px;height: 56px;z-index:2}
+
+    .no-more-tables form table tbody tr td:last-child { display:none;}
+}
+.SelectLink {height: 20px;display: block;}
+
+#SearchPanel {
+    width : 994px;
+    margin:0px auto;
+    box-sizing: border-box;
+}
+#SearchCriteriaLabel {
+    width : 120px;
+    margin-left: 4px;
+    margin-right: 10px;
+}
+#SearchCriteria {
+    width:200px;
+    margin-right:5px;
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#SearchBox {
+    width: 200px;
+    padding: 5px;
+    margin-right: 5px;
+}
+#SearchButton {
+    width:120px;
+    padding: 3px 5px;
+}
+
+@media only screen and  (min-width:681px) and (max-width: 800px){
+    #SearchPanel {
+        width : calc(100% - 6px);
+        padding-left: 6px;
+        margin-bottom:10px;
+    }
+}
+@media only screen and (max-width: 680px) {
+    #SearchPanel {
+        width: calc(100% - 20px);
+        padding:5px;
+        margin: 10px 10px;
+        background-color: #EEE;
+        border: 1px solid #CCC;
+        border-radius: 4px;
+    }
+    #SearchCriteriaLabel {
+        width: 100%;
+        margin-bottom:5px;
+        display:block;
+    }
+    #SearchCriteria {
+        width: 100%;
+        margin-bottom:5px;
+    }
+    #SearchBox {
+        width: 100%;
+        margin-bottom:5px;
+        box-sizing: border-box;
+    }
+    #SearchButton {
+        width: 100%;
+        margin-bottom:5px;
+    }
+}

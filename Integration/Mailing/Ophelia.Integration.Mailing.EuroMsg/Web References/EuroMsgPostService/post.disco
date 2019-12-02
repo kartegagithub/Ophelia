@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://ws.euromsg.com/live/post.asmx?wsdl" docRef="http://ws.euromsg.com/live/post.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://ws.euromsg.com/live/post.asmx" xmlns:q1="http://ws.euromsg.com/post" binding="q1:PostSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://ws.euromsg.com/live/post.asmx" xmlns:q2="http://ws.euromsg.com/post" binding="q2:PostSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

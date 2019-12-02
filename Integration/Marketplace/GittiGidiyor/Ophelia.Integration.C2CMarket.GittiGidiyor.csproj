@@ -1,0 +1,717 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09523AD1-E0B7-40CC-811A-B0A8BBEB3F4C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ophelia.Integration.C2CMarket.GittiGidiyor</RootNamespace>
+    <AssemblyName>Ophelia.Integration.C2CMarket.GittiGidiyor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\Core\Ophelia\Properties\OpheliaSharedAssemblyInfo.cs">
+      <Link>Properties\OpheliaSharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ApplicationService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CatalogService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CategoryService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CityService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CommunityAuthService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CommunityCargoService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CommunityProductService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CommunitySaleService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CommunityUserMessageService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DeveloperService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IndividualActivityService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IndividualAddressService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IndividualCargoService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IndividualProductService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IndividualSaleService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IndividualStoreService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\IndividualUserMessageService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SearchService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Service References\ApplicationService\ApplicationServiceService.wsdl" />
+    <None Include="Service References\ApplicationService\Ophelia.Integration.C2CMarket.GittiGidiyor.ApplicationService.applicationServiceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ApplicationService\Ophelia.Integration.C2CMarket.GittiGidiyor.ApplicationService.applicationServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ApplicationService\Ophelia.Integration.C2CMarket.GittiGidiyor.ApplicationService.messageServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CatalogService\CatalogServiceService.wsdl" />
+    <None Include="Service References\CatalogService\Ophelia.Integration.C2CMarket.GittiGidiyor.CatalogService.catalogServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CategoryService\CategoryServiceService.wsdl" />
+    <None Include="Service References\CategoryService\Ophelia.Integration.C2CMarket.GittiGidiyor.CategoryService.categoryPermaServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CategoryService\Ophelia.Integration.C2CMarket.GittiGidiyor.CategoryService.categoryServiceAuditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CategoryService\Ophelia.Integration.C2CMarket.GittiGidiyor.CategoryService.categoryServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CategoryService\Ophelia.Integration.C2CMarket.GittiGidiyor.CategoryService.categoryServiceVariantResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CategoryService\Ophelia.Integration.C2CMarket.GittiGidiyor.CategoryService.categorySpecsServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CategoryService\Ophelia.Integration.C2CMarket.GittiGidiyor.CategoryService.categorySpecsWithDetailServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CategoryService\Ophelia.Integration.C2CMarket.GittiGidiyor.CategoryService.getCategoriesByCodesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CityService\CityServiceService.wsdl" />
+    <None Include="Service References\CityService\Ophelia.Integration.C2CMarket.GittiGidiyor.CityService.cityServiceAuditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CityService\Ophelia.Integration.C2CMarket.GittiGidiyor.CityService.cityServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CityService\Ophelia.Integration.C2CMarket.GittiGidiyor.CityService.getCitiesByCodesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityAuthService\CommunityAuthServiceService.wsdl" />
+    <None Include="Service References\CommunityAuthService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityAuthService.apiTokenServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityCargoService\CommunityCargoServiceService.wsdl" />
+    <None Include="Service References\CommunityCargoService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityCargoService.cargoInformationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityCargoService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityCargoService.commonSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\CommunityProductServiceService.wsdl" />
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.calculatePriceForShoppingCartResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.deleteProductResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.deleteProductsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.finishEarlyProductsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.finishEarlyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.getProductIdsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.getProductsByIdsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.getProductStatusesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.getStockAndPriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceAuditResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceBooleanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceDescResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceDetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServicePriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceProcessResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceRetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceSpecResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceStockResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.productServiceVariantResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityProductService.relistProductsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunitySaleService\CommunitySaleServiceService.wsdl" />
+    <None Include="Service References\CommunitySaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunitySaleService.commonSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunitySaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunitySaleService.messageServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunitySaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunitySaleService.saleServiceBuyerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunitySaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunitySaleService.saleServiceCancelReasonResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunitySaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunitySaleService.saleServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityUserMessageService\CommunityUserMessageServiceService.wsdl" />
+    <None Include="Service References\CommunityUserMessageService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityUserMessageService.userMessageServiceIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CommunityUserMessageService\Ophelia.Integration.C2CMarket.GittiGidiyor.CommunityUserMessageService.userMessageServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DeveloperService\DeveloperServiceService.wsdl" />
+    <None Include="Service References\DeveloperService\Ophelia.Integration.C2CMarket.GittiGidiyor.DeveloperService.developerServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualActivityService\IndividualActivityServiceService.wsdl" />
+    <None Include="Service References\IndividualActivityService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualActivityService.activityBidResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualActivityService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualActivityService.activityDidntWinResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualActivityService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualActivityService.activitySaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualActivityService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualActivityService.activitySoldResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualActivityService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualActivityService.activityUnsoldResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualActivityService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualActivityService.activityWatchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualActivityService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualActivityService.activityWonResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualAddressService\IndividualAddressServiceService.wsdl" />
+    <None Include="Service References\IndividualAddressService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualAddressService.addressServiceDetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualAddressService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualAddressService.addressServiceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualAddressService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualAddressService.addressServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualCargoService\IndividualCargoServiceService.wsdl" />
+    <None Include="Service References\IndividualCargoService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualCargoService.cargoInformationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualCargoService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualCargoService.commonSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\IndividualProductServiceService.wsdl" />
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.calculatePriceForShoppingCartResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.deleteProductResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.deleteProductsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.finishEarlyProductsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.finishEarlyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.getProductIdsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.getProductsByIdsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.getProductStatusesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.getStockAndPriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productFinishReasonListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceBooleanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceDescResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceDetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceImageStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServicePaymentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServicePriceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceProcessResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceRetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceSpecResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceStockResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.productServiceVariantResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualProductService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualProductService.relistProductsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualSaleService\IndividualSaleServiceService.wsdl" />
+    <None Include="Service References\IndividualSaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualSaleService.accountTransactionListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualSaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualSaleService.commonSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualSaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualSaleService.messageServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualSaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualSaleService.saleServiceBuyerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualSaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualSaleService.saleServiceCancelReasonResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualSaleService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualSaleService.saleServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualStoreService\IndividualStoreServiceService.wsdl" />
+    <None Include="Service References\IndividualStoreService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualStoreService.storeServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualUserMessageService\IndividualUserMessageServiceService.wsdl" />
+    <None Include="Service References\IndividualUserMessageService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualUserMessageService.deleteIncomingMessagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualUserMessageService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualUserMessageService.deleteOutgoingMessagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualUserMessageService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualUserMessageService.userMessageServiceIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\IndividualUserMessageService\Ophelia.Integration.C2CMarket.GittiGidiyor.IndividualUserMessageService.userMessageServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SearchService\Ophelia.Integration.C2CMarket.GittiGidiyor.SearchService.searchServiceCategoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SearchService\Ophelia.Integration.C2CMarket.GittiGidiyor.SearchService.searchServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SearchService\SearchServiceService.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ApplicationService\" />
+    <WCFMetadataStorage Include="Service References\CatalogService\" />
+    <WCFMetadataStorage Include="Service References\CategoryService\" />
+    <WCFMetadataStorage Include="Service References\CityService\" />
+    <WCFMetadataStorage Include="Service References\CommunityAuthService\" />
+    <WCFMetadataStorage Include="Service References\CommunityCargoService\" />
+    <WCFMetadataStorage Include="Service References\CommunityProductService\" />
+    <WCFMetadataStorage Include="Service References\CommunitySaleService\" />
+    <WCFMetadataStorage Include="Service References\CommunityUserMessageService\" />
+    <WCFMetadataStorage Include="Service References\DeveloperService\" />
+    <WCFMetadataStorage Include="Service References\IndividualActivityService\" />
+    <WCFMetadataStorage Include="Service References\IndividualAddressService\" />
+    <WCFMetadataStorage Include="Service References\IndividualCargoService\" />
+    <WCFMetadataStorage Include="Service References\IndividualProductService\" />
+    <WCFMetadataStorage Include="Service References\IndividualSaleService\" />
+    <WCFMetadataStorage Include="Service References\IndividualStoreService\" />
+    <WCFMetadataStorage Include="Service References\IndividualUserMessageService\" />
+    <WCFMetadataStorage Include="Service References\SearchService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SearchService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SearchService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\SearchService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ApplicationService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ApplicationService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ApplicationService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CategoryService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CategoryService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CategoryService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CityService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CityService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CityService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DeveloperService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DeveloperService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\DeveloperService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CatalogService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CatalogService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CatalogService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunitySaleService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunitySaleService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunitySaleService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityProductService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityProductService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityProductService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityCargoService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityCargoService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityCargoService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityUserMessageService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityUserMessageService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityUserMessageService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityAuthService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityAuthService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CommunityAuthService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualAddressService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualAddressService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualAddressService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualStoreService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualStoreService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualStoreService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualActivityService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualActivityService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualActivityService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualUserMessageService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualUserMessageService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualUserMessageService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualCargoService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualCargoService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualCargoService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualSaleService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualSaleService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualSaleService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualProductService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualProductService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\IndividualProductService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "D:\Production\Packages\Build\Ophelia\" /F /Y
+xcopy "$(TargetDir)$(TargetName).pdb" "D:\Production\Packages\Build\Ophelia\" /F /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

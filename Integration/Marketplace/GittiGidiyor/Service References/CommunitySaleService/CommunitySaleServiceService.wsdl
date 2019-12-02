@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://sale.community.ws.listingapi.gg.com" name="CommunitySaleServiceService" targetNamespace="http://sale.community.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://sale.community.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" nillable="true" type="xs:anyType" />
+      <xs:complexType name="saleServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="saleCount" type="xs:int" />
+              <xs:element minOccurs="0" name="sales">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="sale" nillable="true" type="tns:saleType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="saleType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="saleCode" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="xs:string" />
+          <xs:element minOccurs="0" name="productId" type="xs:int" />
+          <xs:element minOccurs="0" name="productTitle" type="xs:string" />
+          <xs:element minOccurs="0" name="price" type="xs:string" />
+          <xs:element minOccurs="0" name="cargoPayment" type="xs:string" />
+          <xs:element minOccurs="0" name="amount" type="xs:int" />
+          <xs:element minOccurs="0" name="endDate" type="xs:string" />
+          <xs:element minOccurs="0" name="buyerInfo" type="tns:orderBuyerInfoType" />
+          <xs:element minOccurs="0" name="changeStatus" type="xs:string" />
+          <xs:element minOccurs="0" name="thumbImageLink" type="xs:string" />
+          <xs:element minOccurs="0" name="lastActionDate" type="xs:string" />
+          <xs:element minOccurs="0" name="waitingProcesses">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="waitingProcess" nillable="true" type="xs:int" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="invoiceInfo" type="tns:saleInvoiceType" />
+          <xs:element minOccurs="0" name="variantId" type="xs:long" />
+          <xs:element minOccurs="0" name="variantSpecs">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="variantSpec" nillable="true" type="tns:itemVariantSpecType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="moneyDate" type="xs:string" />
+          <xs:element minOccurs="0" name="cargoApprovementDate" type="xs:string" />
+          <xs:element minOccurs="0" name="itemId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="orderBuyerInfoType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="username" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="surname" type="xs:string" />
+          <xs:element minOccurs="0" name="phone" type="xs:string" />
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="district" type="xs:string" />
+          <xs:element minOccurs="0" name="city" type="xs:string" />
+          <xs:element minOccurs="0" name="zipCode" type="xs:string" />
+          <xs:element minOccurs="0" name="processCount" type="xs:int" />
+          <xs:element minOccurs="0" name="ratePercentage" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="saleInvoiceType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="fullname" type="xs:string" />
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="district" type="xs:string" />
+          <xs:element minOccurs="0" name="cityCode" type="xs:int" />
+          <xs:element minOccurs="0" name="zipCode" type="xs:string" />
+          <xs:element minOccurs="0" name="phoneNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="taxOffice" type="xs:string" />
+          <xs:element minOccurs="0" name="taxNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="companyTitle" type="xs:string" />
+          <xs:element minOccurs="0" name="tcCertificate" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="itemVariantSpecType">
+        <xs:sequence />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="value" type="xs:string" />
+        <xs:attribute name="quantity" type="xs:int" />
+        <xs:attribute name="soldQuantity" type="xs:int" />
+        <xs:attribute name="stockCode" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="messageServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="result" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="saleServiceCancelReasonResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="reasons">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="reason" nillable="true" type="tns:saleReasonType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="saleReasonType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="value" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:int" />
+      </xs:complexType>
+      <xs:complexType name="saleServiceBuyerResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+              <xs:element minOccurs="0" name="count" type="xs:int" />
+              <xs:element minOccurs="0" name="itemBuyers">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="itemBuyer" nillable="true" type="tns:saleBuyerType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="saleBuyerType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nick" type="xs:string" />
+          <xs:element minOccurs="0" name="saleCount" type="xs:long" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="commonSaleResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence />
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="CommunitySaleService_getSalesByDateRangeResponse">
+    <part name="return" type="tns:saleServiceResponse" />
+  </message>
+  <message name="CommunitySaleService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_getSaleResponse">
+    <part name="return" type="tns:saleServiceResponse" />
+  </message>
+  <message name="CommunitySaleService_getReasonsToCancelSaleResponse">
+    <part name="return" type="tns:saleServiceCancelReasonResponse" />
+  </message>
+  <message name="CommunitySaleService_getServiceName" />
+  <message name="CommunitySaleService_getItemBuyers">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="byStatus" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_replySaleCommentResponse">
+    <part name="return" type="tns:commonSaleResponse" />
+  </message>
+  <message name="CommunitySaleService_getSales">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="byStatus" type="xsd:string" />
+    <part name="byUser" type="xsd:string" />
+    <part name="orderBy" type="xsd:string" />
+    <part name="orderType" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_getSalesByDateRange">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="startOffSet" type="xsd:int" />
+    <part name="rowCount" type="xsd:int" />
+    <part name="withData" type="xsd:boolean" />
+    <part name="byStatus" type="xsd:string" />
+    <part name="byUser" type="xsd:string" />
+    <part name="orderBy" type="xsd:string" />
+    <part name="orderType" type="xsd:string" />
+    <part name="startDate" type="xsd:string" />
+    <part name="endDate" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_cancelSaleResponse">
+    <part name="return" type="tns:messageServiceResponse" />
+  </message>
+  <message name="CommunitySaleService_replySaleComment">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="userType" type="xsd:string" />
+    <part name="productId" type="xsd:int" />
+    <part name="comment" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_giveRateAndCommentResponse">
+    <part name="return" type="tns:commonSaleResponse" />
+  </message>
+  <message name="CommunitySaleService_giveRateAndComment">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="userType" type="xsd:string" />
+    <part name="productId" type="xsd:int" />
+    <part name="rate" type="xsd:int" />
+    <part name="comment" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_getReasonsToCancelSale">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_getSale">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="CommunitySaleService_getSalesResponse">
+    <part name="return" type="tns:saleServiceResponse" />
+  </message>
+  <message name="CommunitySaleService_getItemBuyersResponse">
+    <part name="return" type="tns:saleServiceBuyerResponse" />
+  </message>
+  <message name="CommunitySaleService_cancelSale">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="sessionId" type="xsd:string" />
+    <part name="saleCode" type="xsd:string" />
+    <part name="reasonId" type="xsd:int" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <portType name="CommunitySaleService">
+    <operation name="cancelSale" parameterOrder="apiKey sign time sessionId saleCode reasonId lang">
+      <input message="tns:CommunitySaleService_cancelSale" />
+      <output message="tns:CommunitySaleService_cancelSaleResponse" />
+    </operation>
+    <operation name="getItemBuyers" parameterOrder="apiKey sign time sessionId byStatus startOffSet rowCount lang">
+      <input message="tns:CommunitySaleService_getItemBuyers" />
+      <output message="tns:CommunitySaleService_getItemBuyersResponse" />
+    </operation>
+    <operation name="getReasonsToCancelSale" parameterOrder="apiKey sign time sessionId lang">
+      <input message="tns:CommunitySaleService_getReasonsToCancelSale" />
+      <output message="tns:CommunitySaleService_getReasonsToCancelSaleResponse" />
+    </operation>
+    <operation name="getSale" parameterOrder="apiKey sign time sessionId saleCode lang">
+      <input message="tns:CommunitySaleService_getSale" />
+      <output message="tns:CommunitySaleService_getSaleResponse" />
+    </operation>
+    <operation name="getSales" parameterOrder="apiKey sign time sessionId startOffSet rowCount withData byStatus byUser orderBy orderType lang">
+      <input message="tns:CommunitySaleService_getSales" />
+      <output message="tns:CommunitySaleService_getSalesResponse" />
+    </operation>
+    <operation name="getSalesByDateRange" parameterOrder="apiKey sign time sessionId startOffSet rowCount withData byStatus byUser orderBy orderType startDate endDate lang">
+      <input message="tns:CommunitySaleService_getSalesByDateRange" />
+      <output message="tns:CommunitySaleService_getSalesByDateRangeResponse" />
+    </operation>
+    <operation name="getServiceName">
+      <input message="tns:CommunitySaleService_getServiceName" />
+      <output message="tns:CommunitySaleService_getServiceNameResponse" />
+    </operation>
+    <operation name="giveRateAndComment" parameterOrder="apiKey sign time sessionId userType productId rate comment lang">
+      <input message="tns:CommunitySaleService_giveRateAndComment" />
+      <output message="tns:CommunitySaleService_giveRateAndCommentResponse" />
+    </operation>
+    <operation name="replySaleComment" parameterOrder="apiKey sign time sessionId userType productId comment lang">
+      <input message="tns:CommunitySaleService_replySaleComment" />
+      <output message="tns:CommunitySaleService_replySaleCommentResponse" />
+    </operation>
+  </portType>
+  <binding name="CommunitySaleServiceBinding" type="tns:CommunitySaleService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="cancelSale">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getItemBuyers">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getReasonsToCancelSale">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSale">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSales">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getSalesByDateRange">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="giveRateAndComment">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="replySaleComment">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://sale.community.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="CommunitySaleServiceService">
+    <port name="CommunitySaleServicePort" binding="tns:CommunitySaleServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/CommunitySaleService" />
+    </port>
+  </service>
+</definitions>

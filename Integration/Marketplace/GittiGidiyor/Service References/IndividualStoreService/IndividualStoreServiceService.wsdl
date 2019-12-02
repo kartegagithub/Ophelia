@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://store.individual.ws.listingapi.gg.com" name="IndividualStoreServiceService" targetNamespace="http://store.individual.ws.listingapi.gg.com" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema targetNamespace="http://store.individual.ws.listingapi.gg.com" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="return" type="tns:storeServiceResponse" />
+      <xs:complexType name="storeServiceResponse">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:baseResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="store" type="tns:storeType" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="baseResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ackCode" type="xs:string" />
+          <xs:element minOccurs="0" name="responseTime" type="xs:string" />
+          <xs:element minOccurs="0" name="error" type="tns:errorType" />
+          <xs:element minOccurs="0" name="timeElapsed" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="storeType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="endDate" type="xs:string" />
+          <xs:element minOccurs="0" name="lastUpdate" type="xs:string" />
+          <xs:element minOccurs="0" name="registerDate" type="xs:string" />
+          <xs:element name="isSubscribed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="storeType" type="xs:int" />
+          <xs:element minOccurs="0" name="categories">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="category" nillable="true" type="tns:storeCategoryType" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="storeCategoryType">
+        <xs:sequence />
+        <xs:attribute name="id" type="xs:int" />
+        <xs:attribute name="name" type="xs:string" />
+      </xs:complexType>
+      <xs:complexType name="errorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorId" type="xs:string" />
+          <xs:element minOccurs="0" name="errorCode" type="xs:string" />
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+          <xs:element minOccurs="0" name="viewMessage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="IndividualStoreService_getServiceNameResponse">
+    <part name="return" type="xsd:string" />
+  </message>
+  <message name="IndividualStoreService_getServiceName" />
+  <message name="IndividualStoreService_getStore">
+    <part name="apiKey" type="xsd:string" />
+    <part name="sign" type="xsd:string" />
+    <part name="time" type="xsd:long" />
+    <part name="lang" type="xsd:string" />
+  </message>
+  <message name="IndividualStoreService_getStoreResponse">
+    <part name="return" type="tns:storeServiceResponse" />
+  </message>
+  <portType name="IndividualStoreService">
+    <operation name="getServiceName">
+      <input message="tns:IndividualStoreService_getServiceName" />
+      <output message="tns:IndividualStoreService_getServiceNameResponse" />
+    </operation>
+    <operation name="getStore" parameterOrder="apiKey sign time lang">
+      <input message="tns:IndividualStoreService_getStore" />
+      <output message="tns:IndividualStoreService_getStoreResponse" />
+    </operation>
+  </portType>
+  <binding name="IndividualStoreServiceBinding" type="tns:IndividualStoreService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getServiceName">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://store.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://store.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+    <operation name="getStore">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" namespace="http://store.individual.ws.listingapi.gg.com" />
+      </input>
+      <output>
+        <soap:body use="literal" namespace="http://store.individual.ws.listingapi.gg.com" />
+      </output>
+    </operation>
+  </binding>
+  <service name="IndividualStoreServiceService">
+    <port name="IndividualStoreServicePort" binding="tns:IndividualStoreServiceBinding">
+      <soap:address location="http://dev.gittigidiyor.com:8080/listingapi/ws/IndividualStoreService" />
+    </port>
+  </service>
+</definitions>
