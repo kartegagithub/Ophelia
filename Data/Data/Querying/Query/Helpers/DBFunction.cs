@@ -30,7 +30,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
 
         public string Build(BaseQuery query)
         {
-            return this.FunctionName + "(" + query.Data.MainTable.Alias + "." + query.Context.Connection.FormatDataElement(this.Name) + ") As " + this.FunctionName + this.Name;
+            return this.FunctionName + "(" + query.Data.MainTable.Alias + "." + query.Context.Connection.FormatDataElement(query.Context.Connection.GetMappedFieldName(this.Name)) + ") As " + this.FunctionName + this.Name;
         }
         public DBFunction()
         {
