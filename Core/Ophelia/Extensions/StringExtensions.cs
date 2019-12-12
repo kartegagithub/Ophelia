@@ -1,5 +1,4 @@
-﻿using Ophelia.Cryptography;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +13,7 @@ using System.Net;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using Ophelia.Cryptography;
 
 namespace Ophelia
 {

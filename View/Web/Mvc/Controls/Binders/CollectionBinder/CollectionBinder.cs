@@ -257,6 +257,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
 
                         object formattedValue = null;
                         var defaultValue = Convert.ToString(defaultModel.GetPropertyValue(path));
+
                         if ((doubleSelection && (!string.IsNullOrEmpty(lowValue) || !string.IsNullOrEmpty(highValue))) || (!string.IsNullOrEmpty(this.Request[path]) && defaultValue != value && value != null))
                         {
                             var propTree = typeof(T).GetPropertyInfoTree(entityProp);
@@ -264,11 +265,14 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             var propType = propInfo?.PropertyType;
                             if (propType != null)
                             {
+                                if (propType.Name == "Boolean" && value == "-1")
+                                    continue;
+
                                 if (propType.IsGenericType && propType.Name.StartsWith("Null"))
                                     propType = propType.GenericTypeArguments[0];
                                 if (propType.Name.Contains("String"))
                                 {
-                                    formattedValue = Convert.ChangeType(value, propType);
+                                    formattedValue = propType.ConvertData(value);
                                     if (isQueryableDataSet)
                                         this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.Contains);
                                     else
@@ -286,7 +290,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                         {
                                             try
                                             {
-                                                parameters.Add(Convert.ChangeType(val, propType));
+                                                parameters.Add(propType.ConvertData(val));
                                                 if (!string.IsNullOrEmpty(orParams))
                                                     orParams += " || ";
                                                 orParams += entityProp + " = @" + counter;
@@ -311,7 +315,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                         {
                                             if (!string.IsNullOrEmpty(lowValue))
                                             {
-                                                formattedValue = Convert.ChangeType(lowValue, propType);
+                                                formattedValue = propType.ConvertData(lowValue);
                                                 if (isQueryableDataSet)
                                                     this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
                                                 else
@@ -319,7 +323,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                             }
                                             if (!string.IsNullOrEmpty(highValue))
                                             {
-                                                formattedValue = Convert.ChangeType(highValue, propType);
+                                                formattedValue = propType.ConvertData(highValue);
                                                 if (isQueryableDataSet)
                                                     this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
                                                 else
@@ -328,7 +332,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                         }
                                         else
                                         {
-                                            formattedValue = Convert.ChangeType(value, propType);
+                                            formattedValue = propType.ConvertData(value);
                                             if (isQueryableDataSet)
                                                 this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
                                             else
@@ -342,7 +346,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                     {
                                         if (!string.IsNullOrEmpty(lowValue))
                                         {
-                                            formattedValue = Convert.ChangeType(lowValue, propType);
+                                            formattedValue = propType.ConvertData(lowValue);
                                             if (isQueryableDataSet)
                                                 this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
                                             else
@@ -350,7 +354,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                         }
                                         if (!string.IsNullOrEmpty(highValue))
                                         {
-                                            formattedValue = Convert.ChangeType(highValue, propType);
+                                            formattedValue = propType.ConvertData(highValue);
                                             if (isQueryableDataSet)
                                                 this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
                                             else
@@ -359,7 +363,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                     }
                                     else
                                     {
-                                        formattedValue = Convert.ChangeType(value, propType);
+                                        formattedValue = propType.ConvertData(value);
                                         if (isQueryableDataSet)
                                             this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
                                         else
@@ -920,6 +924,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             if (column is Columns.DateColumn<TModel, T>)
             {
                 (column as Columns.DateColumn<TModel, T>).Mode = Fields.DateFieldMode.DoubleSelection;
+            }
+            if (column is Columns.BoolColumn<TModel, T>)
+            {
+                return (column as Columns.BoolColumn<TModel, T>).GetEditableControlAsSelect(null, value, this.Request);
             }
             return column.GetEditableControl(null, value, this.Request);
         }

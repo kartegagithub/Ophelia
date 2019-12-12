@@ -39,8 +39,7 @@
       <HintPath>..\..\..\..\Packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
-      <HintPath>..\..\..\..\Packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\Packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
