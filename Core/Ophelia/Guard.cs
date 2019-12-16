@@ -15,7 +15,7 @@ namespace Ophelia
         public static void ArgumentNullException(object value, string name)
         {
             if (value == null)
-                throw new ArgumentNullException(name);
+                throw new ArgumentNullException(name); 
         }
 
         /// <summary>
