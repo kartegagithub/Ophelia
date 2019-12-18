@@ -38,9 +38,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\ePayment.dll</HintPath>
     </Reference>
-    <Reference Include="Iyzipay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Packages\Iyzipay.2.1.3\lib\net45\Iyzipay.dll</HintPath>
+    <Reference Include="Iyzipay">
+      <HintPath>..\..\..\Packages\Iyzipay.2.1.3\lib\net45\Iyzipay.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\Packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>

@@ -42,7 +42,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Twitterizer2">
-      <HintPath>..\..\..\..\Packages\twitterizer.2.4.2\lib\net40-Client\Twitterizer2.dll</HintPath>
+      <HintPath>..\..\..\Packages\twitterizer.2.4.2\lib\net40-Client\Twitterizer2.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
