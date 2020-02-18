@@ -17,6 +17,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
     {
         public Expression<Func<T, object>> SelectedValueExpression { get; set; }
         public object SelectedValue { get; set; }
+        public object SelectListValue { get; set; }
         public string DisplayMember { get; set; }
         public Func<T, object> DisplayMemberExpression { get; set; }
         public string AlternateDisplayMember { get; set; }
@@ -35,60 +36,100 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
                 this.DataControl.CssClass = "filterbox multiple-value select2-hidden-accessible";
                 this.DataControl.Attributes.Add("multiple", "multiple");
             }
-
-            if (!string.IsNullOrEmpty(this.ValueMember) && (!string.IsNullOrEmpty(this.DisplayMember) || this.DisplayMemberExpression != null) && this.SelectedValueExpression != null)
+            if (this.SelectListValue != null && this.SelectListValue is IEnumerable)
             {
-                this.SelectedValue = this.SelectedValueExpression.GetValue(this.FieldContainer.Entity);
+
+                var list = new List<SelectListItem>();
+                var datalist = (IEnumerable)this.SelectedValue;
+                foreach (var item in datalist)
+                {
+                    list.Add(this.GetItem(item, false));
+                }
+                
                 if (this.SelectedValue != null)
                 {
-                    var list = new List<SelectListItem>();
-                    if (!(this.SelectedValue is string) && this.SelectedValue is IEnumerable)
+                    var selectedLists = new List<SelectListItem>();
+                    if (this.SelectedValue is IEnumerable)
                     {
-                        var datalist = (IEnumerable)this.SelectedValue;
-                        foreach (var item in datalist)
+                        var dataList = (IEnumerable)this.SelectedValue;
+                        foreach (var item in dataList)
                         {
-                            list.Add(this.GetItem(item));
+                            selectedLists.Add(this.GetItem(item));
                         }
                     }
                     else
                     {
-                        list.Add(this.GetItem(this.SelectedValue));
+                        selectedLists.Add(this.GetItem(this.SelectedValue));
+                    }
+                    if (selectedLists.Count > 0)
+                    {
+                        foreach (var item in list)
+                        {
+                            if (selectedLists.Where(op => op.Value == item.Value).Any())
+                                item.Selected = true;
+                        }
+                    }
+                }
+                this.DataControl.DataSource = list;
+                this.DataControl.SelectedValue = string.Join(",", list.Where(op => op.Selected == true).Select(op => op.Value).ToArray());
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(this.ValueMember) && (!string.IsNullOrEmpty(this.DisplayMember) || this.DisplayMemberExpression != null) && this.SelectedValueExpression != null)
+                {
+                    this.SelectedValue = this.SelectedValueExpression.GetValue(this.FieldContainer.Entity);
+                    if (this.SelectedValue != null)
+                    {
+                        var list = new List<SelectListItem>();
+                        if (!(this.SelectedValue is string) && this.SelectedValue is IEnumerable)
+                        {
+                            var datalist = (IEnumerable)this.SelectedValue;
+                            foreach (var item in datalist)
+                            {
+                                list.Add(this.GetItem(item));
+                            }
+                        }
+                        else
+                        {
+                            list.Add(this.GetItem(this.SelectedValue));
+                        }
+                        this.DataControl.DataSource = list;
+                        this.DataControl.SelectedValue = string.Join(",", list.Select(op => op.Value).ToArray());
+                    }
+                }
+                else
+                {
+                    var list = new List<SelectListItem>();
+                    if (this.SelectedValue != null)
+                    {
+                        if (this.SelectedValue is SelectListItem)
+                        {
+                            list.Add((SelectListItem)this.SelectedValue);
+                        }
+                        else if (this.SelectedValue is string || this.SelectedValue.GetType().IsPrimitive)
+                        {
+                            list.Add(new SelectListItem() { Value = Convert.ToString(this.SelectedValue), Text = Convert.ToString(this.SelectedValue) });
+                        }
+                        else if (this.SelectedValue is IEnumerable)
+                        {
+                            var datalist = (IEnumerable)this.SelectedValue;
+                            foreach (var item in datalist)
+                            {
+                                list.Add(this.GetItem(item));
+                            }
+                        }
+                        else
+                        {
+                            list.Add(this.GetItem(this.SelectedValue));
+                        }
+                        if (list.Count > 0)
+                            list.FirstOrDefault().Selected = true;
                     }
                     this.DataControl.DataSource = list;
                     this.DataControl.SelectedValue = string.Join(",", list.Select(op => op.Value).ToArray());
                 }
             }
-            else
-            {
-                var list = new List<SelectListItem>();
-                if (this.SelectedValue != null)
-                {
-                    if (this.SelectedValue is SelectListItem)
-                    {
-                        list.Add((SelectListItem)this.SelectedValue);
-                    }
-                    else if (this.SelectedValue is string || this.SelectedValue.GetType().IsPrimitive)
-                    {
-                        list.Add(new SelectListItem() { Value = Convert.ToString(this.SelectedValue), Text = Convert.ToString(this.SelectedValue) });
-                    }
-                    else if (this.SelectedValue is IEnumerable)
-                    {
-                        var datalist = (IEnumerable)this.SelectedValue;
-                        foreach (var item in datalist)
-                        {
-                            list.Add(this.GetItem(item));
-                        }
-                    }
-                    else
-                    {
-                        list.Add(this.GetItem(this.SelectedValue));
-                    }
-                    if (list.Count > 0)
-                        list.FirstOrDefault().Selected = true;
-                }
-                this.DataControl.DataSource = list;
-                this.DataControl.SelectedValue = string.Join(",", list.Select(op => op.Value).ToArray());
-            }
+
             this.DataControl.DisplayMemberName = "Text";
             this.DataControl.ValueMemberName = "Value";
             this.DataControl.Attributes.Add("data-clear", "true");
@@ -115,7 +156,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             }
         }
 
-        private SelectListItem GetItem(object item)
+        private SelectListItem GetItem(object item, bool selected = true)
         {
             if (item != null && (this.SelectedValue is string || item.GetType().IsPrimitive))
             {
@@ -149,7 +190,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
                 {
                     name = (string)this.DisplayMemberExpression.Execute(this.FieldContainer.Entity);
                 }
-                return new SelectListItem() { Selected = true, Text = name, Value = id };
+                return new SelectListItem() { Selected = selected, Text = name, Value = id };
             }
         }
         public FilterboxField(FieldContainer<T> FieldContainer) : base(FieldContainer)
