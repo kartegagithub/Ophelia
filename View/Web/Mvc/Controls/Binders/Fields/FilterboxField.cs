@@ -40,7 +40,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             {
 
                 var list = new List<SelectListItem>();
-                var datalist = (IEnumerable)this.SelectedValue;
+                var datalist = (IEnumerable)this.SelectListValue;
                 foreach (var item in datalist)
                 {
                     list.Add(this.GetItem(item, false));
