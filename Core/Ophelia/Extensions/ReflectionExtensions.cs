@@ -434,7 +434,7 @@ namespace Ophelia
                         var Types = a.GetTypes();
                         if (Types != null)
                         {
-                            Types = Types.Where(op => op.FullName == baseType).ToArray();
+                            Types = Types.Where(op => !op.IsInterface && op.FullName == baseType).ToArray();
                             if (Types != null && Types.Length > 0)
                             {
                                 return Types.FirstOrDefault();
@@ -465,7 +465,7 @@ namespace Ophelia
                         var Types = a.GetTypes();
                         if (Types != null)
                         {
-                            Types = Types.Where(op => op.IsSubclassOf(baseType)).ToArray();
+                            Types = Types.Where(op => !op.IsInterface && (op.IsSubclassOf(baseType) || baseType.IsAssignableFrom(op))).ToArray();
                             if (Types != null && Types.Length > 0)
                             {
                                 return Types.FirstOrDefault();
