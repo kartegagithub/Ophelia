@@ -37,9 +37,14 @@ namespace Ophelia.Tasks
                 this.Timer.Stop();
                 this.Timer = null;
             }
+            this.OnApplicationStart();
             this.Timer = new System.Timers.Timer(interval);
             this.Timer.Elapsed += new System.Timers.ElapsedEventHandler(this.TimeElapsed);
             this.Timer.Start();
+        }
+        protected virtual void OnApplicationStart()
+        {
+
         }
         protected virtual void TimeElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

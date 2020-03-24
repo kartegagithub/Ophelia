@@ -152,7 +152,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders
             return control.Render();
         }
 
-        public static MvcHtmlString FilterboxField<T>(this FieldContainer<T> container, string Text, string name, string ajaxURL, object selectedValue, string valueMember = "ID", string DisplayMember = "Name", bool isRequired = false, object htmlAttributes = null, bool IsMultiple = false, bool CanTranslateLabelText = true) where T : class
+        public static MvcHtmlString FilterboxField<T>(this FieldContainer<T> container, string Text, string name, string ajaxURL, object selectedValue, string valueMember = "ID", string DisplayMember = "Name", bool isRequired = false, object htmlAttributes = null, bool IsMultiple = false, bool CanTranslateLabelText = true, object selectListValue = null) where T : class
         {
             var control = new Fields.FilterboxField<T>(container);
             control.DataControl.ID = name;
@@ -166,6 +166,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders
             control.HtmlAttributes = htmlAttributes;
             control.AjaxURL = ajaxURL;
             control.CanTranslateLabelText = CanTranslateLabelText;
+            control.SelectListValue = selectListValue;
             container.AddField(control);
             container.SetFieldProperties(control);
             return control.Render();

@@ -33,6 +33,7 @@ namespace Ophelia.Data.Model
         public long UserCreatedID { get { return this.GetValue(op => op.UserCreatedID); } set { this.SetValue(op => op.UserCreatedID, value); } }
         public long UserModifiedID { get { return this.GetValue(op => op.UserModifiedID); } set { this.SetValue(op => op.UserModifiedID, value); } }
         public long StatusID { get { return this.GetValue(op => op.StatusID); } set { this.SetValue(op => op.StatusID, value); } }
+
         private void SetTracker(DataEntityTracker tracker)
         {
             this._Tracker = tracker;

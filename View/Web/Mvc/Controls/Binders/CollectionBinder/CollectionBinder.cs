@@ -728,7 +728,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             }
                             var val = Convert.ToBoolean(item.GetPropertyValue(this.Configuration.CheckboxProperty));
 
-                            this.Output.Write("<input type='checkbox' class='binder-checkbox' name='" + this.Configuration.CheckboxProperty + "' id='" + id + "'" + (val ? " checked" : "") + " value='" + identifier + "' " + this.GetBinderCheckboxProperties(item) + ">");
+                            this.Output.Write("<input type='checkbox' class='binder-checkbox' name='" + id + "' id='" + id + "'" + (val ? " checked" : "") + " value='" + identifier + "' " + this.GetBinderCheckboxProperties(item) + ">");
                         }
                         this.Output.Write("</td>");
                     }
@@ -745,6 +745,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             try
                             {
                                 link.ID = column.FormatName() + "_" + item.GetPropertyValue("ID");
+                                link.Name = column.FormatName() + "_" + item.GetPropertyValue("ID");
                                 link.CssClass = column.FormatName() + "_" + item.GetPropertyValue("ID");
                             }
                             catch { }
