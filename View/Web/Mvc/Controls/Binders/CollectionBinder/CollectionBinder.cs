@@ -15,6 +15,7 @@ using Ophelia.Web.Extensions;
 using System.Transactions;
 using Ophelia.Data;
 using Ophelia.Data.Querying.Query;
+using Ophelia;
 
 namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
 {
@@ -657,7 +658,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                         this.Output.Write(" data-name='" + column.Name + "'");
                         this.Output.Write(">");
                         if (!column.HideColumnTitle)
-                            this.Output.Write(column.FormatText());
+                            this.Output.Write("<i>" + column.FormatText() + "</i>");
                         this.Output.Write("</th>");
                     }
                 }

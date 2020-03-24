@@ -32,6 +32,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
         }
         protected override void onBeforeRenderControl(TextWriter writer)
         {
+            //// decimal
             base.onBeforeRenderControl(writer);
             this.DataControl.CssClass += " numeric";
             this.DataControl.Value = this.FormatValue(this.DataControl.Value);

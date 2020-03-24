@@ -36,7 +36,7 @@ namespace Ophelia.Web.Application.Client
         }
         public object Item(string Key)
         {
-             return this.InnerList[Key];
+            return this.InnerList[Key];
         }
         public IList KeyList
         {
@@ -68,6 +68,7 @@ namespace Ophelia.Web.Application.Client
         {
             if (string.IsNullOrEmpty(Value))
                 Value = "";
+            Value = Value.RemoveXSS();
             if (this.InnerList[Identifier] == null)
             {
                 this.Add(Identifier, Value);
@@ -89,6 +90,9 @@ namespace Ophelia.Web.Application.Client
         }
         public void Add(string Identifier, string Value)
         {
+            if (string.IsNullOrEmpty(Value))
+                Value = "";
+            Value = Value.RemoveXSS();
             if (this.InnerList[Identifier] == null)
             {
                 this.ValueCreated = false;
@@ -119,7 +123,13 @@ namespace Ophelia.Web.Application.Client
                         this.sValue += this.KeyList[n] + "=false&";
                     }
                     else
+                    {
+                        var value = Convert.ToString(this.ValueList[n]);
+                        if (string.IsNullOrEmpty(value))
+                            value = "";
+                        value = value.RemoveXSS();
                         this.sValue += this.KeyList[n] + "=" + this.ValueList[n] + "&";
+                    }
                 }
                 if (this.sValue.Length - 1 == this.sValue.LastIndexOf('&'))
                     this.sValue = Strings.Left(this.sValue, this.sValue.Length - 1);
@@ -135,14 +145,19 @@ namespace Ophelia.Web.Application.Client
                 {
                     if ((this.Request.Unvalidated.QueryString.Keys[n] != null) && !string.IsNullOrEmpty(this.Request.Unvalidated.QueryString.Keys[n]))
                     {
+                        var value = Convert.ToString(this.Request.Unvalidated.QueryString[this.Request.Unvalidated.QueryString.Keys[n]]);
+                        if (string.IsNullOrEmpty(value))
+                            value = "";
+                        value = value.RemoveXSS();
+
                         if (this.InnerList[this.Request.Unvalidated.QueryString.Keys[n]] == null)
                         {
-                            this.InnerList[this.Request.Unvalidated.QueryString.Keys[n]] = this.Request.Unvalidated.QueryString[this.Request.Unvalidated.QueryString.Keys[n]];
+                            this.InnerList[this.Request.Unvalidated.QueryString.Keys[n]] = value;
                             ItemCount += 1;
                         }
                         else
                         {
-                            this.InnerList[this.Request.Unvalidated.QueryString.Keys[n]] = this.Request.Unvalidated.QueryString[this.Request.Unvalidated.QueryString.Keys[n]];
+                            this.InnerList[this.Request.Unvalidated.QueryString.Keys[n]] = value;
                         }
                     }
                 }
@@ -150,14 +165,19 @@ namespace Ophelia.Web.Application.Client
                 {
                     if ((this.Request.Unvalidated.Form.Keys[n] != null) && !string.IsNullOrEmpty(this.Request.Unvalidated.Form.Keys[n]))
                     {
+                        var value = Convert.ToString(this.Request.Unvalidated.Form[this.Request.Unvalidated.Form.Keys[n]]);
+                        if (string.IsNullOrEmpty(value))
+                            value = "";
+                        value = value.RemoveXSS();
+
                         if (this.InnerList[this.Request.Unvalidated.Form.Keys[n]] == null)
                         {
-                            this.InnerList[this.Request.Unvalidated.Form.Keys[n]] = this.Request.Unvalidated.Form[this.Request.Unvalidated.Form.Keys[n]];
+                            this.InnerList[this.Request.Unvalidated.Form.Keys[n]] = value;
                             ItemCount += 1;
                         }
                         else
                         {
-                            this.InnerList[this.Request.Unvalidated.Form.Keys[n]] = this.Request.Unvalidated.Form[this.Request.Unvalidated.Form.Keys[n]];
+                            this.InnerList[this.Request.Unvalidated.Form.Keys[n]] = value;
                         }
                     }
                 }
@@ -212,19 +232,19 @@ namespace Ophelia.Web.Application.Client
         {
             this.oInnerList = new SortedList();
         }
-        public QueryString(string RawUrl): this()
+        public QueryString(string RawUrl) : this()
         {
             this.sRawUrl = RawUrl;
             this.AddExistingIdentifiers();
         }
 
-        public QueryString(HttpRequestBase Request): this()
+        public QueryString(HttpRequestBase Request) : this()
         {
             this.oRequest = Request;
             this.AddExistingIdentifiers();
         }
 
-        public QueryString(HttpRequest Request): this(Request.ToRequestBase()){ }
+        public QueryString(HttpRequest Request) : this(Request.ToRequestBase()) { }
 
         public QueryString(string RawUrl, HttpRequestBase Request)
             : this()
