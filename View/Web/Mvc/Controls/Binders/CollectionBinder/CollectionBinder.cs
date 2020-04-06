@@ -708,7 +708,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     link.URL = link.URL.Trim('&') + "&" + allIDs;
 
                     this.Output.Write("<tr ");
-                    this.Output.Write("data-name=\"" + this.GetDisplayName(item) + "\" ");
+                    this.Output.Write("data-name=\"" + System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.GetDisplayName(item), false) + "\" ");
                     this.RenderRowProperties(item, counter);
                     this.Output.Write(">");
                     if (this.Configuration.AddBlankColumnToStart)
