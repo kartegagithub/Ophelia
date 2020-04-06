@@ -22,6 +22,9 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
         {
             if (this.ExpressionValue != null)
                 this.DataControl.Value = Convert.ToString(this.ExpressionValue);
+
+            this.DataControl.Value = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.DataControl.Value, false);
+
             return this.DataControl.Draw();
         }
         public HiddenField(FieldContainer<T> FieldContainer) :base(FieldContainer)

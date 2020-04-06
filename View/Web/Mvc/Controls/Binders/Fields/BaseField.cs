@@ -139,6 +139,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             {
                 this.LabelControl.Controls.Add(new System.Web.UI.WebControls.Literal() { Text = "<i class='" + this.HelpClassName + "' data-help-tooltip='" + this.HelpTip + "' data-help-navigator='" + this.HelpNavigator + "'></i>" });
             }
+            this.LabelControl.Text = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.LabelControl.Text, false);
         }
         protected abstract WebControl CreateDataControl();
 

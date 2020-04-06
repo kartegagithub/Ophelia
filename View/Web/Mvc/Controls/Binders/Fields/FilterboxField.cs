@@ -135,7 +135,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             this.DataControl.Attributes.Add("data-clear", "true");
 
             if (!string.IsNullOrEmpty(this.AjaxURL))
-                this.DataControl.Attributes.Add("data-url", this.AjaxURL);
+                this.DataControl.Attributes.Add("data-url", System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.AjaxURL, false));
 
             if (this.SelectedValue != null && this.SelectedValue is SelectListItem)
                 this.HasValue = !string.IsNullOrEmpty((this.SelectedValue as SelectListItem).Value) && !(this.SelectedValue as SelectListItem).Value.Equals("0");

@@ -23,6 +23,8 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             base.onBeforeRenderControl(writer);
             if (this.ExpressionValue != null)
                 this.DataControl.Value = Convert.ToString(this.ExpressionValue);
+
+            this.DataControl.Value = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.DataControl.Value, false);
             this.HasValue = !string.IsNullOrEmpty(this.DataControl.Value);
         }
         public TextboxField(FieldContainer<T> FieldContainer) :base(FieldContainer)

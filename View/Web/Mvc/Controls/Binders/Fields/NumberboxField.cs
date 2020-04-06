@@ -39,6 +39,8 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             if (this.Mode == NumberboxFieldMode.SingleSelection)
             {
                 this.HasValue = this.DataControl.Value.IsNumeric() && this.DataControl.Value.ToInt64() > 0;
+
+                this.DataControl.Value = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.DataControl.Value, false);
             }
             else if (this.Mode == NumberboxFieldMode.DoubleSelection)
             {
@@ -87,6 +89,9 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
 
                 SecondDataControl.Attributes.Add("placeholder", this.FieldContainer.Client.TranslateText(this.HighPlaceHolder));
                 this.DataControl.Attributes.Add("placeholder", this.FieldContainer.Client.TranslateText(this.LowPlaceHolder));
+
+                this.DataControl.Value = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.DataControl.Value, false);
+                SecondDataControl.Value = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(SecondDataControl.Value, false);
             }
         }
         public void SetFormat(string format, string defaultDecimalFormat, string defaultIntFormat)

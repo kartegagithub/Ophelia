@@ -48,7 +48,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             if (this.AllowNew)
             {
                 this.DataControl.Attributes.Add("data-allow-new", "true");
-                this.DataControl.Attributes.Add("data-new-url", this.NewURL);
+                this.DataControl.Attributes.Add("data-new-url", System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.NewURL, false));
             }
             if (this.AllowView)
             {

@@ -24,6 +24,9 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             this.DataControl.CssClass += " richtext";
             if (this.ExpressionValue != null)
                 this.DataControl.Value = Convert.ToString(this.ExpressionValue);
+
+
+            this.DataControl.Value = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.DataControl.Value, false);
         }
         public RichTextField(FieldContainer<T> FieldContainer) : base(FieldContainer)
         {

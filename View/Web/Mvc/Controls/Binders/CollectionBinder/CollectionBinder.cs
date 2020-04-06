@@ -774,7 +774,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                 }
                             }
                             else
+                            {
+                                link.Text = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(link.Text, false);
                                 this.Output.Write(link.Draw());
+                            }
                             this.OnAfterRenderCell(item, column);
                             this.Output.Write("</td>");
                         }

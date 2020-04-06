@@ -36,6 +36,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             {
                 this.DataControl.Text = this.Value;
             }
+            this.DataControl.Text = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.DataControl.Text, false);
         }
         public LabelField(FieldContainer<T> FieldContainer) :base(FieldContainer)
         {
