@@ -320,80 +320,63 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                     else
                                     {
                                         if (value.IndexOf(",") > -1)
-                                            if (doubleSelection)
+                                        {
+                                            var orParams = "";
+                                            var parameters = new List<object>();
+                                            var values = value.Split(',');
+                                            var counter = 0;
+                                            foreach (var val in values)
                                             {
-                                                var orParams = "";
-                                                var parameters = new List<object>();
-                                                var values = value.Split(',');
-                                                var counter = 0;
-                                                foreach (var val in values)
-                                                    if (!string.IsNullOrEmpty(lowValue))
-                                                    {
-                                                        try
-                                                        {
-                                                            parameters.Add(propType.ConvertData(val));
-                                                            if (!string.IsNullOrEmpty(orParams))
-                                                                orParams += " || ";
-                                                            orParams += entityProp + " = @" + counter;
-                                                        }
+                                                try
+                                                {
+                                                    parameters.Add(propType.ConvertData(val));
+                                                    if (!string.IsNullOrEmpty(orParams))
+                                                        orParams += " || ";
+                                                    orParams += entityProp + " = @" + counter;
+                                                }
 #pragma warning disable CS0168 // Variable is declared but never used
-                                                        catch (Exception ex)
+                                                catch (Exception ex)
 #pragma warning restore CS0168 // Variable is declared but never used
-                                                        {
+                                                {
 
-                                                        }
-                                                        counter++;
-                                                    }
-                                                if (parameters.Count > 0)
-                                                    formattedValue = propType.ConvertData(lowValue);
+                                                }
+                                                counter++;
+                                            }
+                                            if (parameters.Count > 0)
                                                 if (isQueryableDataSet)
                                                     this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, parameters.ToArray(), Comparison.In);
-                                                this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
-                                            else
-                                                this.DataSource.Query = this.DataSource.Query.Where(orParams, parameters.ToArray());
+                                                else
+                                                    this.DataSource.Query = this.DataSource.Query.Where(orParams, parameters.ToArray());
+                                        }
+                                        else
+                                        {
+                                            if (doubleSelection)
+                                            {
+                                                if (!string.IsNullOrEmpty(lowValue))
+                                                {
+                                                    formattedValue = propType.ConvertData(lowValue);
+                                                    if (isQueryableDataSet)
+                                                        this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
+                                                    else
+                                                        this.DataSource.Query = this.DataSource.Query.Where(entityProp + " >= @0", formattedValue);
+                                                }
+                                                if (!string.IsNullOrEmpty(highValue))
+                                                {
+                                                    formattedValue = propType.ConvertData(highValue);
+                                                    if (isQueryableDataSet)
+                                                        this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
+                                                    else
+                                                        this.DataSource.Query = this.DataSource.Query.Where(entityProp + " <= @0", formattedValue);
+                                                }
                                             }
                                             else
                                             {
-                                                if (doubleSelection)
-                                                {
-                                                    if (!string.IsNullOrEmpty(lowValue))
-                                                    {
-                                                        formattedValue = propType.ConvertData(lowValue);
-                                                        if (isQueryableDataSet)
-                                                            this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
-                                                        else
-                                                            this.DataSource.Query = this.DataSource.Query.Where(entityProp + " >= @0", formattedValue);
-                                                    }
-                                                    if (!string.IsNullOrEmpty(highValue))
-                                                    {
-                                                        formattedValue = propType.ConvertData(highValue);
-                                                        if (isQueryableDataSet)
-                                                            this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
-                                                        else
-                                                            this.DataSource.Query = this.DataSource.Query.Where(entityProp + " <= @0", formattedValue);
-                                                    }
-                                                    this.DataSource.Query = this.DataSource.Query.Where(entityProp + " >= @0", formattedValue);
-                                                }
+                                                formattedValue = propType.ConvertData(value);
+                                                if (isQueryableDataSet)
+                                                    this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
                                                 else
-                                                if (!string.IsNullOrEmpty(highValue))
-                                                {
-                                                    formattedValue = propType.ConvertData(value);
-                                                    formattedValue = propType.ConvertData(highValue);
-                                                    if (isQueryableDataSet)
-                                                        this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
-                                                    this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
-                                            else
-                                                this.DataSource.Query = this.DataSource.Query.Where(entityProp + " = @0", formattedValue);
-                                                    this.DataSource.Query = this.DataSource.Query.Where(entityProp + " <= @0", formattedValue);
-                                                }
+                                                    this.DataSource.Query = this.DataSource.Query.Where(entityProp + " = @0", formattedValue);
                                             }
-                                        else
-                                        {
-                                            formattedValue = propType.ConvertData(value);
-                                            if (isQueryableDataSet)
-                                                this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
-                                            else
-                                                this.DataSource.Query = this.DataSource.Query.Where(entityProp + " = @0", formattedValue);
                                         }
                                     }
                                 }
