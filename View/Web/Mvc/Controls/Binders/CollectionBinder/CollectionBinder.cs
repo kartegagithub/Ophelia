@@ -281,32 +281,120 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                 }
                                 else if (propType.IsNumeric())
                                 {
-                                    if (doubleSelection)
+                                    if (propType.Name == "Decimal")
                                     {
-                                        if (!string.IsNullOrEmpty(lowValue))
+                                        var customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+                                        if (customCulture.NumberFormat.NumberDecimalSeparator == ",")
+                                            value = value.Replace(".", ",");
+                                        else if (customCulture.NumberFormat.NumberDecimalSeparator == ".")
+                                            value = value.Replace(",", ".");
+
+                                        if (doubleSelection)
                                         {
-                                            formattedValue = propType.ConvertData(lowValue);
-                                            if (isQueryableDataSet)
-                                                this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
-                                            else
-                                                this.DataSource.Query = this.DataSource.Query.Where(entityProp + " >= @0", formattedValue);
+                                            if (!string.IsNullOrEmpty(lowValue))
+                                            {
+                                                formattedValue = propType.ConvertData(lowValue);
+                                                if (isQueryableDataSet)
+                                                    this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
+                                                else
+                                                    this.DataSource.Query = this.DataSource.Query.Where(entityProp + " >= @0", formattedValue);
+                                            }
+                                            if (!string.IsNullOrEmpty(highValue))
+                                            {
+                                                formattedValue = propType.ConvertData(highValue);
+                                                if (isQueryableDataSet)
+                                                    this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
+                                                else
+                                                    this.DataSource.Query = this.DataSource.Query.Where(entityProp + " <= @0", formattedValue);
+                                            }
                                         }
-                                        if (!string.IsNullOrEmpty(highValue))
+                                        else
                                         {
-                                            formattedValue = propType.ConvertData(highValue);
+                                            formattedValue = propType.ConvertData(value);
                                             if (isQueryableDataSet)
-                                                this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
+                                                this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
                                             else
-                                                this.DataSource.Query = this.DataSource.Query.Where(entityProp + " <= @0", formattedValue);
+                                                this.DataSource.Query = this.DataSource.Query.Where(entityProp + " = @0", formattedValue);
                                         }
                                     }
                                     else
                                     {
-                                        formattedValue = propType.ConvertData(value);
-                                        if (isQueryableDataSet)
-                                            this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
+                                        if (value.IndexOf(",") > -1)
+                                            if (doubleSelection)
+                                            {
+                                                var orParams = "";
+                                                var parameters = new List<object>();
+                                                var values = value.Split(',');
+                                                var counter = 0;
+                                                foreach (var val in values)
+                                                    if (!string.IsNullOrEmpty(lowValue))
+                                                    {
+                                                        try
+                                                        {
+                                                            parameters.Add(propType.ConvertData(val));
+                                                            if (!string.IsNullOrEmpty(orParams))
+                                                                orParams += " || ";
+                                                            orParams += entityProp + " = @" + counter;
+                                                        }
+#pragma warning disable CS0168 // Variable is declared but never used
+                                                        catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
+                                                        {
+
+                                                        }
+                                                        counter++;
+                                                    }
+                                                if (parameters.Count > 0)
+                                                    formattedValue = propType.ConvertData(lowValue);
+                                                if (isQueryableDataSet)
+                                                    this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, parameters.ToArray(), Comparison.In);
+                                                this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
+                                            else
+                                                this.DataSource.Query = this.DataSource.Query.Where(orParams, parameters.ToArray());
+                                            }
+                                            else
+                                            {
+                                                if (doubleSelection)
+                                                {
+                                                    if (!string.IsNullOrEmpty(lowValue))
+                                                    {
+                                                        formattedValue = propType.ConvertData(lowValue);
+                                                        if (isQueryableDataSet)
+                                                            this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.GreaterAndEqual);
+                                                        else
+                                                            this.DataSource.Query = this.DataSource.Query.Where(entityProp + " >= @0", formattedValue);
+                                                    }
+                                                    if (!string.IsNullOrEmpty(highValue))
+                                                    {
+                                                        formattedValue = propType.ConvertData(highValue);
+                                                        if (isQueryableDataSet)
+                                                            this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
+                                                        else
+                                                            this.DataSource.Query = this.DataSource.Query.Where(entityProp + " <= @0", formattedValue);
+                                                    }
+                                                    this.DataSource.Query = this.DataSource.Query.Where(entityProp + " >= @0", formattedValue);
+                                                }
+                                                else
+                                                if (!string.IsNullOrEmpty(highValue))
+                                                {
+                                                    formattedValue = propType.ConvertData(value);
+                                                    formattedValue = propType.ConvertData(highValue);
+                                                    if (isQueryableDataSet)
+                                                        this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
+                                                    this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue, Comparison.LessAndEqual);
+                                            else
+                                                this.DataSource.Query = this.DataSource.Query.Where(entityProp + " = @0", formattedValue);
+                                                    this.DataSource.Query = this.DataSource.Query.Where(entityProp + " <= @0", formattedValue);
+                                                }
+                                            }
                                         else
-                                            this.DataSource.Query = this.DataSource.Query.Where(entityProp + " = @0", formattedValue);
+                                        {
+                                            formattedValue = propType.ConvertData(value);
+                                            if (isQueryableDataSet)
+                                                this.DataSource.Query = (this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>).Where(propTree, formattedValue);
+                                            else
+                                                this.DataSource.Query = this.DataSource.Query.Where(entityProp + " = @0", formattedValue);
+                                        }
                                     }
                                 }
                                 else
