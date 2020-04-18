@@ -10,6 +10,7 @@ using Ophelia.Reflection;
 using Ophelia.Extensions;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using Microsoft.Security.Application;
 
 namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
 {
@@ -135,7 +136,8 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             this.DataControl.Attributes.Add("data-clear", "true");
 
             if (!string.IsNullOrEmpty(this.AjaxURL))
-                this.DataControl.Attributes.Add("data-url", System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.AjaxURL, false));
+                this.DataControl.Attributes.Add("data-url", Sanitizer.GetSafeHtmlFragment(this.AjaxURL));
+            
 
             if (this.SelectedValue != null && this.SelectedValue is SelectListItem)
                 this.HasValue = !string.IsNullOrEmpty((this.SelectedValue as SelectListItem).Value) && !(this.SelectedValue as SelectListItem).Value.Equals("0");
