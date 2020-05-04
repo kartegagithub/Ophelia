@@ -285,9 +285,23 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                     {
                                         var customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
                                         if (customCulture.NumberFormat.NumberDecimalSeparator == ",")
-                                            value = value.Replace(".", ",");
+                                        {
+                                            if (!string.IsNullOrEmpty(value))
+                                                value = value.Replace(".", ",");
+                                            if (!string.IsNullOrEmpty(lowValue))
+                                                lowValue = lowValue.Replace(".", ",");
+                                            if (!string.IsNullOrEmpty(highValue))
+                                                highValue = highValue.Replace(".", ",");
+                                        }
                                         else if (customCulture.NumberFormat.NumberDecimalSeparator == ".")
-                                            value = value.Replace(",", ".");
+                                        {
+                                            if (!string.IsNullOrEmpty(value))
+                                                value = value.Replace(",", ".");
+                                            if (!string.IsNullOrEmpty(lowValue))
+                                                lowValue = lowValue.Replace(",", ".");
+                                            if (!string.IsNullOrEmpty(highValue))
+                                                highValue = highValue.Replace(",", ".");
+                                        }
 
                                         if (doubleSelection)
                                         {
@@ -781,6 +795,14 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             this.OnBeforeGetCellValue(item, column);
                             var value = column.GetValue(item);
                             link.Text = Convert.ToString(value);
+                            link.Title = link.Text;
+                            if (column.MaxTextLength > 0)
+                            {
+                                if (!string.IsNullOrEmpty(link.Text) && link.Text.Length > column.MaxTextLength)
+                                {
+                                    link.Text = link.Text.Left(column.MaxTextLength) + "...";
+                                }
+                            }
                             try
                             {
                                 link.ID = column.FormatName() + "_" + item.GetPropertyValue("ID");
@@ -788,14 +810,6 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                 link.CssClass = column.FormatName() + "_" + item.GetPropertyValue("ID");
                             }
                             catch { }
-                            if (column.MaxTextLength > 0)
-                            {
-                                if (!string.IsNullOrEmpty(link.Text) && link.Text.Length > column.MaxTextLength)
-                                {
-                                    link.Title = link.Text;
-                                    link.Text = link.Text.Left(column.MaxTextLength) + "...";
-                                }
-                            }
                             this.Output.Write("<td ");
                             if (!string.IsNullOrEmpty(column.Width))
                                 this.Output.Write("style='width:" + (column.Width.IndexOf("%") == -1 ? column.Width + "px" : column.Width) + "'");
