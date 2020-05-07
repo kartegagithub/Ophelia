@@ -35,31 +35,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto">
-      <HintPath>..\..\..\..\Packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>..\..\..\Packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\Packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\Packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Amazon">
-      <HintPath>..\..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Amazon.dll</HintPath>
+      <HintPath>..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Amazon.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Apple">
-      <HintPath>..\..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Apple.dll</HintPath>
+      <HintPath>..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Apple.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Blackberry">
-      <HintPath>..\..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Blackberry.dll</HintPath>
+      <HintPath>..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Blackberry.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Core">
-      <HintPath>..\..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Core.dll</HintPath>
+      <HintPath>..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Firefox">
-      <HintPath>..\..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Firefox.dll</HintPath>
+      <HintPath>..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Firefox.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Google">
-      <HintPath>..\..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Google.dll</HintPath>
+      <HintPath>..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Google.dll</HintPath>
     </Reference>
     <Reference Include="PushSharp.Windows">
-      <HintPath>..\..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Windows.dll</HintPath>
+      <HintPath>..\..\..\Packages\PushSharp.4.0.10\lib\net45\PushSharp.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
