@@ -137,7 +137,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.Fields
             }
             if (!string.IsNullOrEmpty(this.HelpClassName) && (!string.IsNullOrEmpty(this.HelpTip)) || !string.IsNullOrEmpty(this.HelpNavigator))
             {
-                this.LabelControl.Controls.Add(new System.Web.UI.WebControls.Literal() { Text = "<i class='" + this.HelpClassName + "' data-help-tooltip='" + this.HelpTip + "' data-help-navigator='" + this.HelpNavigator + "'></i>" });
+                this.LabelControl.Controls.Add(new System.Web.UI.WebControls.Literal() { Text = "<i class=\"" + this.HelpClassName + "\" data-help-tooltip=\"" + this.HelpTip + "\" data-help-navigator=\"" + this.HelpNavigator + "\"></i>" });
             }
             this.LabelControl.Text = System.Web.Security.AntiXss.AntiXssEncoder.HtmlEncode(this.LabelControl.Text, false);
         }
