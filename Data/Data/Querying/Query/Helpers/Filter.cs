@@ -246,7 +246,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                 {
                     isStringFilter = this.IsStringProperty(this.PropertyInfo, this.Value);
                     if (query.Context.Connection.Type == DatabaseType.Oracle && isStringFilter)
-                        sb.Append("UPPER(");
+                        sb.Append("NLS_UPPER(");
 
                     if (subqueryTable == null)
                         sb.Append(query.Data.MainTable.Alias);
@@ -256,7 +256,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                     sb.Append(query.Context.Connection.FormatDataElement(query.Context.Connection.GetMappedFieldName(this.Name)));
 
                     if (query.Context.Connection.Type == DatabaseType.Oracle && isStringFilter)
-                        sb.Append(")");
+                        sb.Append(",'NLS_SORT = XTURKISH')");
                 }
                 else
                 {
@@ -319,7 +319,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                             {
                                 isStringFilter = this.IsStringProperty(props.LastOrDefault(), null);
                                 if (query.Context.Connection.Type == DatabaseType.Oracle && isStringFilter)
-                                    name += "UPPER(";
+                                    name += "NLS_UPPER(";
 
                                 name += joinedTable.Alias;
                                 name += ".";
@@ -336,7 +336,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                             name += query.Context.Connection.FormatDataElement(query.Context.Connection.GetMappedFieldName(_prop.Name));
 
                             if (query.Context.Connection.Type == DatabaseType.Oracle && isStringFilter)
-                                name += ")";
+                                name += ",'NLS_SORT = XTURKISH')";
                         }
                     }
                     sb.Append(name);
