@@ -255,9 +255,9 @@ namespace Ophelia.Data.Querying.Query.Helpers
                     hasParentQuery = true;
                 }
                 if (hasParentQuery)
-                    this.Table = table.AddJoin(new Table(query, this.EntityType, joinType, "IN" + table.Joins.Count + Ophelia.Utility.GenerateRandomPassword(5)) { JoinOn = query.Context.Connection.GetMappedFieldName(this.PropertyInfo.Name + "ID"), JoinedTable = table }, table.Joins);
+                    this.Table = table.AddJoin(new Table(query, this.EntityType, joinType, table.Joins.Count + Ophelia.Utility.GenerateRandomPassword(2)) { JoinOn = query.Context.Connection.GetMappedFieldName(this.PropertyInfo.Name + "ID"), JoinedTable = table }, table.Joins);
                 else
-                    this.Table = table.AddJoin(new Table(query, this.EntityType, joinType, "IN" + table.Joins.Count + Ophelia.Utility.GenerateRandomPassword(5)) { JoinOn = query.Context.Connection.GetMappedFieldName(this.PropertyInfo.Name + "ID"), JoinedTable = table }, table.Joins, query.Data.MainTable.Joins);
+                    this.Table = table.AddJoin(new Table(query, this.EntityType, joinType, table.Joins.Count + Ophelia.Utility.GenerateRandomPassword(2)) { JoinOn = query.Context.Connection.GetMappedFieldName(this.PropertyInfo.Name + "ID"), JoinedTable = table }, table.Joins, query.Data.MainTable.Joins);
                 this.Tables.Add(this.Table);
                 sb.Append(query.Context.Connection.GetAllSelectFields(this.Table, true, this.BuildAsXML));
                 if (this.SubIncluders.Count > 0)
@@ -305,26 +305,33 @@ namespace Ophelia.Data.Querying.Query.Helpers
                     var fieldName = query.Context.Connection.CheckCharLimit(query.Context.Connection.GetMappedFieldName(this.Table.Alias + "_" + p.Name));
                     if (row.Table.Columns.Contains(fieldName) && row[fieldName] != DBNull.Value)
                     {
-                        if (referencedEntity == null)
+                        try
                         {
-                            referencedEntity = Activator.CreateInstance(this.PropertyInfo.PropertyType);
-                            if (referencedEntity is Model.DataEntity)
-                                (referencedEntity as Model.DataEntity).Tracker.State = EntityState.Loading;
-                        }
-                        if (p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
-                        {
-                            var value = row[fieldName];
-                            if (value == null)
+                            if (referencedEntity == null)
                             {
-                                p.SetValue(referencedEntity, value);
+                                referencedEntity = Activator.CreateInstance(this.PropertyInfo.PropertyType);
+                                if (referencedEntity is Model.DataEntity)
+                                    (referencedEntity as Model.DataEntity).Tracker.State = EntityState.Loading;
+                            }
+                            if (p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+                            {
+                                var value = row[fieldName];
+                                if (value == null)
+                                {
+                                    p.SetValue(referencedEntity, value);
+                                }
+                                else
+                                {
+                                    p.SetValue(referencedEntity, Nullable.GetUnderlyingType(p.PropertyType).ConvertData(value));
+                                }
                             }
                             else
-                            {
-                                p.SetValue(referencedEntity, Nullable.GetUnderlyingType(p.PropertyType).ConvertData(value));
-                            }
+                                p.SetValue(referencedEntity, p.PropertyType.ConvertData(row[fieldName]));
                         }
-                        else
-                            p.SetValue(referencedEntity, p.PropertyType.ConvertData(row[fieldName]));
+                        catch (Exception)
+                        {
+                            throw new Exception("Load failed while populating field " + fieldName + " on type " + referencedEntity?.GetType().FullName);
+                        }                       
                     }
                 }
                 if (referencedEntity != null)
