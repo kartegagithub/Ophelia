@@ -661,6 +661,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 {
                     this.Output.Write("<th class='no-sort'></th>");
                 }
+                var dataFilters = this.Request.QueryString.ToString().Replace("IsAjaxRequest=1", "").Replace("isajaxrequest=1", "").Trim('&');
 
                 this.RenderOnBeforeDrawLine(null);
                 foreach (var column in this.Columns)
@@ -805,9 +806,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             }
                             try
                             {
-                                link.ID = column.FormatName() + "_" + item.GetPropertyValue("ID");
-                                link.Name = column.FormatName() + "_" + item.GetPropertyValue("ID");
-                                link.CssClass = column.FormatName() + "_" + item.GetPropertyValue("ID");
+                                var id = item.GetPropertyValue("ID");
+                                link.ID = column.FormatName() + "_" + id;
+                                link.Name = column.FormatName() + "_" + id;
+                                link.CssClass = column.FormatName() + "_" + id;
                             }
                             catch { }
                             this.Output.Write("<td ");
@@ -822,7 +824,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             {
                                 using (var editControl = column.GetEditableControl(item, value, this.Request))
                                 {
-                                    editControl.Attributes.Add("data-filters", this.Request.QueryString.ToString().Replace("IsAjaxRequest=1", "").Trim('&'));
+                                    editControl.Attributes.Add("data-filters", dataFilters);
                                     this.Output.Write(editControl.Draw());
                                 }
                             }
