@@ -655,7 +655,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     this.Output.Write("<th class='no-sort'></th>");
                 if (this.Configuration.Checkboxes && this.Configuration.ShowCheckAll)
                 {
-                    this.Output.Write("<th class='no-sort'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'> " + this.Client.TranslateText("All") + "</th>");
+                    this.Output.Write("<th class='no-sort'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'><i> " + this.Client.TranslateText("All") + "</i></th>");
                 }
                 else if (this.Configuration.Checkboxes)
                 {
