@@ -47,7 +47,7 @@ namespace Ophelia.Cryptography
                 byte[] Buffer = Convert.FromBase64String(richText);
                 return System.Text.Encoding.ASCII.GetString(Decryptor.TransformFinalBlock(Buffer, 0, Buffer.Length));
             }
-            catch
+            catch(Exception ex)
             {
                 return richText;
             }

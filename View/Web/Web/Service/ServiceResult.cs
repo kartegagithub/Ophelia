@@ -14,6 +14,8 @@ namespace Ophelia.Web.Service
         [DataMember]
         public ServicePerformance Performance { get; set; }
         public ServiceExceptionHandler Handler { get; set; }
+
+        [DataMember]
         public Dictionary<string, object> ExtraData { get; set; }
 
         [DataMember]

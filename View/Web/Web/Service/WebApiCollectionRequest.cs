@@ -11,6 +11,7 @@ namespace Ophelia.Web.Service
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public Data.Querying.Query.QueryData QueryData { get; set; }
         public WebApiCollectionRequest()
         {
             this.Parameters = new Dictionary<string, object>();
