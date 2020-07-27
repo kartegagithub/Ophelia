@@ -685,14 +685,14 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 this.Output.Write("<thead>");
                 this.Output.Write("<tr>");
                 if (this.Configuration.AddBlankColumnToStart)
-                    this.Output.Write("<th class='no-sort'></th>");
+                    this.Output.Write("<th class='no-sort' data-name='BlankColumn'></th>");
                 if (this.Configuration.Checkboxes && this.Configuration.ShowCheckAll)
                 {
-                    this.Output.Write("<th class='no-sort'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'><i> " + this.Client.TranslateText("All") + "</i></th>");
+                    this.Output.Write("<th class='no-sort' data-name='CheckboxAll'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'><i> " + this.Client.TranslateText("All") + "</i></th>");
                 }
                 else if (this.Configuration.Checkboxes)
                 {
-                    this.Output.Write("<th class='no-sort'></th>");
+                    this.Output.Write("<th class='no-sort' data-name='CheckboxAll'></th>");
                 }
                 var dataFilters = this.Request.QueryString.ToString().Replace("IsAjaxRequest=1", "").Replace("isajaxrequest=1", "").Trim('&');
 
@@ -742,7 +742,13 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                         }
                         if (!string.IsNullOrEmpty(className))
                             this.Output.Write(" class='" + className + "'");
-                        this.Output.Write(" data-name='" + column.Name + "'");
+
+                        var name = column.Name;
+                        if (string.IsNullOrEmpty(name))
+                            name = column.FormatName();
+
+                        this.Output.Write(" data-name='" + name + "'");
+                        this.Output.Write(" title='" + column.FormatText() + "'");
                         this.Output.Write(">");
                         if (!column.HideColumnTitle)
                             this.Output.Write("<i>" + column.FormatText() + "</i>");
