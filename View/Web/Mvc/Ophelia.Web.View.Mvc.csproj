@@ -236,6 +236,10 @@
       <Project>{65b6e4b7-6857-406a-9145-9f51c29f0614}</Project>
       <Name>Ophelia.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Data\EntityFramework\Ophelia.Data.EntityFramework.csproj">
+      <Project>{3b231488-74f5-4497-9802-1d997d43d55d}</Project>
+      <Name>Ophelia.Data.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Web\Ophelia.Web.csproj">
       <Project>{732ae156-646e-4037-9713-eac8e462b2f9}</Project>
       <Name>Ophelia.Web</Name>
