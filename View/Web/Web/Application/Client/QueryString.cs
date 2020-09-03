@@ -147,7 +147,7 @@ namespace Ophelia.Web.Application.Client
                     {
                         var value = Convert.ToString(this.Request.Unvalidated.QueryString[this.Request.Unvalidated.QueryString.Keys[n]]);
                         if (string.IsNullOrEmpty(value))
-                            value = "";
+                            continue;
                         value = value.RemoveXSS();
 
                         if (this.InnerList[this.Request.Unvalidated.QueryString.Keys[n]] == null)
@@ -167,7 +167,7 @@ namespace Ophelia.Web.Application.Client
                     {
                         var value = Convert.ToString(this.Request.Unvalidated.Form[this.Request.Unvalidated.Form.Keys[n]]);
                         if (string.IsNullOrEmpty(value))
-                            value = "";
+                            continue;
                         value = value.RemoveXSS();
 
                         if (this.InnerList[this.Request.Unvalidated.Form.Keys[n]] == null)

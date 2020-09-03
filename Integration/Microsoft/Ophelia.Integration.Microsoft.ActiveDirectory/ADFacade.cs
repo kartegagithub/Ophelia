@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ophelia;
 using System.Text.RegularExpressions;
+using Ophelia.Web.Service;
 
 namespace Ophelia.Integration.Microsoft.ActiveDirectory
 {
@@ -21,6 +22,46 @@ namespace Ophelia.Integration.Microsoft.ActiveDirectory
             var search = GetUserDirectorySearcher(userName, properties);
             return search.FindOne();
         }
+        public static string GetGroups(string path, string filterAttribute)
+        {
+            var search = new DirectorySearcher(path)
+            {
+                Filter = "(cn=" + filterAttribute + ")"
+            };
+            search.PropertiesToLoad.Add("memberOf");
+            var groupNames = new StringBuilder();
+
+            try
+            {
+                var result = search.FindOne();
+
+                int propertyCount = result.Properties["memberOf"].Count;
+
+                string dn;
+                int equalsIndex, commaIndex;
+
+                for (int propertyCounter = 0; propertyCounter < propertyCount; propertyCounter++)
+                {
+                    dn = (string)result.Properties["memberOf"][propertyCounter];
+
+                    equalsIndex = dn.IndexOf("=", 1);
+                    commaIndex = dn.IndexOf(",", 1);
+                    if (-1 == equalsIndex)
+                    {
+                        return null;
+                    }
+
+                    groupNames.Append(dn.Substring((equalsIndex + 1), (commaIndex - equalsIndex) - 1));
+                    groupNames.Append("|");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error obtaining group names. " + ex.Message);
+            }
+            return groupNames.ToString();
+        }
         private static DirectorySearcher GetUserDirectorySearcher(string userName, params string[] properties)
         {
             if (userName.IndexOf("\\") > -1)
@@ -31,7 +72,7 @@ namespace Ophelia.Integration.Microsoft.ActiveDirectory
             DirectorySearcher search = new DirectorySearcher(entry);
             search.Filter = "(&(objectClass=user)(anr=" + userName + "))";
 
-            if(properties != null)
+            if (properties != null)
             {
                 foreach (var item in properties)
                 {
@@ -74,6 +115,40 @@ namespace Ophelia.Integration.Microsoft.ActiveDirectory
                 return true;
             }
             return false;
+        }
+
+        public static ServiceObjectResult<SearchResult> GetAuthenticatedUserInfo(string domain, string username, string pwd, string path, string requestedUserName = "")
+        {
+            var Result = new ServiceObjectResult<SearchResult>();
+            string whitelist = @"^[a-zA-Z\-\.']$";
+            var pattern = new Regex(whitelist);
+
+            if (!pattern.IsMatch(domain) && !pattern.IsMatch(username))
+            {
+                if (string.IsNullOrEmpty(requestedUserName))
+                    requestedUserName = username;
+
+                string domainAndUsername = domain + @"\" + username;
+                try
+                {
+                    using (DirectoryEntry entry = new DirectoryEntry(path, domainAndUsername, pwd))
+                    {
+                        object obj = entry.NativeObject;
+                        using (var search = new DirectorySearcher(entry))
+                        {
+                            search.Filter = string.Format("(SAMAccountName={0})", requestedUserName);
+                            //search.PropertiesToLoad.Add("cn");
+                            obj = null;
+                            Result.SetData(search.FindOne());
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Result.Fail(ex);
+                }
+            }
+            return Result;
         }
     }
 }

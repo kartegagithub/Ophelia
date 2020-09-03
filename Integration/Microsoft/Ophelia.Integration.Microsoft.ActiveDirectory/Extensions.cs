@@ -11,6 +11,10 @@ namespace Ophelia.Integration.Microsoft.ActiveDirectory
     {
         public static object GetPropertyValue(this SearchResult result, string key)
         {
+            if (result == null)
+                return "";
+            if (result.Properties == null)
+                return "";
             if (result.Properties.Contains(key) && result.Properties[key].Count > 0)
                 return result.Properties[key][0];
             return "";

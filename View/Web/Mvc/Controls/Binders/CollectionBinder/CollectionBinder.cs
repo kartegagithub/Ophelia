@@ -48,7 +48,6 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         public Controllers.Base.Controller Controller { get; set; }
         public Client Client { get; private set; }
         public string Title { get; set; }
-        public Func<Ophelia.Web.Service.WebServiceCollectionRequest, Ophelia.Web.Service.ServiceCollectionResult> RemoteDataSource { get; set; }
         private readonly ViewContext viewContext;
         protected IQueryable<IGrouping<object, T>> GroupedData { get; set; }
         public Configuration Configuration { get; private set; }
@@ -176,11 +175,11 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             if (this.DataSource.Query != null)
                 isQueryableDataSet = this.DataSource.Query.GetType().IsQueryableDataSet();
 
-            if (this.RemoteDataSource != null && this.DataSource.Query == null)
+            if (this.DataSource.RemoteDataSource != null && this.DataSource.Query == null)
             {
                 this.DataSource.Query = this.DataSource.Items.AsQueryable();
             }
-            if ((this.RemoteDataSource != null || this.DataSource.Items == null || this.DataSource.Items.Count == 0) && this.DataSource.Query != null)
+            if ((this.DataSource.RemoteDataSource != null || this.DataSource.Items == null || this.DataSource.Items.Count == 0) && this.DataSource.Query != null)
             {
                 var defaultModel = Activator.CreateInstance(typeof(TModel));
 
@@ -511,7 +510,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     this.ContentRenderMode = ContentRenderMode.Group;
 
                     var groupedData = (IQueryable<IGrouping<object, T>>)this.DataSource.Query.GroupBy(selectedGroupers.ToArray());
-                    if (this.RemoteDataSource != null)
+                    if (this.DataSource.RemoteDataSource != null)
                     {
                         this.DataSource.GroupPagination.ItemCount = groupedData.Count();
                         this.GroupedData = groupedData.Paginate(this.CanExport ? 1 : this.DataSource.GroupPagination.PageNumber, this.CanExport ? int.MaxValue : this.DataSource.GroupPagination.PageSize);
@@ -526,17 +525,22 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 }
                 else
                 {
-                    if (this.RemoteDataSource != null)
+                    if (this.DataSource.RemoteDataSource != null && !this.DataSource.DataImportPreview)
                     {
                         using (var queryData = new QueryData())
                         {
                             using (var visitor = new SQLPreparationVisitor(queryData))
                             {
-                                visitor.Visit(this.DataSource.Query.Expression);
+                                if (this.DataSource.OnBeforeQueryExecuted != null)
+                                    this.DataSource.Query = this.DataSource.OnBeforeQueryExecuted(this.DataSource.Query);
 
                                 this.OnBeforeQueryExecuted();
+                                visitor.Visit(this.DataSource.Query.Expression);
+                                var request = new Service.WebApiCollectionRequest<T>() { Page = this.CanExport ? 1 : this.DataSource.Pagination.PageNumber, PageSize = this.CanExport ? int.MaxValue : this.DataSource.Pagination.PageSize, QueryData = queryData.Serialize(), Parameters = additionalParams, TypeName = typeof(T).FullName, Data = this.FiltersToEntity() };
+                                if (this.DataSource.OnBeforeRemoteDataSourceCall != null)
+                                    request = this.DataSource.OnBeforeRemoteDataSourceCall(request);
 
-                                var response = this.RemoteDataSource(new Service.WebServiceCollectionRequest() { Page = this.DataSource.Pagination.PageNumber, PageSize = this.DataSource.Pagination.PageSize, QueryData = queryData.Serialize(), Parameters = additionalParams, TypeName = typeof(T).FullName });
+                                var response = this.DataSource.RemoteDataSource("Get" + typeof(T).Name.Pluralize(), request);
                                 if (response.RawData != null)
                                     this.DataSource.Items = (List<T>)response.RawData;
                                 else
@@ -573,6 +577,35 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         protected virtual void OnBeforeQueryExecuted()
         {
 
+        }
+        protected virtual T FiltersToEntity()
+        {
+            try
+            {
+                var entity = (T)Activator.CreateInstance(typeof(T));
+                var filters = this.DataSource.GetPropertyValue("Filters");
+                var props = filters.GetType().GetProperties();
+                foreach (var prop in props)
+                {
+                    var entityProp = entity.GetType().GetProperty(prop.Name);
+                    try
+                    {
+                        if (entityProp == null)
+                            continue;
+
+                        entityProp.SetValue(entity, prop.GetValue(filters));
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+                return entity;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         protected virtual string GetSortingFieldName(PropertyInfo info)
         {
@@ -652,14 +685,14 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 this.Output.Write("<thead>");
                 this.Output.Write("<tr>");
                 if (this.Configuration.AddBlankColumnToStart)
-                    this.Output.Write("<th class='no-sort'></th>");
+                    this.Output.Write("<th class='no-sort' data-name='BlankColumn'></th>");
                 if (this.Configuration.Checkboxes && this.Configuration.ShowCheckAll)
                 {
-                    this.Output.Write("<th class='no-sort'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'> " + this.Client.TranslateText("All") + "</th>");
+                    this.Output.Write("<th class='no-sort' data-name='CheckboxAll'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'><i> " + this.Client.TranslateText("All") + "</i></th>");
                 }
                 else if (this.Configuration.Checkboxes)
                 {
-                    this.Output.Write("<th class='no-sort'></th>");
+                    this.Output.Write("<th class='no-sort' data-name='CheckboxAll'></th>");
                 }
                 var dataFilters = this.Request.QueryString.ToString().Replace("IsAjaxRequest=1", "").Replace("isajaxrequest=1", "").Trim('&');
 
@@ -709,7 +742,13 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                         }
                         if (!string.IsNullOrEmpty(className))
                             this.Output.Write(" class='" + className + "'");
-                        this.Output.Write(" data-name='" + column.Name + "'");
+
+                        var name = column.Name;
+                        if (string.IsNullOrEmpty(name))
+                            name = column.FormatName();
+
+                        this.Output.Write(" data-name='" + name + "'");
+                        this.Output.Write(" title='" + column.FormatText() + "'");
                         this.Output.Write(">");
                         if (!column.HideColumnTitle)
                             this.Output.Write("<i>" + column.FormatText() + "</i>");

@@ -350,9 +350,10 @@ namespace Ophelia.Data.Model
         {
             return this._list[index];
         }
-        public void ExtendData(QueryData data)
+        public QueryableDataSet ExtendData(QueryData data)
         {
             this.ExtendedData = data;
+            return this;
         }
         public virtual void EnsureLoad()
         {

@@ -636,7 +636,7 @@ namespace Ophelia.Data
             if (p.PropertyType.IsDataEntity()) { return ""; }
             if (p.PropertyType.IsQueryableDataSet()) { return ""; }
 
-            var alias = this.FormatDataElement(this.GetMappedFieldName(table.Alias + "_" + p.Name));
+            var alias = this.FormatDataElement(this.GetMappedFieldName(table.Alias) + "_" + this.GetMappedFieldName(p.Name));
             if (isSubTable && loadByXML)
             {
                 if (table.Query.Context.Connection.Type == DatabaseType.PostgreSQL)

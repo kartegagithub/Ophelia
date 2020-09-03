@@ -11,6 +11,7 @@ namespace Ophelia.Web.Service
         public long ID { get; set; }
         public string Name { get; set; }
         public T Data { get; set; }
+        public string TypeName { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
         public WebApiObjectRequest()
         {
