@@ -232,6 +232,14 @@
       <Project>{6ed74a5b-dbdf-46be-b7a0-497920bd7529}</Project>
       <Name>Ophelia</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Data\Data\Ophelia.Data.csproj">
+      <Project>{65b6e4b7-6857-406a-9145-9f51c29f0614}</Project>
+      <Name>Ophelia.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web\Ophelia.Web.csproj">
+      <Project>{732ae156-646e-4037-9713-eac8e462b2f9}</Project>
+      <Name>Ophelia.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
