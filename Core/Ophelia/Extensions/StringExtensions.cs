@@ -285,6 +285,9 @@ namespace Ophelia
         /// </summary>
         public static decimal ToDecimal(this string value)
         {
+            if (string.IsNullOrEmpty(value))
+                return 0;
+
             var numberFormat = new NumberFormatInfo();
             numberFormat.NumberDecimalSeparator = ",";
             return Convert.ToDecimal(value.Replace(".", ","), numberFormat);
