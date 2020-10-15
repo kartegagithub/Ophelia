@@ -78,6 +78,8 @@
     </Compile>
     <Compile Include="Notification\Android\Notifier.cs" />
     <Compile Include="Notification\Android\PushNotification.cs" />
+    <Compile Include="Notification\Expo\Notifier.cs" />
+    <Compile Include="Notification\Expo\ExpoNotificationResult.cs" />
     <Compile Include="Notification\Firebase\DeviceType.cs" />
     <Compile Include="Notification\Firebase\FirebaseNotificationResult.cs" />
     <Compile Include="Notification\Firebase\Notifier.cs" />

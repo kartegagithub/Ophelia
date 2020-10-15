@@ -13,6 +13,8 @@ namespace Ophelia.Web.Service
         [DataMember]
         public TEntity Data { get; set; }
 
+        public string Token { get; set; }
+
         public void SetData(TEntity entity) {
             this.Data = entity;
             if(!this.HasFailed)

@@ -196,11 +196,11 @@ namespace Ophelia.Data.Model
                                 {
                                     try
                                     {
-                                        p.SetValue(entity, row[fieldName]);
+                                        p.SetValue(entity, p.PropertyType.ConvertData(row[fieldName]));
                                     }
                                     catch (Exception)
                                     {
-                                        p.SetValue(entity, p.PropertyType.ConvertData(row[fieldName]));
+                                        p.SetValue(entity, row[fieldName]);
                                     }
                                 }
                             }

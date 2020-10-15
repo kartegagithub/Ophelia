@@ -37,7 +37,6 @@ namespace Ophelia.Web.Service
                         if (this.Base64Data.IndexOf(',') > -1)
                             this.Base64Data = this.Base64Data.Substring(this.Base64Data.IndexOf(',') + 1);
                         this.oByteData = Convert.FromBase64String(this.Base64Data);
-                        this.Base64Data = "";
                     }
                     catch
                     {

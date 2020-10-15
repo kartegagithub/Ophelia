@@ -193,7 +193,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                     if (foreignKeyRelationAttribute == null)
                     {
                         if (subqueryTable == null)
-                            sb.Append(query.Data.MainTable.GetForeignKeyName());
+                            sb.Append(query.Data.MainTable.GetForeignKeyName(subTable.EntityType));
                         else
                             sb.Append(subqueryTable.GetForeignKeyName());
                     }
@@ -331,7 +331,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                         catch (Exception)
                         {
                             throw new Exception("Load failed while populating field " + fieldName + " on type " + referencedEntity?.GetType().FullName);
-                        }                       
+                        }
                     }
                 }
                 if (referencedEntity != null)
