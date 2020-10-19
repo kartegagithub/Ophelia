@@ -4,6 +4,7 @@ using Ophelia.Web.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -89,11 +90,17 @@ namespace Ophelia.Mobile.Notification.Expo
             var Result = new ExpoNotificationResult();
             try
             {
+                ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                       | SecurityProtocolType.Tls11
+                       | SecurityProtocolType.Tls12
+                       | SecurityProtocolType.Ssl3;
                 Result = this.URL.PostURL<ExpoNotificationResult>(data, "application/json");
             }
             catch (Exception ex)
             {
-               
+
             }
             return Result;
         }

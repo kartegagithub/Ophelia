@@ -86,27 +86,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 return null;
             }
         }
-        public CollectionBinder(Client client, TModel dataSource, string title)
-        {
-            this.ContentRenderMode = ContentRenderMode.Normal;
-            this.Client = client;
-            this.Configuration = new Configuration();
-            this.DataSource = dataSource;
-            this.Columns = new List<Binders.CollectionBinder.Columns.BaseColumn<TModel, T>>();
-            this.Breadcrumb = new List();
-            this.Breadcrumb.CssClass = "breadcrumb";
-            this.ActionButtons = new List();
-            this.ActionButtons.CssClass = "breadcrumb-elements";
-            this.Groupers = new GrouperList<T>();
-
-            this.ID = title;
-            this.Title = this.Client.TranslateText(title);
-            this.FilterPanel = new FilterPanel<TModel, T>(this);
-            this.Configure();
-            this.ProcessQuery();
-            this.CheckAjaxFunctions();
-            this.Export();
-        }
+       
         protected virtual void CheckAjaxFunctions()
         {
             if (this.Request["IsAjaxRequest"] == "1" && !string.IsNullOrEmpty(this.Request["CollectionBinderTriggerFunction"]))
@@ -623,7 +603,39 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 this.Response.Clear();
             }
             this.Controller = (Controllers.Base.Controller)this.viewContext.Controller;
+            this.SetPageSize();
             this.onViewContextSet();
+            if (viewContext.ViewData.Model != this.DataSource)
+                this.ParentDrawsLayout = true;
+            this.Configure();
+            this.ProcessQuery();
+            this.CheckAjaxFunctions();
+            this.Export();
+        }
+        public CollectionBinder(Client client, TModel dataSource, string title)
+        {
+            this.ContentRenderMode = ContentRenderMode.Normal;
+            this.Client = client;
+            this.Configuration = new Configuration();
+            this.DataSource = dataSource;
+            this.Columns = new List<Binders.CollectionBinder.Columns.BaseColumn<TModel, T>>();
+            this.Breadcrumb = new List();
+            this.Breadcrumb.CssClass = "breadcrumb";
+            this.ActionButtons = new List();
+            this.ActionButtons.CssClass = "breadcrumb-elements";
+            this.Groupers = new GrouperList<T>();
+
+            this.ID = title;
+            this.Title = this.Client.TranslateText(title);
+            this.FilterPanel = new FilterPanel<TModel, T>(this);
+        }
+        protected virtual void SetPageSize()
+        {
+            if (this.DataSource != null && this.DataSource.Pagination != null)
+            {
+                if (!string.IsNullOrEmpty(this.Client.Request[this.DataSource.Pagination.PageKey]))
+                    this.DataSource.Pagination.PageNumber = this.Client.Request[this.DataSource.Pagination.PageKey].ToInt32();
+            }
         }
         protected virtual object GetReferencedEntity(Type entityType, object value)
         {
