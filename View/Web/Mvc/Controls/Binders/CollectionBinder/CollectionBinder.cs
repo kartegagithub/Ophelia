@@ -86,7 +86,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 return null;
             }
         }
-       
+
         protected virtual void CheckAjaxFunctions()
         {
             if (this.Request["IsAjaxRequest"] == "1" && !string.IsNullOrEmpty(this.Request["CollectionBinderTriggerFunction"]))
@@ -707,6 +707,8 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     this.Output.Write("<th class='no-sort' data-name='CheckboxAll'></th>");
                 }
                 var dataFilters = this.Request.QueryString.ToString().Replace("IsAjaxRequest=1", "").Replace("isajaxrequest=1", "").Trim('&');
+                if (string.IsNullOrEmpty(dataFilters) && this.Request.Form != null && this.Request.Form.Count > 0)
+                    dataFilters = this.Request.Form.ToString().Replace("IsAjaxRequest=1", "").Replace("isajaxrequest=1", "").Trim('&');
 
                 this.RenderOnBeforeDrawLine(null);
                 foreach (var column in this.Columns)
