@@ -1,14 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
 namespace Ophelia.Web.Service
 {
     [DataContract(IsReference = true)]
-    public class ServiceCollectionResult<TEntity> : ServiceCollectionResult
+    public class ServiceCollectionResult<TEntity> : Ophelia.Web.Service.ServiceCollectionResult
     {
         [DataMember]
         public List<TEntity> Data { get; set; }
@@ -16,6 +14,19 @@ namespace Ophelia.Web.Service
         public void SetData(int totalCount, List<TEntity> list)
         {
             this.SetData(Convert.ToInt64(totalCount), list);
+        }
+
+        public void SetData(long totalCount, IList list)
+        {
+            if (list is List<TEntity>)
+                this.SetData(totalCount, list as List<TEntity>);
+            else
+            {
+                this.TotalDataCount = totalCount;
+                this.RawData = list;
+                if (!this.HasFailed)
+                    this.HasFailed = false;
+            }
         }
 
         public void SetData(long totalCount, List<TEntity> list)
@@ -34,18 +45,20 @@ namespace Ophelia.Web.Service
             if (!this.HasFailed)
                 this.HasFailed = false;
         }
+
+        private bool _HasData = false;
         [DataMember]
         public bool HasData
         {
             get
             {
                 if (this.Data != null && this.Data.Count > 0)
-                    return true;
-                return false;
+                    this._HasData = true;
+                return this._HasData;
             }
             set
             {
-
+                this._HasData = value;
             }
         }
     }

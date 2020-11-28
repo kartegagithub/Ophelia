@@ -25,6 +25,7 @@ namespace Ophelia.Web.UI.Controls
                     base.ID = value;
             }
         }
+        public bool CanRender { get; set; }
         public virtual string Name { get; set; }
         public virtual object HtmlAttributes { get; set; }
         public virtual bool IsHidden { get; set; }
@@ -39,6 +40,8 @@ namespace Ophelia.Web.UI.Controls
 
         public virtual string Draw()
         {
+            if (!this.CanRender)
+                return "";
             StringBuilder sb = new StringBuilder();
             this.Output = new HtmlTextWriter(new System.IO.StringWriter(sb, System.Globalization.CultureInfo.InvariantCulture));
             this.RenderControl();
@@ -65,6 +68,8 @@ namespace Ophelia.Web.UI.Controls
         }
         public virtual void RenderControl()
         {
+            if (!this.CanRender)
+                return;
             this.RenderControlAsText(this.Output);
         }
 
@@ -86,6 +91,8 @@ namespace Ophelia.Web.UI.Controls
         }
         public override void RenderControl(HtmlTextWriter writer)
         {
+            if (!this.CanRender)
+                return;
             if (this.HtmlAttributes != null)
             {
                 var type = this.HtmlAttributes.GetType();
@@ -113,17 +120,21 @@ namespace Ophelia.Web.UI.Controls
             base.RenderControl(writer);
             this.onAfterRenderControl(writer);
         }
+        public void AddAttribute(string key, string value)
+        {
+            this.Attributes[key] = value;
+        }
         public WebControl() : base()
         {
-
+            this.CanRender = true;
         }
         public WebControl(HtmlTextWriterTag tag) : base(tag)
         {
-
+            this.CanRender = true;
         }
         public WebControl(string tag) : base(tag)
         {
-
+            this.CanRender = true;
         }
     }
 }

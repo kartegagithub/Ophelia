@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ophelia.Data.Querying.Query
 {
@@ -11,6 +8,12 @@ namespace Ophelia.Data.Querying.Query
     public class QueryData : IDisposable
     {
         internal Type EntityType { get; set; }
+
+        [DataMember]
+        public int GroupPageSize { get; set; }
+
+        [DataMember]
+        public Dictionary<int, int> GroupPagination { get; set; }
 
         [DataMember]
         public int PageSize { get; set; }
@@ -44,7 +47,13 @@ namespace Ophelia.Data.Querying.Query
 
         [DataMember]
         public Helpers.Table MainTable { get; set; }
-        public void Dispose()
+        public virtual void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             this.Sorters = null;
             this.Groupers = null;
@@ -53,6 +62,7 @@ namespace Ophelia.Data.Querying.Query
             this.Parameters = null;
             this.Functions = null;
             this.Excluders = null;
+            this.GroupPagination = null;
         }
 
         public QueryData()
@@ -64,6 +74,7 @@ namespace Ophelia.Data.Querying.Query
             this.Parameters = new List<object>();
             this.Functions = new List<Helpers.DBFunction>();
             this.Excluders = new List<Helpers.Excluder>();
+            this.GroupPagination = new Dictionary<int, int>();
         }
         public QueryData Serialize()
         {
@@ -74,7 +85,7 @@ namespace Ophelia.Data.Querying.Query
             }
             foreach (var item in this.Groupers)
             {
-                qd.Groupers.Add(item.Serialize());
+                qd.Groupers.AddRange(item.Serialize());
             }
             foreach (var item in this.Includers)
             {
@@ -97,6 +108,8 @@ namespace Ophelia.Data.Querying.Query
 
             qd.PageSize = this.PageSize;
             qd.SkippedCount = this.SkippedCount;
+            qd.GroupPageSize = this.GroupPageSize;
+            qd.GroupPagination = this.GroupPagination;
             return qd;
         }
     }

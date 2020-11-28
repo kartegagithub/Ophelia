@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ophelia.Data.Querying
 {
@@ -28,11 +25,20 @@ namespace Ophelia.Data.Querying
         public IQueryable CreateQuery(Expression expression)
         {
             var listType = typeof(Model.QueryableDataSet<>);
-            var constructedListType = listType.MakeGenericType(expression.Type.GenericTypeArguments[0]);
+            var underlyingType = this.GetUnderlyingType(expression);
+            var constructedListType = listType.MakeGenericType(underlyingType);
 
             return (IQueryable)Activator.CreateInstance(constructedListType, this._Context, expression);
         }
-
+        private Type GetUnderlyingType(Expression expression)
+        {
+            if (expression.Type.GenericTypeArguments.Any())
+                return expression.Type.GenericTypeArguments[0];
+            else if (expression is MethodCallExpression)
+                return GetUnderlyingType((expression as MethodCallExpression).Arguments[0]);
+            else
+                return null;
+        }
         public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
         {
             var listType = typeof(Model.QueryableDataSet<>);
@@ -86,8 +92,6 @@ namespace Ophelia.Data.Querying
                         return (TResult)Convert.ChangeType((data.TotalCount > 0), typeof(TResult));
                     return (TResult)Convert.ChangeType(data.TotalCount, typeof(TResult));
                 case "Sum":
-                case "Max":
-                case "Min":
                     using (var query = this._Context.CreateSelectQuery(expression, data))
                     {
                         return query.Execute<TResult>();
@@ -110,10 +114,15 @@ namespace Ophelia.Data.Querying
             }
             return (TResult)Convert.ChangeType(null, typeof(TResult));
         }
-
-        public void Dispose()
+        public virtual void Dispose()
         {
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+
         }
     }
 }

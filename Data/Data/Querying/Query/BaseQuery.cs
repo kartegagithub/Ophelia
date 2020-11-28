@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace Ophelia.Data.Querying.Query
 {
@@ -83,9 +80,23 @@ namespace Ophelia.Data.Querying.Query
         }
         protected abstract string GetCommand(CommandType cmdType);
 
-        public void Dispose()
+        public virtual void Dispose()
         {
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+        public string GetTableJoinIndex()
+        {
+            if (this.TableJoinIndex == 0)
+                this.TableJoinIndex = new Random().Next(20, 50);
+
+            this.TableJoinIndex++;
+            return this.TableJoinIndex.ToString();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+
         }
 
         public BaseQuery(DataContext Context, Type EntityType)
@@ -103,14 +114,6 @@ namespace Ophelia.Data.Querying.Query
             this.Expression = expression;
             this.dataToExtend = source.ExtendedData;
         }
-        public string GetTableJoinIndex()
-        {
-            if (this.TableJoinIndex == 0)
-                this.TableJoinIndex = new Random().Next(20, 50);
-
-            this.TableJoinIndex++;
-            return this.TableJoinIndex.ToString();
-        }
         protected void VisitExpression()
         {
             var visitor = new SQLPreparationVisitor(this.Data);
@@ -121,6 +124,8 @@ namespace Ophelia.Data.Querying.Query
         {
             if (this.dataToExtend != null)
             {
+                this.Data.GroupPageSize = this.dataToExtend.GroupPageSize;
+                this.Data.GroupPagination = this.dataToExtend.GroupPagination;
                 this.Data.Groupers.AddRange(this.dataToExtend.Groupers);
                 this.Data.Includers.AddRange(this.dataToExtend.Includers);
                 this.Data.Sorters.AddRange(this.dataToExtend.Sorters);

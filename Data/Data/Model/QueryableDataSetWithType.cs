@@ -70,6 +70,10 @@ namespace Ophelia.Data.Model
         {
 
         }
+        public IList DecideToList()
+        {
+            return base.ToList();
+        }
         public new List<TEntity> ToList()
         {
             this.EnsureLoad();

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 
 namespace Ophelia
@@ -65,7 +63,7 @@ namespace Ophelia
                 {
                     convertedValue = isNull ? default(double) : Convert.ToDouble(value);
                 }
-                else
+                else if (value != null)
                 {
                     var valueType = value.GetType();
                     var c1 = System.ComponentModel.TypeDescriptor.GetConverter(valueType);
@@ -94,7 +92,7 @@ namespace Ophelia
                 }
                 return convertedValue;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -144,7 +142,7 @@ namespace Ophelia
             {
                 var methods = entity.GetType().GetMethods().Where(op => op.Name == method).ToList();
                 MethodInfo m = null;
-                if(parameters != null)
+                if (parameters != null)
                     m = methods.Where(op => op.GetParameters().Length == parameters.Length).FirstOrDefault();
                 if (m == null)
                     m = methods.FirstOrDefault();
@@ -195,7 +193,7 @@ namespace Ophelia
                 }
                 catch (Exception)
                 {
-
+                    continue;
                 }
             }
             return list;
@@ -223,7 +221,7 @@ namespace Ophelia
                 }
                 catch (Exception)
                 {
-
+                    return list;
                 }
                 a = null;
             }
@@ -304,8 +302,16 @@ namespace Ophelia
             {
                 foreach (var p in property.Split('.'))
                 {
-                    props.Add(type.GetProperties().Where(op => op.Name == p).FirstOrDefault());
-                    type = props.LastOrDefault().PropertyType;
+                    var prop = type.GetProperties().Where(op => op.Name == p).FirstOrDefault();
+                    if (prop != null)
+                    {
+                        props.Add(prop);
+                        type = props.LastOrDefault().PropertyType;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
             else
@@ -413,13 +419,13 @@ namespace Ophelia
                     }
                     catch (Exception)
                     {
-
+                        continue;
                     }
                 }
             }
             catch (Exception)
             {
-
+                return types;
             }
             return types;
         }
@@ -431,6 +437,9 @@ namespace Ophelia
                 {
                     try
                     {
+                        if (a.FullName.Contains(".Redis") || a.FullName.StartsWith("Microsoft.") || a.FullName.StartsWith("System.") || a.FullName.StartsWith("Newtonsoft."))
+                            continue;
+
                         var Types = a.GetTypes();
                         if (Types != null)
                         {
@@ -443,68 +452,113 @@ namespace Ophelia
                     }
                     catch (Exception)
                     {
-
+                        continue;
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
             }
 
             return null;
         }
-        public static Type GetRealType(this Type baseType, bool baseTypeIsDefault = true)
+        public static List<Type> GetRealTypes(this Type baseType, bool baseTypeIsDefault = true)
         {
+            var returnTypes = new List<Type>();
             try
             {
+
                 foreach (System.Reflection.Assembly a in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     try
                     {
+                        if (a.FullName.Contains(".Redis") || a.FullName.StartsWith("Microsoft.") || a.FullName.StartsWith("System.") || a.FullName.StartsWith("Newtonsoft."))
+                            continue;
+
                         var Types = a.GetTypes();
                         if (Types != null)
                         {
                             Types = Types.Where(op => !op.IsInterface && (op.IsSubclassOf(baseType) || baseType.IsAssignableFrom(op))).ToArray();
                             if (Types != null && Types.Length > 0)
                             {
-                                return Types.FirstOrDefault();
+                                if (Types.FirstOrDefault() != baseType)
+                                {
+                                    returnTypes.AddRange(Types);
+                                }
                             }
                         }
                     }
                     catch (Exception)
                     {
-
+                        continue;
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
             }
-            if (baseTypeIsDefault && !baseType.IsInterface)
-                return baseType;
-            return null;
+            return returnTypes;
         }
-        public static object GetRealTypeInstance(this Type baseType, bool baseTypeIsDefault = true)
+        public static Type GetRealType(this Type baseType, bool baseTypeIsDefault = true)
+        {
+            var types = baseType.GetRealTypes(baseTypeIsDefault);
+            return types.FirstOrDefault();
+        }
+        public static object GetRealTypeInstance(this Type baseType, bool baseTypeIsDefault = true, params object[] parameters)
         {
             try
             {
                 var subType = baseType.GetRealType(baseTypeIsDefault);
                 if (subType != null)
                 {
-                    return Activator.CreateInstance(subType);
+                    return Activator.CreateInstance(subType, parameters);
                 }
             }
             catch (Exception)
             {
-
+                return null;
             }
             return null;
         }
+        public static Type ResolveType(this string typeName)
+        {
+            Type finalType = Type.GetType(typeName);
+            try
+            {
+                foreach (System.Reflection.Assembly a in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    try
+                    {
+                        if (a.FullName.Contains(".Redis") || a.FullName.StartsWith("Microsoft.") || a.FullName.StartsWith("System.") || a.FullName.StartsWith("Newtonsoft."))
+                            continue;
+
+                        var Types = a.GetTypes();
+                        if (Types != null)
+                        {
+                            Types = Types.Where(op => op.FullName == typeName).ToArray();
+                            if (Types != null && Types.Length > 0)
+                            {
+                                finalType = Types.FirstOrDefault();
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return finalType;
+            }
+            return finalType;
+        }
         public static string GetPropertyStringValue<TResult>(this TResult source, string property) where TResult : class
         {
-            return GetPropertyValue(source, property).ToString();
+            return GetPropertyValue(source, property)?.ToString();
         }
 
         public static bool IsStaticProperty(this PropertyInfo source)
@@ -538,6 +592,19 @@ namespace Ophelia
 
             var list = info.GetCustomAttributes(true).Where(op => op.GetType().IsAssignableFrom(attributeType));
             return new List<object>(list);
+        }
+        public static Type GetMemberInfoType(this MemberInfo member)
+        {
+            switch (member.MemberType)
+            {
+                case MemberTypes.Field:
+                    return ((FieldInfo)member).FieldType;
+                case MemberTypes.Property:
+                    return ((PropertyInfo)member).PropertyType;
+                case MemberTypes.Event:
+                    return ((EventInfo)member).EventHandlerType;
+            }
+            return null;
         }
     }
 }

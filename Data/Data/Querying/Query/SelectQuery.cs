@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq.Expressions;
 using System.Data;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Ophelia.Data.Querying.Query
 {
@@ -137,6 +134,10 @@ namespace Ophelia.Data.Querying.Query
             {
                 if (!this.Data.Functions.Where(op => op.IsAggregiate).Any())
                     sb.Append(strOrder);
+            }
+            if (this.Data.Groupers.Count > 0 && string.IsNullOrEmpty(strOrder))
+            {
+                sb.Append(" ORDER BY Counted DESC");
             }
             return sb.ToString();
         }

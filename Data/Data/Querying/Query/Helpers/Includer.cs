@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Collections;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace Ophelia.Data.Querying.Query.Helpers
 {
@@ -59,13 +58,16 @@ namespace Ophelia.Data.Querying.Query.Helpers
             return ExpressionParser.Create(expression).ToIncluder(joinType).DecideType();
         }
 
-        public override void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
-
         public override string Build(Query.BaseQuery query, Table subqueryTable = null)
         {
+            if (this.EntityType == null && !string.IsNullOrEmpty(this.EntityTypeName))
+            {
+                this.EntityType = this.EntityTypeName.ResolveType();
+            }
+            if (this.PropertyInfo == null && !string.IsNullOrEmpty(this.Name))
+            {
+                this.PropertyInfo = query.Data.MainTable.EntityType.GetPropertyInfo(this.Name);
+            }
             var sb = new StringBuilder();
             if (this.EntityType == null && this.SubIncluders.Count > 0)
             {
@@ -201,6 +203,19 @@ namespace Ophelia.Data.Querying.Query.Helpers
                     {
                         sb.Append(query.Data.MainTable.FormatFieldName(foreignKeyRelationAttribute.PropertyName));
                     }
+
+                    var filterProperties = this.PropertyInfo.GetCustomAttributes(typeof(Attributes.RelationFilterProperty)).ToList();
+                    if (filterProperties != null && filterProperties.Count > 0)
+                    {
+                        foreach (Attributes.RelationFilterProperty item in filterProperties)
+                        {
+                            sb.Append(" AND ");
+                            sb.Append(subTable.Alias);
+                            sb.Append(".");
+                            sb.Append(query.Data.MainTable.FormatFieldName(item.PropertyName));
+                            this.AddParameter(sb, query, item.Value, null, item.Comparison, false, this.IsStringProperty(subTable.EntityType.GetProperty(item.PropertyName), null));
+                        }
+                    }
                 }
                 else
                 {
@@ -305,33 +320,26 @@ namespace Ophelia.Data.Querying.Query.Helpers
                     var fieldName = query.Context.Connection.CheckCharLimit(query.Context.Connection.GetMappedFieldName(this.Table.Alias + "_" + p.Name));
                     if (row.Table.Columns.Contains(fieldName) && row[fieldName] != DBNull.Value)
                     {
-                        try
+                        if (referencedEntity == null)
                         {
-                            if (referencedEntity == null)
+                            referencedEntity = Activator.CreateInstance(this.PropertyInfo.PropertyType);
+                            if (referencedEntity is Model.DataEntity)
+                                (referencedEntity as Model.DataEntity).Tracker.State = EntityState.Loading;
+                        }
+                        if (p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+                        {
+                            var value = row[fieldName];
+                            if (value == null)
                             {
-                                referencedEntity = Activator.CreateInstance(this.PropertyInfo.PropertyType);
-                                if (referencedEntity is Model.DataEntity)
-                                    (referencedEntity as Model.DataEntity).Tracker.State = EntityState.Loading;
-                            }
-                            if (p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
-                            {
-                                var value = row[fieldName];
-                                if (value == null)
-                                {
-                                    p.SetValue(referencedEntity, value);
-                                }
-                                else
-                                {
-                                    p.SetValue(referencedEntity, Nullable.GetUnderlyingType(p.PropertyType).ConvertData(value));
-                                }
+                                p.SetValue(referencedEntity, value);
                             }
                             else
-                                p.SetValue(referencedEntity, p.PropertyType.ConvertData(row[fieldName]));
+                            {
+                                p.SetValue(referencedEntity, Nullable.GetUnderlyingType(p.PropertyType).ConvertData(value));
+                            }
                         }
-                        catch (Exception)
-                        {
-                            throw new Exception("Load failed while populating field " + fieldName + " on type " + referencedEntity?.GetType().FullName);
-                        }
+                        else
+                            p.SetValue(referencedEntity, p.PropertyType.ConvertData(row[fieldName]));
                     }
                 }
                 if (referencedEntity != null)
@@ -418,7 +426,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                                         }
                                         catch (Exception)
                                         {
-
+                                            continue;
                                         }
                                     }
                                 }

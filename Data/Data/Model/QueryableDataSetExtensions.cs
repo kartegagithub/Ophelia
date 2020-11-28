@@ -538,7 +538,38 @@ namespace Ophelia.Data
             }
             return source;
         }
+        public static QueryableDataSet Paginate(this QueryableDataSet source, int page, int pageSize)
+        {
+            if (pageSize > 0 && page > 0)
+            {
+                int skip = Math.Max(pageSize * (page - 1), 0);
+                return source.Skip(skip).Take(pageSize);
+            }
+            return source;
+        }
+        public static QueryableDataSet Take(this QueryableDataSet source, int count)
+        {
+            return ((QueryableDataSet)source.InternalProvider.CreateQuery(
+                Expression.Call(
+                    null,
+                    GetMethodInfoOf(() => QueryableDataSetExtensions.Take(
+                        default(QueryableDataSet),
+                        default(int))),
+                    new Expression[] { source.Expression, new Expressions.TakeExpression(count) }
+                    ))).ExtendData(source.ExtendedData);
+        }
 
+        public static QueryableDataSet Skip(this QueryableDataSet source, int count)
+        {
+            return ((QueryableDataSet)source.InternalProvider.CreateQuery(
+                Expression.Call(
+                    null,
+                    GetMethodInfoOf(() => QueryableDataSetExtensions.Skip(
+                        default(QueryableDataSet),
+                        default(int))),
+                    new Expression[] { source.Expression, new Expressions.SkipExpression(count) }
+                    ))).ExtendData(source.ExtendedData);
+        }
         public static QueryableDataSet<TSource> Take<TSource>(this QueryableDataSet<TSource> source, int count)
         {
             return (QueryableDataSet<TSource>)((QueryableDataSet<TSource>)source.InternalProvider.CreateQuery<TSource>(

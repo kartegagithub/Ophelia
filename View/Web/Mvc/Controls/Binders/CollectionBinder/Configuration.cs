@@ -14,6 +14,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         public bool AllowExporting { get; set; }
         public bool AllowGrouping { get; set; }
         public bool AllowServerSideOrdering { get; set; }
+        public bool ColumnSortingByLink { get; set; }
+        public bool ColumnSortingByClick { get; set; }
+        public bool SaveChangesOnUIInteraction { get; set; }
+        public bool EnableGroupingByDragDrop { get; set; }
         public bool AllowNew { get; set; }
         public bool AllowNewRow { get; set; }
         public bool OpenExportOptions { get; set; }

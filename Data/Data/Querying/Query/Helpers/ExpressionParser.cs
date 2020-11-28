@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Diagnostics;
 
 namespace Ophelia.Data.Querying.Query.Helpers
 {
@@ -30,6 +26,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
         public bool IsIncluder { get; set; }
         public bool IsSubInclude { get; set; }
         public List<MemberInfo> Members { get; set; }
+        public List<Expression> MemberExpressions { get; set; }
         public static ExpressionParser Create(System.Linq.Expressions.Expression expression)
         {
             ExpressionParser exp = null;
@@ -63,6 +60,12 @@ namespace Ophelia.Data.Querying.Query.Helpers
                 {
                     exp = new ExpressionParser(newExpression);
                 }
+
+                var memberInitExpression = (expression as LambdaExpression).Body as MemberInitExpression;
+                if (memberInitExpression != null)
+                {
+                    exp = new ExpressionParser(memberInitExpression);
+                }
             }
             else if (expression is BinaryExpression)
             {
@@ -85,6 +88,14 @@ namespace Ophelia.Data.Querying.Query.Helpers
                 exp = new ExpressionParser(expression as Expressions.InExpression);
             }
             return exp;
+        }
+        public ExpressionParser(MemberInitExpression expression)
+        {
+            this.Members = new List<MemberInfo>();
+            foreach (var item in expression.Bindings)
+            {
+                this.Members.Add(item.Member);
+            }
         }
         public ExpressionParser(NewExpression expression)
         {
@@ -269,6 +280,8 @@ namespace Ophelia.Data.Querying.Query.Helpers
                 this.Comparison = Comparison.StartsWith;
             else if (expression.Method.Name == "Contains")
                 this.Comparison = Comparison.Contains;
+            else if (expression.Method.Name == "ContainsFTS")
+                this.Comparison = Comparison.ContainsFTS;
             else if (expression.Method.Name == "EndsWith")
                 this.Comparison = Comparison.EndsWith;
             else if (expression.Method.Name == "Between")
@@ -282,7 +295,20 @@ namespace Ophelia.Data.Querying.Query.Helpers
             else if (expression.Method.Name == "Include")
                 this.IsIncluder = true;
 
-            if (expression.Object != null)
+            if (this.Comparison == Comparison.ContainsFTS)
+            {
+                if (expression.Arguments[0] is MemberExpression)
+                    this.Value = (expression.Arguments[0] as MemberExpression).GetExpressionValue(null);
+                else if (expression.Arguments[0] is ConstantExpression)
+                    this.Value = (expression.Arguments[0] as ConstantExpression).Value;
+                this.MemberExpressions = new List<Expression>();
+                var expressions = (expression.Arguments[1] as NewArrayExpression).Expressions;
+                foreach (var item in expressions)
+                {
+                    this.MemberExpressions.Add((item as MemberExpression));
+                }
+            }
+            else if (expression.Object != null)
             {
                 if (expression.Object is MemberExpression && expression.Object.GetType().Name.IndexOf("Field") > -1)
                 {
@@ -368,6 +394,16 @@ namespace Ophelia.Data.Querying.Query.Helpers
                             this.Take = Convert.ToInt32(consExpression.Value);
                         if (expression.Method.Name == "Skip")
                             this.Skip = Convert.ToInt32(consExpression.Value);
+                    }
+
+                    if (expression.Method.Name == "OrderBy" || expression.Method.Name == "OrderByDescending" || expression.Method.Name == "ThenBy" || expression.Method.Name == "ThenByDescending")
+                    {
+                        if (expression.Arguments[1] is UnaryExpression)
+                        {
+                            var unaryExp = expression.Arguments[1] as UnaryExpression;
+                            if (unaryExp.Operand != null)
+                                this.Name = unaryExp.Operand.ParsePath();
+                        }
                     }
                 }
 
@@ -507,6 +543,8 @@ namespace Ophelia.Data.Querying.Query.Helpers
             filter.IsDataEntity = this.IsDataEntity;
             filter.IsQueryableDataSet = this.IsQueryableDataSet;
             filter.EntityType = this.EntityType;
+            filter.Members = this.Members;
+            filter.MemberExpressions = this.MemberExpressions;
             if (this.EntityType != null)
                 filter.EntityTypeName = this.EntityType.FullName;
 
@@ -583,6 +621,7 @@ namespace Ophelia.Data.Querying.Query.Helpers
                 includer.EntityTypeName = this.EntityType.FullName;
             includer.Constraint = this.Constraint;
             includer.Comparison = this.Comparison;
+            includer.PropertyInfo = this.PropertyInfo;
             if (this.SubExpression != null)
             {
                 if (this.IsSubInclude)
@@ -630,12 +669,20 @@ namespace Ophelia.Data.Querying.Query.Helpers
         {
             var grouper = new Grouper();
             grouper.Name = this.Name;
+            if (this.EntityType != null)
+                grouper.TypeName = this.EntityType.FullName;
             grouper.Members = this.Members;
             if (this.SubExpression != null)
                 grouper.SubGrouper = this.SubExpression.ToGrouper();
             return grouper;
         }
-        public void Dispose()
+        public virtual void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             this.ParentPropertyInfo = null;
             this.PropertyInfo = null;

@@ -158,6 +158,8 @@
     <Compile Include="Reflection\IInstanceFactory.cs" />
     <Compile Include="Reflection\InstanceFactory.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Reflection\ObjectBuilder.cs" />
+    <Compile Include="Reflection\ObjectField.cs" />
     <Compile Include="Tasks\Job.cs" />
     <Compile Include="Tasks\JobExecution.cs" />
     <Compile Include="Tasks\JobMethodAttribute.cs" />

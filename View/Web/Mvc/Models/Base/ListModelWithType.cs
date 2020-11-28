@@ -21,6 +21,7 @@ namespace Ophelia.Web.View.Mvc.Models
         public Func<Service.WebApiCollectionRequest<T>, Service.WebApiCollectionRequest<T>> OnBeforeRemoteDataSourceCall { get; set; }
         public bool DataImportPreview { get; set; }
         public string DataImportKey { get; set; }
+        public bool ParentDrawsLayout { get; set; }
         public override void Dispose()
         {
             base.Dispose();
