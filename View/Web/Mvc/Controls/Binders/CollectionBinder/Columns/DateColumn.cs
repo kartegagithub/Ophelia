@@ -16,6 +16,8 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder.Columns
     public class DateColumn<TModel, T> : BaseColumn<TModel, T> where T : class where TModel : ListModel<T>
     {
         public DateTimeFormatType Format { get; set; }
+        public string DateType { get; set; }
+        public string TimeType { get; set; }
         public DateFieldMode Mode { get; set; }
         public override object GetValue(T item)
         {
@@ -51,14 +53,12 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder.Columns
                 DataControl.Attributes.Add("data-column", this.FormatColumnName());
                 DataControl.CssClass = "form-control date-field pickadate-selectors";
                 if (this.Format == DateTimeFormatType.TimeOnly)
-                    DataControl.Type = "time";
+                    DataControl.Type = this.TimeType;
                 else
                 {
-                    if (BinderConfiguration.UseHtml5DataTypes)
-                    {
-                        DataControl.CssClass = "form-control";
-                        DataControl.Type = "date";
-                    }
+                    if (this.DateType == "date")
+                        DataControl.CssClass = "form-control date-field";
+                    DataControl.Type = this.DateType;
                 }
                 var minValue = "";
                 if (request["Filters." + DataControl.ID] != null && request["Filters." + DataControl.ID] != "")
@@ -74,14 +74,12 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder.Columns
                 SecondDataControl.Attributes.Add("data-column", this.FormatColumnName());
                 SecondDataControl.CssClass = "form-control date-field pickadate-selectors";
                 if (this.Format == DateTimeFormatType.TimeOnly)
-                    SecondDataControl.Type = "time";
+                    SecondDataControl.Type = this.TimeType;
                 else
                 {
-                    if (BinderConfiguration.UseHtml5DataTypes)
-                    {
-                        SecondDataControl.CssClass = "form-control";
-                        SecondDataControl.Type = "date";
-                    }
+                    if (this.DateType == "date")
+                        SecondDataControl.CssClass = "form-control date-field";
+                    SecondDataControl.Type = this.DateType;
                 }
                 var maxValue = "";
                 if (request["Filters." + SecondDataControl.ID] != null && request["Filters." + SecondDataControl.ID] != "")
@@ -109,6 +107,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder.Columns
         public DateColumn(CollectionBinder<TModel, T> binder, string Name) : base(binder, Name)
         {
             this.Format = DateTimeFormatType.DateTimeWithHour;
+            this.DateType = "text";
+            this.TimeType = "time";
+            if (BinderConfiguration.UseHtml5DataTypes)
+                this.DateType = "date";
         }
     }
 }

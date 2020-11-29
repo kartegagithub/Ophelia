@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.SessionState;
 using Ophelia.Web.Extensions;
 namespace Ophelia.Web
 {
-    public class Client : IClient
+    public class Client : IClient, IDisposable
     {
         private string sSessionID;
         private string sUserHostAddress = string.Empty;
         protected int nCurrentLanguageID = 0;
+        public Dictionary<string, object> SharedData { get; set; }
         public decimal InstanceID { get; set; }
         public string ApplicationName { get; set; }
         protected HttpContext Context
@@ -150,12 +152,23 @@ namespace Ophelia.Web
         }
         public virtual void Disconnect()
         {
+            this.SharedData = null;
+        }
+        public virtual void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            this.Disconnect();
         }
         public Client()
         {
             var rnd = new Random();
             this.InstanceID = rnd.Next(int.MaxValue);
+            this.SharedData = new Dictionary<string, object>();
             rnd = null;
         }
     }

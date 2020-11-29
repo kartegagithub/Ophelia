@@ -276,10 +276,13 @@ namespace Ophelia.Data.Model
                             foreach (var item in query.Data.Groupers)
                             {
                                 var count = Convert.ToInt64(row[query.Context.Connection.GetMappedFieldName("Counted")]);
-                                if (!string.IsNullOrEmpty(item.Name))
+                                var name = item.Name;
+                                if (string.IsNullOrEmpty(name) && item.SubGrouper != null && !string.IsNullOrEmpty(item.SubGrouper.Name))
+                                    name = item.SubGrouper.Name;
+                                if (!string.IsNullOrEmpty(name))
                                 {
-                                    var p = entityType.GetProperty(item.Name);
-                                    var fieldName = query.Context.Connection.GetMappedFieldName(item.Name);
+                                    var p = entityType.GetProperty(name);
+                                    var fieldName = query.Context.Connection.GetMappedFieldName(name);
                                     var value = p.PropertyType.ConvertData(row[fieldName]);
                                     if (value == DBNull.Value)
                                     {
@@ -293,19 +296,25 @@ namespace Ophelia.Data.Model
                                     //var oGrouping = Activator.CreateInstance(groupingType, );
                                     this._list.Add(oGrouping);
                                 }
-                                else if (item.Members != null && item.Members.Count > 0)
+                                else
                                 {
-                                    var parameters = new List<object>();
-                                    foreach (var member in item.Members)
+                                    var members = item.Members;
+                                    if (members == null && item.SubGrouper != null)
+                                        members = item.SubGrouper.Members;
+                                    if (members != null && members.Count > 0)
                                     {
-                                        var fieldName = query.Context.Connection.GetMappedFieldName(member.Name);
-                                        Type memberType = member.GetMemberInfoType();
-                                        object value = memberType.ConvertData(row[fieldName]);
-                                        queryable = queryable.Where(member, value);
-                                        parameters.Add(value);
+                                        var parameters = new List<object>();
+                                        foreach (var member in members)
+                                        {
+                                            var fieldName = query.Context.Connection.GetMappedFieldName(member.Name);
+                                            Type memberType = member.GetMemberInfoType();
+                                            object value = memberType.ConvertData(row[fieldName]);
+                                            queryable = queryable.Where(member, value);
+                                            parameters.Add(value);
+                                        }
+                                        var oGrouping = Activator.CreateInstance(groupingType, Activator.CreateInstance(this.ElementType.GenericTypeArguments[0], parameters.ToArray()), queryable, count);
+                                        this._list.Add(oGrouping);
                                     }
-                                    var oGrouping = Activator.CreateInstance(groupingType, Activator.CreateInstance(this.ElementType.GenericTypeArguments[0], parameters.ToArray()), queryable, count);
-                                    this._list.Add(oGrouping);
                                 }
                             }
                         }

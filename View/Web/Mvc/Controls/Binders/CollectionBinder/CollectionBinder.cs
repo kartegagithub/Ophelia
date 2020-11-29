@@ -18,6 +18,7 @@ using Ophelia.Data.Querying.Query;
 using Ophelia;
 using Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder.Columns;
 using System.Collections;
+using Ophelia.Web.View.Mvc.Controls.Binders.Fields;
 
 namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
 {
@@ -37,11 +38,11 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 return this._Url;
             }
         }
-        public bool IsAjaxRequest
+        public virtual bool IsAjaxRequest
         {
             get
             {
-                return this.Request["IsAjaxRequest"] == "1";
+                return this.Request["IsAjaxRequest"] == "1" || this.Request["ajaxentitybinder"] == "1";
             }
         }
         public HttpRequest Request { get { return this.Client.Request; } }
@@ -109,9 +110,25 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             this.CheckAjaxFunctions();
             this.Export();
         }
+        public CollectionBinder(ViewContext viewContext, TModel dataSource, string title) : this(((Controllers.Base.Controller)viewContext.Controller).Client, dataSource, title)
+        {
+            if (viewContext == null)
+                throw new ArgumentNullException("viewContext");
+
+            this.viewContext = viewContext;
+            this.Output = this.viewContext.Writer;
+            if (this.IsAjaxRequest && this.Response != null && !this.CanExport)
+            {
+                this.Response.Clear();
+                this.Response.ClearContent();
+                this.Response.ClearHeaders();
+            }
+            this.Controller = (Controllers.Base.Controller)this.viewContext.Controller;
+            this.onViewContextSet();
+        }
         protected virtual void CheckAjaxFunctions()
         {
-            if (this.Request["IsAjaxRequest"] == "1" && !string.IsNullOrEmpty(this.Request["CollectionBinderTriggerFunction"]))
+            if (this.IsAjaxRequest && !string.IsNullOrEmpty(this.Request["CollectionBinderTriggerFunction"]))
             {
                 this.Visible = false;
                 this.CanRender = false;
@@ -604,7 +621,12 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     this.ContentRenderMode = ContentRenderMode.Group;
 
                     //TODO: https://stackoverflow.com/a/12829015/1766100
-                    var groupedData = (IQueryable<IGrouping<object, T>>)this.DataSource.Query.GroupBy(selectedGroupers.ToArray());
+                    IQueryable<IGrouping<object, T>> groupedData = null;
+                    if (this.DataSource.Query is Ophelia.Data.Model.QueryableDataSet<T>)
+                        groupedData = (IQueryable<IGrouping<object, T>>)(QueryableDataSetExtensions.GroupBy(this.DataSource.Query as Ophelia.Data.Model.QueryableDataSet<T>, selectedGroupers.ToArray()));
+                    else
+                        groupedData = (IQueryable<IGrouping<object, T>>)this.DataSource.Query.GroupBy(selectedGroupers.ToArray());
+
                     if (this.DataSource.RemoteDataSource != null)
                     {
                         using (var queryData = new QueryData())
@@ -656,7 +678,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     else
                     {
                         this.DataSource.GroupPagination.ItemCount = groupedData.Count();
-                        this.GroupedData = groupedData.Paginate(this.CanExport ? 1 : this.DataSource.GroupPagination.PageNumber, this.CanExport ? int.MaxValue : this.DataSource.GroupPagination.PageSize);
+                        if (this.DataSource.Query is Ophelia.Data.Model.QueryableDataSet<T>)
+                            this.GroupedData = Ophelia.Data.QueryableDataSetExtensions.Paginate((Data.Model.QueryableDataSet<Data.Model.OGrouping<object, T>>)groupedData, this.CanExport ? 1 : this.DataSource.GroupPagination.PageNumber, this.CanExport ? int.MaxValue : this.DataSource.GroupPagination.PageSize);
+                        else
+                            this.GroupedData = groupedData.Paginate(this.CanExport ? 1 : this.DataSource.GroupPagination.PageNumber, this.CanExport ? int.MaxValue : this.DataSource.GroupPagination.PageSize);
                     }
                     groupedData = null;
                     this.DataSource.Query = null;
@@ -817,20 +842,6 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         {
             return info.Name + "ID";
         }
-        public CollectionBinder(ViewContext viewContext, TModel dataSource, string title) : this(((Controllers.Base.Controller)viewContext.Controller).Client, dataSource, title)
-        {
-            if (viewContext == null)
-                throw new ArgumentNullException("viewContext");
-
-            this.viewContext = viewContext;
-            this.Output = this.viewContext.Writer;
-            if (this.IsAjaxRequest && this.Response != null && !this.CanExport)
-            {
-                this.Response.Clear();
-            }
-            this.Controller = (Controllers.Base.Controller)this.viewContext.Controller;
-            this.onViewContextSet();
-        }
         protected virtual object GetReferencedEntity(Type entityType, object value)
         {
             return null;
@@ -956,7 +967,11 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                         if (name.IndexOf(".") > -1)
                             name = name.Replace(".", "");
 
-                        var text = Convert.ToString(group.Key.GetPropertyValue(name));
+                        var text = "";
+                        if (group.Key.GetType().IsPrimitiveType())
+                            text = group.Key.ToString();
+                        else
+                            text = Convert.ToString(group.Key.GetPropertyValue(name));
 
                         if (grouper.Type != null && grouper.Type.IsEnum)
                             text = grouper.Type.GetEnumDisplayName(text, this.Client);
@@ -1238,7 +1253,21 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
 
                     this.Output.Write(" data-align='" + column.Alignment.ToString() + "'");
 
-                    this.Output.Write(" data-name='" + column.FormatColumnName() + "'");
+                    var columnName = column.FormatColumnName();
+                    if (column.Expression.Body is MethodCallExpression)
+                    {
+                        var values = columnName.Split('.');
+                        columnName = "";
+                        for (int i = 0; i < values.Length - 1; i++)
+                        {
+                            columnName += values[i] + ".";
+                        }
+                        columnName = columnName.Trim('.');
+                        var prop = typeof(T).GetProperty(columnName);
+                        if (prop != null && (prop.PropertyType.IsPOCOEntity() || prop.PropertyType.IsDataEntity()))
+                            columnName += "ID";
+                    }
+                    this.Output.Write(" data-name='" + columnName + "'");
                     this.OnDrawingColumnHeader(column, true);
                     this.Output.Write(">");
                     if (!column.HideColumnTitle)
@@ -1335,24 +1364,79 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                 {
                     if (column.Visible)
                     {
-                        if (this.Groupers.Where(op => op.IsSelected && (op.FormatName() == column.FormatName())).Any())
+                        var columnName = column.FormatColumnName();
+                        if (this.Groupers.Where(op => op.IsSelected && (op.FormatName() == columnName)).Any())
                             continue;
 
                         this.Output.Write("<" + tag + ">");
-                        if (column.EnableColumnFiltering)
+                        if (this.CanDrawColumnFilter(column))
                         {
-                            var value = "";
-                            if (this.Request["Filters." + column.FormatName()] != null && this.Request["Filters." + column.FormatName()] != "")
+                            if (column is Columns.BoolColumn<TModel, T>)
                             {
-                                value = this.Request["Filters." + column.FormatName()];
+                                this.Output.Write((this.OnBeforeDrawColumnFilter(column) as Columns.BoolColumn<TModel, T>).GetEditableControlAsSelect(null, null, this.Request).Draw());
                             }
-                            this.Output.Write(this.GetEditableControl(column, value).Draw());
+                            else
+                            {
+                                if (column is Columns.DateColumn<TModel, T>)
+                                {
+                                    (column as Columns.DateColumn<TModel, T>).Mode = Fields.DateFieldMode.DoubleSelection;
+                                }
+                                this.Output.Write(this.RenderColumnFilter(column, this.OnBeforeDrawColumnFilter(column).GetEditableControl(null, null, this.Request)));
+                            }
                         }
                         this.Output.Write("</" + tag + ">");
                     }
                 }
                 this.Output.Write("</tr>");
             }
+        }
+        protected virtual bool CanDrawColumnFilter(Columns.BaseColumn<TModel, T> column)
+        {
+            if (!column.Visible)
+                return false;
+
+            if (!column.EnableColumnFiltering)
+                return false;
+
+            var includedToFilters = false;
+            var columnName = column.FormatColumnName();
+            foreach (Binders.Fields.BaseField<TModel> item in this.FilterPanel.Controls)
+            {
+                var path = "";
+                if (item.Expression != null)
+                {
+                    path = item.Expression.ParsePath();
+                }
+                else if (!string.IsNullOrEmpty(item.DataControl.ID))
+                {
+                    path = item.DataControl.ID.Replace("_", ".");
+                    if (item.DataControl.ID.IndexOf("Filters") == -1)
+                        path = "Filters." + path;
+                }
+                else if (!string.IsNullOrEmpty(item.Text))
+                {
+                    path = item.Text.Replace("_", ".");
+                    if (item.Text.IndexOf("Filters") == -1)
+                        path = "Filters." + path;
+                }
+                else if (item is Binders.Fields.DateField<TModel>)
+                {
+                    var dateField = item as Binders.Fields.DateField<TModel>;
+                    if (dateField != null)
+                    {
+                        path = dateField.LowPropertyName;
+                    }
+                }
+                includedToFilters = path.Replace("Filters.", "").Replace("Low", "") == columnName;
+                if (includedToFilters)
+                    break;
+            }
+
+            return includedToFilters;
+        }
+        protected virtual Columns.BaseColumn<TModel, T> OnBeforeDrawColumnFilter(Columns.BaseColumn<TModel, T> column)
+        {
+            return column;
         }
         protected WebControl GetEditableControl(Columns.BaseColumn<TModel, T> column, object value)
         {
@@ -1647,6 +1731,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             }
             this.Response.Flush();
             this.Response.End();
+        }
+        public virtual void ValidateSelectedValue(BaseField<TModel> Field)
+        {
+
         }
         public override void Dispose()
         {

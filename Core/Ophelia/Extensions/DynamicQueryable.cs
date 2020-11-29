@@ -15,7 +15,7 @@ namespace Ophelia
     public static class DynamicQueryable
     {
         #region IQueryable Extensions
-        private static Type GetQueryableType(this IQueryable source)
+        public static Type GetQueryableType(this IQueryable source)
         {
             if (source.GetType().GetMethods().Where(op => op.Name == "GetOpheliaType").Any())
             {

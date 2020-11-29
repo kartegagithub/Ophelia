@@ -596,14 +596,32 @@ namespace Ophelia.Data
 
         public static QueryableDataSet<OGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this QueryableDataSet<TSource> source, Expression<Func<TSource, TKey>> keySelector)
         {
-            return (QueryableDataSet<OGrouping<TKey, TSource>>)source.InternalProvider.CreateQuery<OGrouping<TKey, TSource>>(
+            return (QueryableDataSet<OGrouping<TKey, TSource>>)((QueryableDataSet<OGrouping<TKey, TSource>>)source.InternalProvider.CreateQuery<OGrouping<TKey, TSource>>(
                 Expression.Call(
                     null,
                     GetMethodInfoOf(() => QueryableDataSetExtensions.GroupBy(
                         default(QueryableDataSet<TSource>),
                         default(Expression<Func<TSource, TKey>>))),
                     new Expression[] { source.Expression, new Expressions.GroupExpression(keySelector) }
-                    ));
+                    ))).ExtendData(source.ExtendedData);
+        }
+
+        public static QueryableDataSet<OGrouping<object, TSource>> GroupBy<TSource>(this QueryableDataSet<TSource> source, params Expression<Func<TSource, object>>[] groupSelectors)
+        {
+            var expressions = new List<Expression>();
+            expressions.Add(source.Expression);
+            foreach (var item in groupSelectors)
+            {
+                expressions.Add(item);
+            }
+            return (QueryableDataSet<OGrouping<object, TSource>>)((QueryableDataSet<OGrouping<object, TSource>>)source.InternalProvider.CreateQuery<OGrouping<object, TSource>>(
+                Expression.Call(
+                    null,
+                    GetMethodInfoOf(() => QueryableDataSetExtensions.GroupBy(
+                        default(QueryableDataSet<TSource>),
+                        default(Expression<Func<TSource, object>>))),
+                    expressions.ToArray()
+                    ))).ExtendData(source.ExtendedData);
         }
 
         //public static QueryableDataSet<TSource> Union<TSource>(this QueryableDataSet<TSource> source1, IEnumerable<TSource> source2)
