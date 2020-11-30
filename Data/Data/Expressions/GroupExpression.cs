@@ -9,6 +9,7 @@ namespace Ophelia.Data.Expressions
 {
     public class GroupExpression : Expression, IDisposable
     {
+        public Expression[] Expressions { get; set; }
         public Expression Expression { get; set; }
         public override ExpressionType NodeType => ExpressionType.Extension;
 
@@ -29,6 +30,11 @@ namespace Ophelia.Data.Expressions
         public GroupExpression(Expression expression)
         {
             this.Expression = expression;
+        }
+        public GroupExpression(Expression[] expressions)
+        {
+            this.Expressions = expressions;
+            this.Expression = expressions.FirstOrDefault();
         }
     }
 }
