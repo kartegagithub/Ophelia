@@ -747,6 +747,8 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         private void ApplyFilter(string entityProp, string value, Type propType, bool isQueryableDataSet, PropertyInfo[] propTree)
         {
             var comparison = Comparison.Contains;
+            if (propType?.Name == "Byte")
+                comparison = Comparison.Equal;
             if (!string.IsNullOrEmpty(this.Request[entityProp + "-Comparison"]))
                 comparison = (Comparison)this.Request[entityProp + "-Comparison"].ToInt32();
 
@@ -1424,6 +1426,13 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     if (dateField != null)
                     {
                         path = dateField.LowPropertyName;
+                        if (string.IsNullOrEmpty(path))
+                        {
+                            if (dateField.LowExpression != null)
+                            {
+                                path = dateField.LowExpression.ParsePath();
+                            }
+                        }
                     }
                 }
                 includedToFilters = !string.IsNullOrEmpty(path) && path.Replace("Filters.", "").Replace("Low", "") == columnName;

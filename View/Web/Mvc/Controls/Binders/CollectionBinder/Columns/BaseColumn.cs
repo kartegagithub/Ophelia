@@ -120,6 +120,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder.Columns
             textbox.HtmlAttributes = this.HtmlAttributes;
             textbox.CssClass = "form-control";
             textbox.Value = Convert.ToString(this.GetValue(entity));
+
+            if (this is Columns.NumericColumn<TModel, T> && textbox.Value == "0")
+                textbox.Value = "";
+
             if (string.IsNullOrEmpty(textbox.Value) && value != null)
             {
                 try
