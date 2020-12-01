@@ -612,7 +612,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             this.SaveGrouping(grouper);
                     }
                 }
-                var selectedGroupers = this.Groupers.Where(op => op.IsSelected).Select(op => op.Expression).ToList();
+                var selectedGroupers = this.Groupers.Where(op => op.IsSelected).Select(op => op.Expression).Distinct(op => op.ParsePath()).ToList();
                 if (selectedGroupers.Count > 0)
                 {
                     if (!string.IsNullOrEmpty(this.Request[this.DataSource.GroupPagination.PageKey]) && this.Request[this.DataSource.GroupPagination.PageKey].IsNumeric())
@@ -956,7 +956,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     this.Output.Write("<tr>");
                     this.Output.Write("<td colspan='" + this.Columns.Count + "'>");
 
-                    var selectedGroupers = this.Groupers.Where(op => op.IsSelected).ToList();
+                    var selectedGroupers = this.Groupers.Where(op => op.IsSelected).Distinct(op => op.Expression.ParsePath()).ToList();
                     var counter = 0;
                     foreach (var grouper in selectedGroupers)
                     {
@@ -1163,14 +1163,14 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             this.Output.Write("<thead>");
             this.Output.Write("<tr>");
             if (this.Configuration.AddBlankColumnToStart)
-                this.Output.Write("<th class='no-sort'></th>");
+                this.Output.Write("<th class='no-sort' data-name='BlankColumn'></th>");
             if (this.Configuration.Checkboxes && this.Configuration.ShowCheckAll)
             {
-                this.Output.Write("<th class='no-sort'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'> " + this.Client.TranslateText("All") + "</th>");
+                this.Output.Write("<th class='no-sort' data-name='CheckboxAll'><input type='checkbox' id='CheckAll' class='binder-check-all' name='CheckAll'> " + this.Client.TranslateText("All") + "</th>");
             }
             else if (this.Configuration.Checkboxes)
             {
-                this.Output.Write("<th class='no-sort'></th>");
+                this.Output.Write("<th class='no-sort' data-name='CheckboxAll'></th>");
             }
 
             this.RenderOnBeforeDrawLine(null);
@@ -1179,8 +1179,9 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             {
                 if (column.Visible)
                 {
+                    var style = "";
                     if (this.Groupers.Where(op => op.IsSelected && (op.FormatName() == column.FormatName())).Any())
-                        continue;
+                        style = "style='display:none'";
 
                     this.Output.Write("<th");
                     var className = "";
@@ -1254,7 +1255,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     this.Output.Write(" data-align='" + column.Alignment.ToString() + "'");
 
                     var columnName = column.FormatColumnName();
-                    if (column.Expression.Body is MethodCallExpression)
+                    if (column.Expression != null && column.Expression.Body is MethodCallExpression)
                     {
                         var values = columnName.Split('.');
                         columnName = "";
@@ -1267,9 +1268,10 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                         if (prop != null && (prop.PropertyType.IsPOCOEntity() || prop.PropertyType.IsDataEntity()))
                             columnName += "ID";
                     }
+
                     this.Output.Write(" data-name='" + columnName + "'");
                     this.OnDrawingColumnHeader(column, true);
-                    this.Output.Write(">");
+                    this.Output.Write($" {style} >");
                     if (!column.HideColumnTitle)
                     {
                         this.DrawColumnText(column, column.FormatText(), link);
@@ -1306,10 +1308,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     counter++;
                 }
             }
-            if (counter == 0)
-            {
-                this.Output.Write("<span>" + this.Client.TranslateText("DragColumnsToGroup") + "</span>");
-            }
+            this.Output.Write("<span style='" + (counter == 0 ? "display:inline;" : "display:none;") + "'>" + this.Client.TranslateText("DragColumnsToGroup") + "</span>");
             this.Output.Write("</div>");
         }
         protected virtual string GetItemLink(T item)
@@ -1427,7 +1426,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                         path = dateField.LowPropertyName;
                     }
                 }
-                includedToFilters = path.Replace("Filters.", "").Replace("Low", "") == columnName;
+                includedToFilters = !string.IsNullOrEmpty(path) && path.Replace("Filters.", "").Replace("Low", "") == columnName;
                 if (includedToFilters)
                     break;
             }
