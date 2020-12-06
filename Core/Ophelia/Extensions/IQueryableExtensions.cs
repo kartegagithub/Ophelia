@@ -13,7 +13,7 @@ namespace Ophelia
     public static class IQueryableExtensions
     {
         public static IQueryable GroupBy<TElement>(this IQueryable<TElement> elements, params Expression<Func<TElement, object>>[] groupSelectors)
-            where TElement : class
+                    where TElement : class
         {
             var columns = "";
             foreach (var item in groupSelectors)
@@ -21,8 +21,15 @@ namespace Ophelia
                 if (!string.IsNullOrEmpty(columns))
                     columns += ",";
                 var name = item.ParsePath();
-                if (item.Body.Type.IsClass && !item.Body.Type.FullName.Contains("System."))
-                    name += "ID";
+                if (item.Body is MethodCallExpression)
+                {
+                    name = (item.Body as MethodCallExpression).Arguments.FirstOrDefault().ParsePath() + "ID";
+                }
+                else
+                {
+                    if (item.Body.Type.IsClass && !item.Body.Type.FullName.Contains("System."))
+                        name += "ID";
+                }
 
                 if (name.IndexOf(".") > -1)
                     name = name + " as " + name.Replace(".", "");
