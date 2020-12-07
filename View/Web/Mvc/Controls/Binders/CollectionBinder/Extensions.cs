@@ -140,6 +140,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             column.Text = Text;
             column.IsSortable = IsSortable;
             column.IsHidden = IsHidden;
+            column.IsDefault = false;
             return (Columns.NumericColumn<TModel, T>)binder.AddColumn(column);
         }
 
