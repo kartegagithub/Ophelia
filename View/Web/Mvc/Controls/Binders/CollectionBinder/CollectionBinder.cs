@@ -1327,7 +1327,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
             }
             this.RenderOnAfterDrawLine(null);
             this.Output.Write("</tr>");
-            if (this.Configuration.ColumnFiltersInHead && !this.ParentDrawsLayout && this.GroupedData == null)
+            if (this.Configuration.ColumnFiltersInHead && !this.ParentDrawsLayout)
                 this.RenderColumnFilters();
             this.Output.Write("</thead>");
         }
@@ -1392,7 +1392,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         }
         protected virtual void RenderColumnFilters()
         {
-            if (this.Configuration.EnableColumnFiltering && this.GroupedData == null)
+            if (this.Configuration.EnableColumnFiltering)
             {
                 var tag = "th";
                 if (!this.Configuration.ColumnFiltersInHead)
