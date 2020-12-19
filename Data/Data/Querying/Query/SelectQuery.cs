@@ -137,7 +137,7 @@ namespace Ophelia.Data.Querying.Query
             }
             if (this.Data.Groupers.Count > 0 && string.IsNullOrEmpty(strOrder))
             {
-                sb.Append(" ORDER BY Counted DESC");
+                sb.Append(" ORDER BY " + this.Context.Connection.FormatDataElement("Counted") + " DESC");
             }
             return sb.ToString();
         }
