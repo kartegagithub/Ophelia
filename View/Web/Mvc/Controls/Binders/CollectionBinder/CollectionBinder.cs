@@ -1409,10 +1409,11 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                     if (column.Visible)
                     {
                         var columnName = column.FormatColumnName();
+                        var style = "";
                         if (this.Groupers.Where(op => op.IsSelected && (op.FormatName() == columnName)).Any())
-                            continue;
+                            style = "style='display:none'";
 
-                        this.Output.Write("<" + tag + ">");
+                        this.Output.Write($"<{tag} {style}>");
                         if (this.CanDrawColumnFilter(column))
                         {
                             if (column is Columns.BoolColumn<TModel, T>)
@@ -1428,7 +1429,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                                 this.Output.Write(this.RenderColumnFilter(column, this.OnBeforeDrawColumnFilter(column).GetEditableControl(null, null, this.Request)));
                             }
                         }
-                        this.Output.Write("</" + tag + ">");
+                        this.Output.Write($"</{tag}>");
                     }
                 }
                 this.Output.Write("</tr>");
