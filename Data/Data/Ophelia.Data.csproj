@@ -85,6 +85,9 @@
     <Compile Include="Expressions\WhereExpression.cs" />
     <Compile Include="Expressions\IncludeExpression.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Logging\AuditLog.cs" />
+    <Compile Include="Logging\AuditLoggingAttribute.cs" />
+    <Compile Include="Logging\IAuditLogger.cs" />
     <Compile Include="Model\DataEntity.cs" />
     <Compile Include="Model\DataEntityTracker.cs" />
     <Compile Include="Model\DataValue.cs" />

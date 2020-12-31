@@ -18,6 +18,8 @@ namespace Ophelia.Data
         protected static Dictionary<Type, DataContext> _Currents;
         private DBStructureCache _DBStructureCache;
         public int ExecutionTimeout { get; set; }
+        public bool EnableAuditLog { get; set; }
+        public Dictionary<string, long> PostActionAudits { get; private set; }
         public Dictionary<string, string> NamespaceMap { get; set; }
         public Dictionary<string, string> TableMap { get; set; }
         public Dictionary<string, string> FieldMap { get; set; }
@@ -125,6 +127,7 @@ namespace Ophelia.Data
             this.ContextEntities = new List<Type>();
             this.Configure();
             this._Connection = new Connection(this, this.GetDatabaseType(), this.GetConnectionString());
+            this.PostActionAudits = new Dictionary<string, long>();
         }
         protected virtual void Configure()
         {

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using Ophelia.Data.Logging;
+using Newtonsoft.Json;
 
 namespace Ophelia.Data
 {
@@ -18,8 +20,7 @@ namespace Ophelia.Data
                 return this.oContext;
             }
         }
-
-        public bool Delete(Model.DataEntity entity) 
+        public bool Delete(Model.DataEntity entity)
         {
             if (entity.ID > 0)
             {
@@ -34,8 +35,9 @@ namespace Ophelia.Data
         {
             if (entity.ID == 0 || entity.Tracker.HasChanged)
             {
+                this.CheckAuditState(entity);
                 int effectedRowCount = 0;
-                if(entity.ID > 0)
+                if (entity.ID > 0)
                 {
                     entity.Tracker.OnBeforeUpdateEntity();
                     entity.DateModified = DateTime.Now;
@@ -49,26 +51,26 @@ namespace Ophelia.Data
                     entity.DateCreated = DateTime.Now;
 
                     effectedRowCount = this.Context.CreateInsertQuery(entity).Execute<int>();
-                    if(entity.ID == 0 && (this.Context.Connection.Type == DatabaseType.MySQL || this.Context.Connection.Type == DatabaseType.SQLServer))
+                    if (entity.ID == 0 && (this.Context.Connection.Type == DatabaseType.MySQL || this.Context.Connection.Type == DatabaseType.SQLServer))
                         entity.ID = effectedRowCount;
                     entity.Tracker.OnAfterCreateEntity();
                 }
 
                 var entityType = entity.GetType();
                 var properties = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(op => op.PropertyType.IsDataEntity()).ToList();
-                if(properties.Count > 0)
+                if (properties.Count > 0)
                 {
                     foreach (var _prop in properties)
                     {
                         var referenced = (Model.DataEntity)_prop.GetValue(entity);
-                        if(referenced != null)
+                        if (referenced != null)
                         {
-                            if(referenced.ID == 0 || referenced.Tracker.HasChanged)
+                            if (referenced.ID == 0 || referenced.Tracker.HasChanged)
                             {
                                 this.SaveChanges(referenced);
 
                                 var refMethod = entityType.GetProperty(_prop.Name + "ID");
-                                if(refMethod != null && (long)refMethod.GetValue(entity) != referenced.ID)
+                                if (refMethod != null && (long)refMethod.GetValue(entity) != referenced.ID)
                                 {
                                     refMethod.SetValue(entity, referenced.ID);
 
@@ -94,7 +96,7 @@ namespace Ophelia.Data
                             var n2nRelationProperties = attributes.Where(op => op.GetType().IsAssignableFrom(typeof(Attributes.N2NRelationProperty))).ToList();
                             if (n2nRelationProperties != null && n2nRelationProperties.Count > 0)
                             {
-                                
+
                             }
                             else
                             {
@@ -128,7 +130,81 @@ namespace Ophelia.Data
             }
             return false;
         }
+        protected virtual void CheckAuditState(Model.DataEntity entity)
+        {
+            if (!this.Context.EnableAuditLog)
+                return;
 
+            var logs = new List<AuditLog>();
+            var attributes = entity.GetType().GetCustomAttributes(typeof(AuditLoggingAttribute));
+            if (attributes == null || attributes.Count == 0 || !(attributes.FirstOrDefault() as AuditLoggingAttribute).Enable)
+                return;
+
+            var auditLogModel = new AuditLog()
+            {
+                EntityName = entity.GetType().Name,
+                EntityID = entity.ID,
+                UserID = entity.UserCreatedID,
+                Date = DateTime.Now,
+                State = entity.ID > 0 ? System.Data.Entity.EntityState.Modified : System.Data.Entity.EntityState.Added
+            };
+            logs.Add(auditLogModel);
+
+            var changes = new Dictionary<string, string>();
+            foreach (var item in entity.Tracker.Properties)
+            {
+                //We find the name of the entity.
+                string key = item.Key;
+
+                var value = "";
+                if (item.Value.Value != null && item.Value.Value.GetType().IsPrimitiveType())
+                    value = Convert.ToString(item.Value.Value);
+                if (key != null && value != null)
+                {
+                    changes.Add(key, value);
+                }
+            }
+            var newValue = JsonConvert.SerializeObject(changes);
+            auditLogModel.NewValue = newValue;
+
+            if (!string.IsNullOrEmpty((attributes.FirstOrDefault() as AuditLoggingAttribute).ParentPropertyName))
+            {
+                var parentName = (attributes.FirstOrDefault() as AuditLoggingAttribute).ParentPropertyName;
+                var parentProperty = entity.GetType().GetProperty(parentName);
+                if (parentProperty != null)
+                {
+                    var id = entity.GetPropertyValue(parentName + "ID");
+                    if (id != null)
+                    {
+                        long longID = 0;
+                        if (long.TryParse(id.ToString(), out longID))
+                        {
+                            if (this.Context.PostActionAudits.ContainsKey($"{parentProperty.PropertyType.Name}_{longID}"))
+                            {
+                                auditLogModel.ParentAuditLogID = this.Context.PostActionAudits[$"{parentProperty.PropertyType.Name}_{longID}"];
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            this.WriteAuditLogs(logs);
+            if (attributes != null && (attributes.FirstOrDefault() as AuditLoggingAttribute).ParentOfPostActions)
+            {
+                this.Context.PostActionAudits[$"{auditLogModel.EntityName}_{auditLogModel.EntityID}"] = auditLogModel.ID;
+            }
+        }
+        protected virtual void WriteAuditLogs(List<AuditLog> logs)
+        {
+            using (var Handler = (IAuditLogger)typeof(IAuditLogger).GetRealTypeInstance())
+            {
+                if (Handler != null)
+                {
+                    Handler.Write(logs);
+                }
+            }
+        }
         public Repository(DataContext Context)
         {
             this.oContext = Context;
