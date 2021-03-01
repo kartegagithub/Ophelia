@@ -67,6 +67,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ophelia.Tools.RSS", "Tools\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ophelia.Data.Importer", "Data\Importer\Ophelia.Data.Importer\Ophelia.Data.Importer.csproj", "{3D3C4D07-06C1-4F61-BC51-E0BD5E46490F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "I18NService", "I18NService", "{BE7BE335-603D-4FB5-B4A0-835F84FA176E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ophelia.Integration.I18NService", "Integration\I18NService\Ophelia.Integration.I18NService.csproj", "{B1A5F4C6-38A9-4B27-9756-F96437632203}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +157,10 @@ Global
 		{3D3C4D07-06C1-4F61-BC51-E0BD5E46490F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D3C4D07-06C1-4F61-BC51-E0BD5E46490F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D3C4D07-06C1-4F61-BC51-E0BD5E46490F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A5F4C6-38A9-4B27-9756-F96437632203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A5F4C6-38A9-4B27-9756-F96437632203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A5F4C6-38A9-4B27-9756-F96437632203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A5F4C6-38A9-4B27-9756-F96437632203}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +192,8 @@ Global
 		{EEFDD171-75BB-41FD-A735-A912A1571979} = {1923DA4B-ABEE-46C6-B709-853250928C74}
 		{5D387760-707D-457C-8D1B-0B0530B068D8} = {06AAA1AF-09F4-4255-BFF4-37A7830060D3}
 		{3D3C4D07-06C1-4F61-BC51-E0BD5E46490F} = {1767E93C-31B3-4FE7-B595-6F989901BFCE}
+		{BE7BE335-603D-4FB5-B4A0-835F84FA176E} = {E75A88CC-0CE6-4BBC-944D-709674C14113}
+		{B1A5F4C6-38A9-4B27-9756-F96437632203} = {BE7BE335-603D-4FB5-B4A0-835F84FA176E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCA9CB92-9DFA-4803-B071-82537168C72E}

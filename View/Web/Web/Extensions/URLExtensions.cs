@@ -26,6 +26,12 @@ namespace Ophelia.Web.Extensions
         {
             return JsonConvert.DeserializeObject<ServiceObjectResult<T>>(URL.PostURL(request.ToJson(), "application/json", headers, PreAuthenticate));
         }
+        public static ServiceCollectionResult<T> GetCollection<T>(this string URL, int page, int pageSize, T filterEntity, dynamic parameters = null, WebHeaderCollection headers = null, bool PreAuthenticate = false)
+        {
+            var request = new WebApiCollectionRequest<T>() { Page = page, PageSize = pageSize, Data = filterEntity };
+            SetParameters(request, parameters);
+            return URL.GetCollection(request, headers, PreAuthenticate);
+        }
         public static ServiceCollectionResult<T> GetCollection<T>(this string URL, int page, int pageSize, dynamic parameters = null, WebHeaderCollection headers = null, bool PreAuthenticate = false)
         {
             var request = new WebApiCollectionRequest<T>() { Page = page, PageSize = pageSize };
