@@ -54,6 +54,7 @@
     <Compile Include="Models\TranslationAccess.cs" />
     <Compile Include="Models\TranslationAccessRequest.cs" />
     <Compile Include="Models\TranslationPool.cs" />
+    <Compile Include="Models\TranslationPoolOverride.cs" />
     <Compile Include="Models\TranslationPool_i18n.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Base\Facade.cs" />
