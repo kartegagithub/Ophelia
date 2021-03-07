@@ -5,6 +5,7 @@ using System.Text;
 using Ophelia.Integration.I18NService.Models;
 using Ophelia;
 using Ophelia.Web.Service;
+using System.Threading.Tasks;
 
 namespace Ophelia.Integration.I18NService
 {
@@ -39,6 +40,12 @@ namespace Ophelia.Integration.I18NService
                 this.Accesses.Add(new TranslationAccess() { Name = name, Count = 1 });
             else
                 access.Count += 1;
+        }
+        public Task FlushAsync()
+        {
+            Task task = new Task(() => this.Flush());
+            task.Start();
+            return task;
         }
         public void Flush()
         {
