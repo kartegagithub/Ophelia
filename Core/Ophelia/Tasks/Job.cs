@@ -15,12 +15,15 @@ namespace Ophelia.Tasks
         public string AssemblyName { get; set; }
         public string ClassName { get; set; }
         public string MethodName { get; set; }
+        public string Parameters { get; set; }
+        public bool OneTimeJob { get; set; }
         public DateTime? LastExecutionTime { get; set; }
         public JobExecutionStatus LastExecutionStatus { get; set; }
         public DateTime? NextExecutionTime { get; set; }
         public Routine Routine { get; set; }
         public long OccurenceIndex { get; set; }
         public System.Threading.Thread CurrentThread { get; private set; }
+        public System.Threading.ThreadPriority Priority { get; set; }
         public void Run()
         {
             if (this.CurrentThread == null && this.Manager.CanRunJob(this))
@@ -32,7 +35,7 @@ namespace Ophelia.Tasks
                         this.LastExecutionStatus = JobExecutionStatus.Running;
                         this.Manager.OnBeforeJobExecuted(this);
                         this.CurrentThread = new System.Threading.Thread(new System.Threading.ThreadStart(this.RunInternal));
-                        this.CurrentThread.Priority = System.Threading.ThreadPriority.Lowest;
+                        this.CurrentThread.Priority = this.Priority;
                         this.CurrentThread.Start();
                     }
                 }
