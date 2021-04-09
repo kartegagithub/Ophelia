@@ -61,6 +61,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         public List<Columns.BaseColumn<TModel, T>> Columns { get; private set; }
         public bool ParentDrawsLayout { get; set; }
         protected ContentRenderMode ContentRenderMode { get; set; }
+        public bool DisableFilterComparison { get; set; }
         protected virtual bool CanExport
         {
             get
@@ -274,13 +275,13 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             doubleSelection = true;
 
                             var tmpPath = (item as Fields.NumberboxField<TModel>).LowPropertyName.Replace("_", ".");
-                            if ((item as Fields.NumberboxField<TModel>).LowExpression == null || !string.IsNullOrEmpty(this.Request[tmpPath]))
+                            if ((item as Fields.NumberboxField<TModel>).LowExpression == null || (!string.IsNullOrEmpty(tmpPath) && !string.IsNullOrEmpty(this.Request[tmpPath])))
                                 lowValue = this.Request[tmpPath];
                             else
                                 lowValue = Convert.ToString(item.GetExpressionValue((item as Fields.NumberboxField<TModel>).LowExpression));
 
                             tmpPath = (item as Fields.NumberboxField<TModel>).HighPropertyName.Replace("_", ".");
-                            if ((item as Fields.NumberboxField<TModel>).HighExpression == null || !string.IsNullOrEmpty(this.Request[tmpPath]))
+                            if ((item as Fields.NumberboxField<TModel>).HighExpression == null || (!string.IsNullOrEmpty(tmpPath) && !string.IsNullOrEmpty(this.Request[tmpPath])))
                                 highValue = this.Request[tmpPath];
                             else
                                 highValue = Convert.ToString(item.GetExpressionValue((item as Fields.NumberboxField<TModel>).HighExpression));
@@ -292,7 +293,7 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             var propertyName = (item as Fields.DateField<TModel>).LowPropertyName;
                             if (!string.IsNullOrEmpty(propertyName))
                                 propertyName = propertyName.Replace("_", ".");
-                            if ((item as Fields.DateField<TModel>).LowExpression == null || !string.IsNullOrEmpty(this.Request[propertyName]))
+                            if ((item as Fields.DateField<TModel>).LowExpression == null || (!string.IsNullOrEmpty(propertyName) && !string.IsNullOrEmpty(this.Request[propertyName])))
                                 lowValue = this.Request[propertyName];
                             else
                                 lowValue = Convert.ToString(item.GetExpressionValue((item as Fields.DateField<TModel>).LowExpression));
@@ -301,14 +302,14 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
                             if (!string.IsNullOrEmpty(propertyName))
                                 propertyName = propertyName.Replace("_", ".");
 
-                            if ((item as Fields.DateField<TModel>).HighExpression == null || !string.IsNullOrEmpty(this.Request[propertyName]))
+                            if ((item as Fields.DateField<TModel>).HighExpression == null || (!string.IsNullOrEmpty(propertyName) && !string.IsNullOrEmpty(this.Request[propertyName])))
                                 highValue = this.Request[propertyName];
                             else
                                 highValue = Convert.ToString(item.GetExpressionValue((item as Fields.DateField<TModel>).HighExpression));
                         }
                         else
                         {
-                            if (item.Expression == null || !string.IsNullOrEmpty(this.Request[path]))
+                            if (item.Expression == null || (!string.IsNullOrEmpty(path) && !string.IsNullOrEmpty(this.Request[path])))
                                 value = this.Request[path];
                             else
                                 value = Convert.ToString(item.GetExpressionValue());
@@ -1679,6 +1680,11 @@ namespace Ophelia.Web.View.Mvc.Controls.Binders.CollectionBinder
         }
         protected string DrawFilterComparison(Columns.BaseColumn<TModel, T> column)
         {
+            if (this.DisableFilterComparison)
+            {
+                return string.Empty;
+            }
+
             var comparisons = new List<Comparison>();
             if (column is NumericColumn<TModel, T>)
             {
