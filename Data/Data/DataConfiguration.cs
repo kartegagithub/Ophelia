@@ -13,6 +13,7 @@ namespace Ophelia.Data
         public bool PrimaryKeyContainsEntityName { get; set; }
         public bool AllowStructureAutoCreation { get; set; }
         public bool AllowLinkedDatabases { get; set; }
+        public bool UseUppercaseObjectNames { get; set; }
         public int DefaultStringColumnSize { get; set; }
         public int DefaultDecimalColumnPrecision { get; set; }
         public int DefaultDecimalColumnScale { get; set; }
