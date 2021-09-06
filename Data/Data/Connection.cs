@@ -487,7 +487,7 @@ namespace Ophelia.Data
             {
                 sp = this.Context.NamespaceMap[sp];
             }
-            if (this.Type == DatabaseType.Oracle)
+            if (this.Type == DatabaseType.Oracle || this.Context.Configuration.UseUppercaseObjectNames)
                 sp = sp.ToUpper().Replace("İ", "I");
             return sp;
         }
@@ -497,7 +497,7 @@ namespace Ophelia.Data
             {
                 tb = this.Context.TableMap[tb];
             }
-            if (this.Type == DatabaseType.Oracle)
+            if (this.Type == DatabaseType.Oracle || this.Context.Configuration.UseUppercaseObjectNames)
                 tb = tb.ToUpper().Replace("İ", "I");
             return tb;
         }
@@ -507,7 +507,7 @@ namespace Ophelia.Data
             {
                 f = this.Context.FieldMap[f];
             }
-            if (this.Type == DatabaseType.Oracle)
+            if (this.Type == DatabaseType.Oracle || this.Context.Configuration.UseUppercaseObjectNames)
                 f = f.ToUpper().Replace("İ", "I");
             return f;
         }
