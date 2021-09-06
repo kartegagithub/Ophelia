@@ -550,6 +550,10 @@ namespace Ophelia.Data
             {
                 key = key.Left(30);
             }
+            else if (this.Context.Configuration.ObjectNameCharLimit > 0 && key.Length > this.Context.Configuration.ObjectNameCharLimit)
+            {
+                key = key.Left(this.Context.Configuration.ObjectNameCharLimit);
+            }
             return key;
         }
         private string GetOpeningBracket()

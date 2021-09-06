@@ -22,7 +22,7 @@ namespace Ophelia.Data
         public bool LogEntityLoads { get; set; }
         public string OracleStringColumnCollation { get; set; }
         public string DatabaseVersion { get; set; }
-
+        public int ObjectNameCharLimit { get; set; }
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -37,6 +37,7 @@ namespace Ophelia.Data
             this.DefaultDecimalColumnScale = 5;
             this.DefaultDecimalColumnPrecision = 38;
             this.EnableLazyLoading = false;
+            this.ObjectNameCharLimit = 0;
         }
     }
 }
