@@ -107,6 +107,7 @@
     <Compile Include="Model\QueryableDataSetWithType.cs" />
     <Compile Include="Model\QueryableDataSet.cs" />
     <Compile Include="Querying\DataDesigner.cs" />
+    <Compile Include="Querying\DBSchemaGenerator.cs" />
     <Compile Include="Querying\Query\Helpers\Filter.cs" />
     <Compile Include="Querying\Query\Helpers\Grouper.cs" />
     <Compile Include="Querying\Query\Helpers\Includer.cs" />

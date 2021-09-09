@@ -11,8 +11,8 @@ namespace Ophelia.Data.Querying
     public class DataDesigner : IDisposable
     {
         private Query.BaseQuery Query { get; set; }
-        private DataContext Context { get; set; }
-        private List<string> SQLList;
+        internal DataContext Context { get; set; }
+        internal List<string> SQLList;
         public bool Check(Query.QueryBuilder query, Exception ex)
         {
             this.Context = query.Context;
@@ -83,7 +83,7 @@ namespace Ophelia.Data.Querying
             return false;
         }
 
-        private void CreateSchema(Type type)
+        public void CreateSchema(Type type)
         {
             if (this.Context.Configuration.UseNamespaceAsSchema)
             {
@@ -163,6 +163,8 @@ namespace Ophelia.Data.Querying
         }
         private void AddSQL(string SQL)
         {
+            if (this.SQLList == null)
+                this.SQLList = new List<string>();
             if (!this.SQLList.Contains(SQL))
                 this.SQLList.Add(SQL);
         }
@@ -174,7 +176,7 @@ namespace Ophelia.Data.Querying
                 this.CheckJoins(table);
             }
         }
-        private void CreateTable(Type type)
+        public void CreateTable(Type type)
         {
             this.CreateSchema(type);
             var pkey = this.Context.Connection.GetPrimaryKeyName(type);
