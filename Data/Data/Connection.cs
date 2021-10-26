@@ -384,7 +384,7 @@ namespace Ophelia.Data
             {
                 return (value.ToString() == "True" ? 1 : 0);
             }
-            else if (valueType != null && (valueType == typeof(DateTime) || valueType == typeof(Nullable<DateTime>)))
+            else if (this.Type == DatabaseType.SQLServer && valueType != null && (valueType == typeof(DateTime) || valueType == typeof(Nullable<DateTime>)))
             {
                 if (value == null && valueType == typeof(Nullable<DateTime>))
                     return null;
