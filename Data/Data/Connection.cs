@@ -378,11 +378,20 @@ namespace Ophelia.Data
                     this.Close();
             }
         }
-        public object FormatParameterValue(object value, bool isString = false)
+        public object FormatParameterValue(object value, bool isString = false, Type valueType = null)
         {
             if (value != null & !isString && (value.ToString() == "True" || value.ToString() == "False"))
             {
                 return (value.ToString() == "True" ? 1 : 0);
+            }
+            else if (this.Type == DatabaseType.SQLServer && valueType != null && (valueType == typeof(DateTime) || valueType == typeof(Nullable<DateTime>)))
+            {
+                if (value == null && valueType == typeof(Nullable<DateTime>))
+                    return null;
+                else if (value == null && valueType == typeof(DateTime))
+                    return System.Data.SqlTypes.SqlDateTime.MinValue;
+                else if (valueType == typeof(DateTime) && (DateTime)value == DateTime.MinValue)
+                    return System.Data.SqlTypes.SqlDateTime.MinValue;
             }
             return value;
         }
