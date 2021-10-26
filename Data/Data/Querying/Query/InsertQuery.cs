@@ -56,7 +56,7 @@ namespace Ophelia.Data.Querying.Query
 
                                 sbFields.Append(this.Context.Connection.FormatDataElement(this.Context.Connection.GetMappedFieldName(_prop.PropertyInfo.Name)));
                                 sbValues.Append(this.Context.Connection.FormatParameterName("p") + i);
-                                this.Data.Parameters.Add(this.Context.Connection.FormatParameterValue(_prop.Value));
+                                this.Data.Parameters.Add(this.Context.Connection.FormatParameterValue(_prop.Value, false, _prop.PropertyInfo.PropertyType));
                                 i++;
                             }
                         }

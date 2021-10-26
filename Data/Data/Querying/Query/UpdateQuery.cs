@@ -62,7 +62,7 @@ namespace Ophelia.Data.Querying.Query
                                     this.Data.Parameters.Add(DBNull.Value);
                                 }
                                 else
-                                    this.Data.Parameters.Add(this.Context.Connection.FormatParameterValue(_prop.Value));
+                                    this.Data.Parameters.Add(this.Context.Connection.FormatParameterValue(_prop.Value, false, _prop.PropertyInfo.PropertyType));
                                 i++;
                             }
                         }
